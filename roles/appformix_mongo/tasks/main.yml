@@ -34,12 +34,13 @@
     mode: 0444
 
 - name: Start AppFormix Mongo container
-  docker:
+  docker_container:
       name: appformix-mongo
       image: "{{ appformix_mongo_image }}"
-      state: "{{ appformix_mongo_state }}"
+      state: started
       restart_policy: always
-      net: "{{ appformix_network }}"
+      networks: 
+        - name: "{{ appformix_network }}"
       ports: "{{ appformix_mongo_docker_ports }}"
       volumes: "{{ appformix_mongo_volumes }}"
       command: mongod --config "{{ appformix_container_mongo_conf_file }}"

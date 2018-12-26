@@ -20,12 +20,13 @@
 
 - name: Start appformix translate with a dns server
   when: appformix_state != 'absent'
-  docker:
+  docker_container:
       name: appformix-translate
       image: "{{ appformix_controller_image }}"
-      state: "{{ appformix_translate_state }}"
-      dns: ["127.0.0.1"]
-      net: "{{ appformix_network }}"
+      state: started
+      dns_servers: ["127.0.0.1"]
+      networks: 
+        - name: "{{ appformix_network }}"
       volumes: "{{ appformix_translate_volumes }}"
       command: dnsmasq -k
       env:
@@ -56,7 +57,7 @@
 
 - name: Remove AppFormix Translate container
   when: appformix_state != 'absent'
-  docker:
+  docker_container:
       name: appformix-translate
       image: "{{appformix_docker_registry}}appformix/controller:{{appformix_controller_version}}"
       state: absent

@@ -1,6 +1,6 @@
 ---
 - name: Ensure appformix-dns container is absent
-  docker:
+  docker_container:
     name: appformix-dns
     image: "{{ appformix_dns_image }}"
     state: "absent"

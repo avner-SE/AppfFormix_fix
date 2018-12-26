@@ -2,4 +2,4 @@
 # Default values for the appformix_dashboard role.  These can be
 # overridden when including the role.
 appformix_dashboard_state: "{{ appformix_state }}"
-appformix_dashboard_pull: 'missing'
+appformix_dashboard_pull: no

@@ -1,0 +1,7 @@
+[appformix_controller]
+appformix
+
+[bare_host]
+x240-hyper.maas
+lxc-vm.maas
+x260-hyper.maas

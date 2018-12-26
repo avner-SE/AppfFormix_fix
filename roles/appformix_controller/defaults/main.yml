@@ -1,6 +1,6 @@
 ---
 appformix_controller_state: "{{ appformix_state }}"
-appformix_controller_pull: 'missing'
+appformix_controller_pull: no
 
 # Configure the HTTP proxy settings inside of appformix-controller container
 #

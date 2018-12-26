@@ -22,13 +22,14 @@
     - "{{ appformix_install_dir }}/etc/service_connectivity/certs"
 
 - name: Start AppFormix Controller container
-  docker:
+  docker_container:
       name: appformix-controller
       image: "{{ appformix_controller_image }}"
-      state: "{{ appformix_controller_state }}"
+      state: started
       restart_policy: always
-      dns: ["127.0.0.1"]
-      net: "{{ appformix_network }}"
+      dns_servers: ["127.0.0.1"]
+      networks: 
+        - name: "{{ appformix_network }}"
       ports: "{{ appformix_controller_ports }}"
       pull: "{{ appformix_controller_pull }}"
       volumes: "{{ appformix_controller_volumes }}"
@@ -53,8 +54,12 @@
         LOG_ROTATE_MAX_HOURS: "{{ appformix_log_rotate_max_hours }}"
         OPENSTACK_ADAPTER_HTTP_TIMEOUT: "{{ appformix_openstack_adapter_timeout}}"
 
-#- name: Wait for AppFormix Controller to be ready
-#  wait_for: port={{ appformix_controller_port_http }} timeout=20
+# - name: Wait for AppFormix Controller to be ready
+#  wait_for:
+#    port: "{{ appformix_controller_port_http }}"
+#    delay: 3
+        
+
 #
 #- name: Wait for AppFormix Controller to be ready (SSL Enabled)
 #  wait_for: port={{ appformix_controller_port_https }} timeout=20
@@ -72,9 +77,17 @@
     body: ' {{ controller_master_config_json | to_json}}'
     validate_certs: no
   register: result
-  until: result.status | default(0) == 200
+  until: result.stdout.find ("200") != false
   retries: 30
   delay: 1
   delegate_to: localhost
   run_once: true
-  when: appformix_controller_state != 'absent' and (appformix_scale_setup_flag|bool)
+  when: appformix_controller_state != 'false' and (appformix_scale_setup_flag|bool)
+
+#- name: Wait for AppFormix Controller to be ready
+#  command: "curl --silent {{ appformix_controller_master_url }}"
+#  register: result
+#  until: result.stdout.find("200 OK") != off
+#  retries: 60
+#  delay: 1
+#  changed_when: false

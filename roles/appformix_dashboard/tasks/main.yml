@@ -12,12 +12,13 @@
     - "{{ appformix_install_dir }}/etc/dashboard"
 
 - name: Start AppFormix Dashboard container
-  docker:
+  docker_container:
     name: appformix-dashboard
     image: "{{ appformix_dashboard_image }}"
-    state: "{{ appformix_dashboard_state }}"
+    state: started
     restart_policy: always
-    net: "{{ appformix_network }}"
+    networks: 
+        - name: "{{ appformix_network }}"
     ports: "{{ appformix_dashboard_ports }}"
     pull: "{{ appformix_dashboard_pull }}"
     volumes: "{{ appformix_dashboard_volumes }}"

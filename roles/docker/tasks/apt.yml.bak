@@ -8,8 +8,9 @@
 
 - name: Add Docker apt repository GPG key
   become: yes
-  apt_key: url=https://download.docker.com/linux/ubuntu/gpg
-#    state: '{{ docker_state }}'
+  apt_key:
+    data: "{{ lookup('file', 'ubuntu.asc') }}"
+    state: '{{ docker_state }}'
   when: docker_state != 'absent'
 
 - name: Configure Docker apt repository
@@ -40,7 +41,7 @@
 - name: Install docker-ce
   become: yes
   apt:
-    name: ['apt-transport-https','ca-certificates','curl','software-properties-common','docker-ce']
+    name: docker-ce={{ docker_ce_version_ubuntu }}
     force: yes
     purge: yes
     state: '{{ docker_state }}'

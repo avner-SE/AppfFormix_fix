@@ -1,0 +1,10 @@
+#appformix_license: /path/to/license_file
+appformix_docker_images:
+    - /home/avners/appformix/appformix-platform-images-2.18.8.tar.gz
+    - /home/avners/appformix/appformix-dependencies-images-2.18.8.tar.gz
+    - /home/avners/appformix/appformix-network_device-images-2.18.8.tar.gz
+appformix_kvm_instance_discovery: true
+
+http_proxy_url: 'http://10.0.0.10:8080'
+prerequisites_env:
+        http_proxy: '{{ http_proxy_url }}'

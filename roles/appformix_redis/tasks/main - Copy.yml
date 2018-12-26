@@ -34,13 +34,12 @@
   when: appformix_redis_state != "absent"
 
 - name: Start AppFormix Redis container
-  docker_container:
+  docker:
       name: appformix-redis
       image: "{{ appformix_redis_image }}"
-      state: started
+      state: "{{ appformix_redis_state }}"
       restart_policy: always
-      networks: 
-        - name: "{{ appformix_network }}"
+      net: "{{ appformix_network }}"
       ports: "{{ appformix_redis_docker_ports }}"
       volumes: "{{ appformix_redis_volumes }}"
       command: redis-server "{{ appformix_container_redis_conf_file }}"

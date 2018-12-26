@@ -3,4 +3,4 @@
 # overridden when including the role.
 appformix_network_device_adapter_version: "{{ appformix_version }}"
 appformix_network_device_adapter_state: "{{ appformix_state }}"
-appformix_network_device_adapter_pull: "missing"
+appformix_network_device_adapter_pull: no

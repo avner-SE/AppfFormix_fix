@@ -15,10 +15,10 @@
 
 - name: Start AppFormix DataManager container
   when: datamanager_action == "install"
-  docker:
+  docker_container:
     name: appformix-datamanager
     image: "{{ appformix_datamanager_image }}"
-    state: "{{ appformix_datamanager_state }}"
+    state: started
     restart_policy: always
     env:
         PURGER_ENABLED: "{{ appformix_datamanager_purger_enable | default(true) }}"
@@ -33,8 +33,9 @@
         MONGO_USERNAME: "{{ appformix_mongo_username }}"
         MONGO_PASSWORD: "{{ appformix_mongo_password }}"
         MONGO_REPLICA_SET_NAME: "{{ appformix_mongo_replica_set }}"
-    dns: ["127.0.0.1"]
-    net: "{{ appformix_network }}"
+    dns_servers: ["127.0.0.1"]
+    networks: 
+        - name: "{{ appformix_network }}"
     ports: "{{ appformix_datamanager_ports }}"
     pull: "{{ appformix_datamanager_pull }}"
     volumes: "{{ appformix_datamanager_volumes }}"

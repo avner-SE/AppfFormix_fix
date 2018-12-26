@@ -13,13 +13,14 @@
     - /var/log/appformix/network_device_adapter/nginx
 
 - name: Start AppFormix NetworkDevice Adapter container
-  docker:
+  docker_container:
     name: appformix-network-device-adapter
     image: "{{appformix_docker_registry}}appformix/network_device_adapter:{{appformix_network_device_adapter_version}}"
-    state: "{{ appformix_network_device_adapter_state }}"
+    state: started
     restart_policy: always
-    dns: ["127.0.0.1"]
-    net: "{{ appformix_network }}"
+    dns_servers: ["127.0.0.1"]
+    networks: 
+        - name: "{{ appformix_network }}"
     ports: "{{ appformix_network_device_adapter_ports }}"
     pull: "{{ appformix_network_device_adapter_pull }}"
     volumes: "{{ appformix_network_device_adapter_volumes }}"

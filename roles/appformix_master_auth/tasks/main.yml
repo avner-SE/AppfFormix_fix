@@ -30,6 +30,7 @@
     HEADER_X-Auth-Token: "{{ auth_token }}"
     HEADER_X-Auth-Type: "{{ auth_type }}"
     validate_certs: no
+    follow_redirects: all
   register: auth_info
   delegate_to: localhost
   when: (slurp_file.failed is defined and slurp_file.failed) or (contents.Token.UserName is undefined) or (contents.Token.UserName == "")
