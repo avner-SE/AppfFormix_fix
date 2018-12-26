@@ -1,0 +1,25 @@
+---
+- name: Remove existing AppFormix containers
+  shell: if docker inspect {{ item }}; then docker stop {{ item }}; docker rm -vf {{ item }}; fi
+  with_items:
+    - appformix-dashboard
+    - appformix-openstack-adapter
+    - appformix-controller
+    - appformix-datamanager
+    - appformix-vcenter-adapter
+    - appformix-aws-adapter
+    - appformix-azure-adapter
+    - appformix-network-device-adapter
+  ignore_errors: yes
+
+- name: Run DB translation
+  when: appformix_state != 'absent'
+  run_once: true
+  ignore_errors: yes
+  shell: docker exec appformix-translate bash -c "python -m controller_package.translate_db"
+  register: translate_result
+
+- name: Fail if translate result failed
+  run_once: true
+  fail: msg="Translate failed with code={{ translate_result.rc }}.  For details, see logs in /var/log/appformix/translate/appformix."
+  when: appformix_state != 'absent' and translate_result.rc != 0

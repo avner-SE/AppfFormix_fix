@@ -1,0 +1,10 @@
+- name: Prerequisites for using JTI network device monitoring
+  become: yes
+  apt: state=present name={{ item }}
+  with_items:
+    - netcat
+    - protobuf-compiler
+    - libprotobuf-dev
+  when: appformix_jti_network_device_monitoring_enabled|bool == True or appformix_install_jti_dependencies|bool == True
+  ignore_errors: yes
+

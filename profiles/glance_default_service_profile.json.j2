@@ -1,0 +1,20 @@
+{
+    "ServiceGroupName": "AppformixGlanceServiceGroup",
+    "Endpoints": [
+        {
+            "Url": "{{ glance_url }}",
+            "EndpointName": "glanceEndpoint",
+            "Method": "GET",
+            "Interval": 2
+        }
+    ],
+    "ServiceGroupId": "GlanceServiceGroupId",
+    "RefreshTokenData": {
+        "RefreshToken": "False",
+        "Username": "admin",
+        "AuthType": "openstack",
+        "Password": "{{ }}",
+        "AuthUrl": "{{ }}",
+        "Project": ""
+    }
+}

@@ -1,0 +1,1680 @@
+AppFormix Release Notes
+
+v2.18.8
+=======
+* Add Ansible configuration variable `appformix_secondary_vip` to allow
+  users to configure multiple virtual IP addresses for a multi-host
+  deployment of the platform.  This enables users to configure both IPv4
+  and IPv6 address for the platform.
+* Improve OpenStack Heat plugin to fetch the list of available metrics that
+  may be configured for an alarm.
+* In Dashboard Alarm configuration panel, filter the list of metrics
+  displayed based on the type of entity that is selected.
+* Add details to discovery status endpoint that show the iteration number
+  and timestamp of the last completed discovery iteration.
+* Improve validation of user input for network device configuration.
+* LLDP discovery runs once per hour to reduce SNMP load on network devices.
+* Timeout for LLDP discovery is increased from 1-minute to 2-minutes to
+  support devices that are slower to respond.
+* Remove unnecessary log messages produced by Python requests module.
+* Fix issue in Ansible playbook for VMware vCenter configuration.
+* Fix issue that some Dashboard functionality is not working properly when
+  the Dashboard is accessed via an IPv6 address.
+* Fix issue that log rotation was not working when Docker uses 'overlayfs'
+  storage driver.
+* Fix issue that adapter discovery process may write log messages to a
+  rotated file.
+* Fix issue that Dashboard cannot display all information when platform is
+  accessed using an IPv6 address.
+* Fix display of health and risk reasons is the pop-up display on the
+  Network Topology panel.
+* Fix issue that Dashboard did not display health and risk status for
+  Kubernetes objects.
+* Fix issue that queries for alarm state may timeout.
+* Fix issue that user receives an error when trying to download capacity
+  planning data in CSV format.
+* Fix issue that configuration may fail when user adds a second data
+  collection source to an existing network device in the Dashboard.
+* Fix issue that LLDP discovery timeout may cause a network device to be
+  removed from the AppFormix Controller.
+
+
+
+v2.18.7
+=======
+* Improve OpenStack Heat plugin to allow definition of Composite Alarms in
+  a Heat template.
+* Improve integration with OpenStack Heat to support tenant-defined Heat
+  stacks.
+* Improve handling of Unicode characters in names of alarms, instances,
+  projects, volumes, etc. that are configured in Controller and discovered
+  by OpenStack Adapter.
+* Reduce number of OpenStack API calls made to retrieve project information
+  used in department report.  This reduces likelihood of API timeout observed
+  in environments with a large number of projects.
+* Add Ansible configuration variable `appformix_openstack_adapter_timeout`
+  to configure the timeout of API calls from Controller to OpenStack
+  Adapter.
+* Email notification listener may be configured without username and
+  password for SMTP server.
+* Ansible playbook improved to support configuration of an internal and
+  external VIP for multi-host platform deployment.
+* Validate ObjectId for data point posted for a custom chargeback metric.
+* Add metric 'openstack.cluster.status.Nova' that indicates if OpenStack
+  Nova service is enabled.  This metric may be used in service alarms.
+* Rename OpenStack project metrics to have consistent names in both the
+  chart and the alarm menus.
+* Improve generation of department report when there exists a large number
+  of data points for custom chargeback metrics.
+* Improve error logging in Agent module that inspects virtual machines to
+  log more details and reduce duplicate log entries.
+* In network device LLDP discovery, fix issue that invalid configuration
+  parameters for one device can prevent deletion of other devices.
+* Fix issue in volume discovery that updated volume name when there was no
+  change since previous discovery iteration.
+* Fix issue that virtual network heartbeat alarm does not get enabled after
+  OpenStack Adapter restarts, when TLS is enabled.
+* Fix issue that Agent reports 0% CPU usage for an instance when libvirt does
+  not support CPU affinity.
+
+
+v2.18.6
+=======
+* Improve Ansible playbooks for NFX150 to handle necessary prerequisites
+  for communication with NFX150 devices during installation.
+* Improve Ansible playbooks to execute without error when the `nfx150` host
+  group is not defined in inventory.
+* Fix issue that history chart of service availability for MySQL service
+  did not display correct data.
+
+
+v2.18.5
+=======
+* Fix issue with installation playbook that affects Ansible version 1.9.6
+
+
+v2.16.10
+========
+* Improve handling of Unicode characters in names of alarms, instances,
+  projects, volumes, etc. that are configured in Controller and discovered
+  by OpenStack Adapter.
+* Reduce number of OpenStack API calls made to retrieve project information
+  used in department report.  This reduces likelihood of API timeout observed
+  in environments with a large number of projects.
+* Add Ansible configuration variable `appformix_openstack_adapter_timeout`
+  to configure the timeout of API calls from Controller to OpenStack
+  Adapter.
+* Validate ObjectId for data point posted for a custom chargeback metric.
+* Improve generation of department report when there exists a large number
+  of data points for custom chargeback metrics.
+* Fix issue that virtual network heartbeat alarm does not get enabled after
+  OpenStack Adapter restarts, when TLS is enabled.
+* Fix issue that Agent reports 0% CPU usage for an instance when libvirt does
+  not support CPU affinity.
+* Improve error logging in Agent module that inspects virtual machines to
+  log more details and reduce duplicate log entries.
+
+
+v2.18.4
+=======
+* Add support for NFX150
+* Allow configure standalone ha playbook to be run individually
+
+
+v2.16.9
+=======
+* Improve department report generation to address issue that report may not
+  be generated when the size of the report is large.
+
+
+v2.18.3
+=======
+* Add ESX hosts and instances to network topology
+* Fix issue where health/risk icons wouldn't show on devices in
+  network topology
+
+
+v2.18.2
+=======
+* Added support for collecting OpenStack metrics from clusters
+  deployed using Helm
+* Added Ansible variables for user-defined Ceph config file
+  and keyring file
+* Fixed bug for containers in 'terminated' state
+
+
+v2.18.1
+=======
+* Add Ansible configuration variables for http, https and no_proxy
+  settings for AppFormix Controller container.
+* Modify GET request to avoid sending a data payload which can have
+  issues with proxy servers.
+* Deprecate requirements for collection_name and series_list in the plugin
+  parsers for network device plugins for JTI/gRPC.
+* Add search in the chart legend sort.
+* Fix behavior where Management IP was not being validated in the Device
+  configuration page.
+* Update out-of-sync missing-data message for the network device charts to show
+  1 message per group.
+* Allow topology to show even when clusters are not configured
+* Topology stats are not shown until a cluster is selected when multiple
+  clusters are available
+* Fix the behavior of expired token notifier to not notify when token already
+  expired.
+* Allow capacity reports to generate report per resource.
+* Add the disk mounts series groups on host charts.
+* Add popup for clicking device charts with multiple sources.
+
+
+v2.18.0
+=======
+
+Features:
+--------
+* Role based access: Support for Composite rules for tenant users
+* Role based access: Openstack Tenants can create Aggregates
+* Role based access: ESX tenant users can create Host Aggregates,
+  Host event Rules
+* Add metrics for volume mounts on compute
+* Usage report for host aggregate
+* Network Capacity planning: Ability to analyze end-to-end network
+  metrics for devices, ports and tenants
+* Addition of LSP Series Group
+* Addition of option to input username/password for master auth
+* Addition of  login by token in url
+* Redesign of Network Settings
+* Bulk post network device using ip range
+* Placement algorithm for virtual networks in topology
+* Alarms: Alarm correlation across resources per event rule
+
+OpenConfig/gRPC:
+---------------
+* Addition of new sensors for gRPC (detailed list available in documentation)
+* Heartbeat checks added for collectors including checks for data reception
+* Pluggability to add custom sensors with their corresponding parsers
+
+Network Devices:
+---------------
+* Network devices: Ability to add network devices through
+  GUI from dashboard settings
+* Network devices: Allow users to copy configurations from one device to another
+  copy sensors from one device to another,  bulk add multiple network devices
+* Network devices: In Dashboard, user may edit connections between
+  network devices in both the Network Topology panel and in Settings
+* Network devices: Auto discover network device entities:
+  interfaces, routing engines, interface queues, etc.
+* User may extend available set of JTI and gRPC sensors via plugins.
+* vSRX Autodiscovery of vSRX instances from AppFormix agent
+* Alarms: Alarms on all network device Entity Types (interface, queue, fpc,
+  firewall etc.)
+
+Kubernetes:
+----------
+* Ability to auto-discover, monitor and analyze following:
+  - Nodes
+  - Pods
+  - Containers
+  - Namespaces
+  - Services
+  - Replication Controllers
+  - Daemon Sets
+* Alarms on Kubernetes cluster entities and control plane services
+* Capacity Planning Charts showing per-node trends for
+  - Resource Utilization
+  - Pod and Container counts
+* Ability to extend the Kubernetes Scheduler with custom SLA profiles
+  to use during pod scheduling
+* Charts showing per-node trends for scheduler requests and limits
+
+Northstar Integration:
+---------------------
+* AppFormix can be configured to discover network devices from NorthStar
+* Monitoring of network resources using AppFormix
+* Automation scripts in SDK for self-healing
+
+Contrail Integration:
+--------------------
+* Auto-discovery of Virtual Networks, Servers
+* Monitoring availability of Contrail control plane services: standalone and
+  HA deployments
+* vRouter Stats Plugin - packets, bytes, drops, flow table stats from the
+  introspect API
+* Single installation playbook for Contrail and AppFormix
+* Support for SNMP
+* Support for JTI
+* Support for gRPC
+* Cassandra monitoring, zookeeper monitoring and plugins - metrics, alarms
+* Support for VIF monitoring for DPDK and SR-IOV interfaces from the
+  perspective of a Host, VM or any aggregation of a VM - Project, Instance
+  Aggregate, Service Chain
+* Contrail vrouter stats plugin on charts, top-n flows plugins on topology,
+  alarms and ML on vrouter metrics.
+* Contrail vstats plugin for contrail version 5.0
+* Contrail Command UI integration for time series data from AppFormix
+* Contrail Command UI integration for alarms data from AppFormix
+
+Enhancements:
+------------
+* Reports: Ability to filter by device aggregates
+* Reports: Addition of aggregate network device for custom reports
+* Reports: Support for network device reports in vCenter
+* Charts: Ability to search on toggled interfaces
+* Charts: Support for scale for large number of entities on device dashboard
+* Charts: Show notification if data on charts are out of sync
+* Charts: Ability to save list of metrics to be viewed in charts
+* Charts: Support for multiple series groups to network device charts
+* Topology: Link utilization displayed on the topology page
+* Topology: Ability to replace default dashboard with Topology view
+* Topology: Display health-risk and alarm counts in multi-cluster topology
+* Topology: Ability to switch clusters and drill down into resources in
+  multi-cluster toplogy
+* Topology: Ability to search IPs in topology
+* Topology: Dynamic tooltips in topology
+* Topology: Highlight VN-VM ownership for links in topology
+* Topology: Add link highlighting for interface metric selection
+* Topology: VCF (Virtual Chassis Fabric) in topology
+* Network Devices: gRPC support for private/exclusive configure modes
+
+Fixes:
+-----
+* Dashboard Notification message  on misconfigured cluster without blocking
+  loading of other clusters
+
+
+v2.17.1
+=======
+* Fix issues with package enum34 required for agent
+* Add support for Optics sensor for JTI and LSP sensor for gRPC
+
+
+v2.17.0
+=======
+* Add support for gRPC, OpenConfig sensors
+* Supported sensors for gRPC include interfaces, components, bgp_local_rib,
+  lldp_interface, bng sdb_stats, task_memory tms and tsb sensors.
+* Add qmon sensor support in JTI
+* Add JTI support for Junos OS version 18.1R1
+* Refinements in the topology UX
+
+
+v2.16.8
+=======
+* Add Ansible configuration variables for http, https and no_proxy
+  settings for AppFormix Controller container.
+* Modify GET request to avoid sending a data payload which can have
+  issues with proxy servers.
+
+
+v2.16.7
+=======
+* Use separate databases in Redis to maintain separate key spaces.  This
+  avoids conflicts between keys used by AppFormix internal queues and
+  user-defined strings, such as names discovered from OpenStack.
+* Add Ansible variable `appformix_haproxy_global_ssl_options` that is
+  included in the global section of HAProxy configuration.  This variable
+  can be used to configure which TLS/SSL versions are allowed, and which
+  ciphers may be used by HAProxy in a multi-host HA deployment.  Default
+  values for the configuration are based on Mozilla best practice guide.
+* Resolve possible error in clean_appformix_standalone.yml playbook that
+  AppFormixNetwork cannot be removed.
+
+
+v2.16.6
+=======
+* Improve parser in OpenStack service plugins to handle wider variation in
+  access log formats.
+* New version of appformix-openstack (v0.4.0) Python package that improves
+  functionality of Heat plugin.  The Heat plugin add global configuration
+  variables to set the timeout and retry count for API calls made by the
+  plugin to AppFormix Controller. An OS::AppFormix::Alarm resources may be
+  configured to monitor only instances in a specified aggregate, such as
+  the instances defined by a Heat stack in which the Alarm is defined.
+* In the instance timeline, do not include an entry for "DELETE" state when
+  a resize or migration action causes a VM to move from one host to
+  another.  Previously, the timeline recorded the "DELETE" status for the
+  old host from which the instance was moved.
+* Improve manner in which user project list is requested from OpenStack
+  Keystone API.  In some environments, Keystone policy restricted access to
+  the per-user project list.  This prevented non-administrator users from
+  being able to login to Dashboard or make API calls.
+* Fix issue in OpenStack Adapter discovery that failed to discover an
+  Ironic instance.
+* Fix issue in Dashboard that did not display capacity planning data.
+* Fix ability in Dashboard to generate capacity reports.
+* Fix issue in vCenter that instances were disassociated with a datastore
+  when the datastore became associated with a instance on a new hypervisor.
+* Fix issue in vCenter to reflect change in the IP address of an instance.
+* Fix issue in vCenter that missed heartbeat may not be detected when ESX
+  hypervisor loses connectivity to vCenter server.
+* Fix issue that some log files in Dashboard and DataManager were not being
+  rotated.
+* Fix extraneous debug log in secondary Controller in HA deployment.
+* SDK supports authentication using vCenter authentication and standalone
+  AppFormix authentication token.
+* SDK default request timeout changed to 10 seconds.
+
+
+v2.16.5
+=======
+* Add option for email notifications through sdk
+* Added new derived metrics for SNMP devices snmp.interface.ifInDiscardRate,
+  snmp.interface.ifOutDiscardRate
+* Add support for aggregate ethernet interfaces in VCF mode
+* Fix bugs and improve UX in Network Settings dashboard
+* Log Parser Fix to handle additional file formats in Openstack
+* Add support for read-only user for ESX installation
+* Heartbeat Bug fix for Esx Host and Projects
+* Add SNMP plugin for Network and Storage Metrics from Host
+
+
+v2.16.4
+=======
+* Fix for HA playbooks
+
+
+v2.16.3
+=======
+* Use HTTP header directives to instruct web browser to not cache data.
+* Enable network device reports for vCenter deployments.
+* Improve SNMP collector to handle blank lines when parsing response data.
+* Add certified plugins for the following SNMP MIBs and OIDs:
+  IP-MIB::ipInReceives, IPV6-MIB::ipv6IfTable, UCD-SNMP-MIB, UDP-MIB::udp,
+  JUNIPER-IPv6-MIB::jnxIpv6StatsReceives,
+  JUNIPER-PFE-MIB::jnxPfeMemoryUkernFreePercent,
+  JUNIPER-SUBSCRIBER-MIB::jnxSubscriberTotalCount.
+* Improve log message for failure to post an external notification. Error
+  message now includes the service name and alarm rule ID.
+* Fix issue that Alarms did not trigger for SNMP metrics.
+* Fix issue that API request failed to return instance or project details
+  for a user that authenticated with an OpenStack project-scoped token for
+  a different project than requested.
+* Fix navigation issue in Dashboard that "Capacity Reports" tab did not
+  display in the "Reports" panel.
+* Fix issue in Dashboard "Plan" panel that displayed project resources when
+  viewing capacity for an aggregate selected in the context menu at top.
+* Fix error that Controller and EventsCollector uwsgi log files were merged
+  into a single file in multi-host deployment.
+
+
+v2.16.2
+=======
+* Optimize metric collection for logical chassis.
+* Fix for custom notification for network devices SLA profiles.
+* Fix playbook ordering for openstack controller aggregate plugins.
+
+
+v2.16.1
+=======
+* Fix missing network metrics for vCenter host and instances interfaces
+
+
+v2.16.0
+=======
+* Add support for read-only-admin user in AppFormix
+* Add support for network metrics from OVS DPDK nodes
+* Fix Log parsing issue in Redhat openstack environment
+* Add new feature to monitor any service endpoints
+* Add support for rotating logs both on size and time
+* Add SSL support for HA mode
+* Add HA playbooks for vCenter and network devices
+* Add notifications for composite rules
+* Add support for Multi-tenancy for vCenter
+* Add API to reset chargeback settings
+* Add support to save login domain/type for all users
+* Add collector heartbeat metric for network devices
+* Add network device interface metrics to custom reports
+* Add alarms on network device interfaces
+* Add alarms on network device aggregates
+
+
+v2.15.3
+=======
+* In Dashboard settings, add capability to remove a bare host.
+* Fix issue that some log files in Controller and Adapters (e.g., OpenStack,
+  vCenter) were not being rotated.
+* Fix issue that AppFormix does not respond when configured to use TLS/SSL.
+* Fix issue in Contrail service monitoring that prevented XMPP rx/tx statistics
+  from being collected when Contrail does not report state of an XMPP Peer.
+
+
+v2.15.2
+=======
+* Fix "Debug Shell Command Execution in AppFormix Agent" (CVE-2018-0015).
+  A malicious user with unrestricted access to the AppFormix application
+  management platform may be able to access a Python debug console and
+  execute system commands with root privilege.  Refer to
+  https://kb.juniper.net/JSA10843 for more information.
+* Metrics from user-supplied MIBs are displayed even if routing engine
+  plugin is not installed.
+* Agent collects metrics from Linux Software RAID devices (e.g., /dev/md).
+* In Dashboard, administrator may configure the color for highlighted menu
+  items in left and top navigation (default is blue).
+* Capacity and Custom Reports tabs in Dashboard are visible only to
+  users with administrator capability.
+* In Dashboard Charts, do not display queue statistics for logical
+  interface of a network device.
+* Role-based access considers a user's group assignments when determining
+  the capability of the user.  Previously, only the user's role assignments
+  were considered.
+* Chargeback for VMware vCenter now uses projects as a way to group instances.
+  Previously, chargeback for vCenter used the concept of a chargeback aggregate.
+  Chargeback aggregate is now deprecated.
+* When creating a report template in Dashboard, choices of metrics for Ceph
+  Object Storage (if present) are displayed even if no Cinder backends are
+  configured.
+* Add custom logo to service availability report.
+* Custom logo in reports displays with original aspect ratio of the image.
+* In Dashboard, option for "Excluded Project Domain" only filters projects
+  from the navigation menu.  Projects remain visible in the properties of
+  an instance.
+* In Dashboard, fix units displayed for normalized load average metrics:
+  cpu.normalized_loadavg_1m, cpu.normalized_loadavg_5m,
+  cpu.normalized_loadavg_15m.  The metrics are a ratio of Linux load
+  average to effective CPU cores.  Previously, the units displayed "%".
+* The PUT request to configure RabbitMQ monitoring can accept empty string
+  for AgentUrl.  Fixes Ansible error when running appformix_openstack.yml
+  when configuration has an empty string in AgentUrl for a RabbitMQ node.
+* Fix issue that Dashboard may display "NaN" for the File Size in storage
+  settings.
+* Fix issue in Dashboard chart that charts did not update after changing
+  the sort order of elements.
+* Fix issue that Dashboard does not switch between clusters.
+* Fix issue that modification of SnmpConfig for a network device can cause
+  Agent to stop reporting SNMP metrics for the device.
+* Fix issue that JTI metrics may not be reported for a network device when
+  there is a change in the status of the collecting Agent.
+* Fix appformix_standalone_ha.yml playbook to define the variable that
+  specifies which Docker images are loaded.
+* Fix missing dependency in Agent package that caused error that prevented
+  collection JTI metrics from network devices.
+
+
+v2.15.1
+=======
+* Improve time to generate a usage report.
+* In Dashboard, improve user interface for storage reports.  Template
+  definition is simplified to input storage metric and storage backend
+  type. In the report, a single chart for a selected metric displays a
+  line for each storage backend type.
+* Add capability to override the endpoint URLs for Heat and Glance.
+* Improve Contrail service heartbeat alert to generate an event if a
+  service fails when the alert is already active for a different service
+  heartbeat failure.  All failed services are included in the metadata
+  of the alert.
+* Fix an issue that Ceph monitoring may not be configured in Agent for a
+  hyperconverged host that also provides compute (e.g., an OpenStack nova
+  hypervisor).
+
+
+v2.15.0
+=======
+* NOTE TO USERS: MongoDB version changed from 3.0.6 to 3.2.17.  Users MUST
+  upgrade to v2.15 before upgrading to a version later than v2.15.
+* In Dashboard, add capability to generate a Capacity Report that shows
+  resource allocation over time.  User defines a report template that
+  specifies what metrics to display in the report.  The report template is
+  used to generate a report for a user-specified period of time.
+* In Dashboard, add a volume summary page that displays volume storage
+  allocations by storage backend type and volume type.  User may filter the
+  view by project.
+* In Dashboard, the service availability chart display details about the
+  number of failures in a time period are displayed on mouse-over.
+* In Dashboard, service availability panel has progress indicator to
+  indicate that the chart is being updated.
+* User may generate a PDF report that displays the availability of
+  Keystone, Nova, Neutron services.
+* Use consistent terminology in Dashboard and reports to distinguish
+  resource allocation and consumption.  An allocated resource is a resource
+  provisioned by a cloud management platform (e.g., provisioning 4 vCPUs
+  for an instance on a host).  A used resource is a resource consumed by an
+  entity (e.g., CPU consumption by a virtual machine, storage consumption
+  by a volume).
+* In Dashboard Plan panel, change the bar graph to display percent allocated
+  instead of percent available.
+* In Dashboard Plan panel, add informational pop-up to explain how
+  allocated percent is calculated.
+* In Dashboard, add option to hide Instance Actions.
+* In Dashboard, user may filter the list of OpenStack projects that are
+  displayed in the context navigation menu to exclude projects that
+  belong to a particular domain.  This is useful to filter auto-generated
+  projects, such as created by Heat.
+* Custom logo configured by user is displayed in header of Capacity Report.
+* In Chargeback, add capability to specify a one-time fee to the "OS
+  License" rate card.  Use of a particular image by an instance now has two
+  cost components: (1) an hourly rate, and (2) a one-time cost for creating
+  an instance that uses the image.  Each cost may be set independently.
+* Plugins for OpenStack service monitoring accept parameters to specify the
+  location of the API access log files.
+* Add JTI support for Junos OS versions 15.1F5, 15.1F6, 15.1F7, 16.1R3,
+  17.2R1, and 17.3R1.
+* Add support for monitoring hyperconverged host that provides compute and
+  Ceph storage.
+* Add support to monitor a host using both the Agent on the host and with
+  metrics from IPMI.
+* AppFormix OpenStack plugins for nova-scheduler and Heat are packaged as
+  an RPM file for installation on CentOS and Red Hat Enterpise Linux.  Both
+  the RPM file and Python wheels package are included in the release bundle
+  in the 'pkg' subdirectory.
+* AppFormix Stream API provides push-based stream of events to a client.
+  Client may configure AppFormix to listen to messages from a RabbitMQ, and
+  those messages will be published on the AppFormix Stream.
+
+
+v2.13.1
+=======
+* Add virtual chassis icon for virtual network devices and ensure linking
+  is handled between different views i.e topology, network device dashboard and
+  host and instance dashboard.
+* Add NFX250 installer script and update its usage
+* Fix parsing for plugins relevant for older Junos versions. Also make loading
+  of all mibs definition during snmp metric generation optional
+* Reduce network calls for generating snmp metrics from devices
+* Make improvements to make central cluster search elements like network
+  devices from regional clusters
+* Fix charting issue wherein historical data is not requested when the user
+  moves from a loaded object chart to another object chart; and then returns
+  to the original object chart after sometime. Earlier this required an
+  additional refresh.
+* Fix issue wherein contrail virtual network status was not getting updated by
+  the discovery adapter
+
+
+v2.13.0
+=======
+* Chargeback report event history is modified to display only events from
+  the current billing period.  The first event in the history for a given
+  report will be status at the start of the billing period.
+* In Chargeback report, event history for an Instance includes history of
+  Volumes attached or detached.
+* In Chargeback report, event history of Volume includes changes in status.
+* Chargeback report includes Volume metadata from OpenStack.
+* Add support to configure start of a billing period. By default, the
+  billing period starts at 00:00 on 1st day of the month.
+* Capacity planning charts and values reflects user-configured
+  oversubscription ratios.
+* Dynamic alarms may be configured for devices discovered from Contrail
+  Analytics.
+* Composite Alarms may be configured in the REST API v2.0.
+* Dashboard displays SKUs that have been licensed.
+* In Dashboard, user may configure the logo that is displayed.
+* In Dashboard, fix active alert count to update more responsively.
+* In Dashboard, fix issue that Heat Map does not load when switching views.
+* Fix issue that host may not be deleted due to incorrect refcount.
+* Fix Instance disk usage percentage to be calculated according to the disk
+  allocated to the flavor size of the Instance.
+* In HA deployment, MongoDB containers renamed from appformix-mongo-replica
+  to appformix-mongo.
+* In HA deployment, MongoDB containers not restarted during upgrade.
+
+
+v2.12.2
+=======
+* Support configuration of SNMP v3 to use NoAuthNoPriv security level.
+* Change Ansible configuration of MySQL and RabbitMQ monitoring to support
+  specification of which Agent monitors a host in a MySQL or RabbitMQ
+  cluster.  One Agent may monitor multiple service instances in a cluster
+  or Agent may be deployed onto the host itself.
+* Fix Charts to display plugin metrics in Aggregate view.
+* Fix Reports to display the right-size summary count of instances that are
+  recommended to be re-sized to a different flavor.
+* Fix issue with collection of OpenStack service API metrics on Red Hat
+  OpenStack Platform (RHOSP).
+* Fix issue that Ceph storage usage displayed the available storage.
+* Add configuration parameter in Ansible playbooks to specify IPv4 subnet
+  used by Docker network for AppFormix containers ('AppFormixNetwork').
+* Fix Ansible playbooks for standalone deployment to be compatible with
+  inventory file that does not have 'openstack_controller' or 'compute'
+  host groups defined.
+* Fix Ansible playbook for HA deployment to create AppFormixNetwork before
+  it is used by appformix-redis container.
+
+
+v2.12.1
+=======
+* Fix Issue with configuring Composite Alarms on Dashboard
+* Add License info page with alerts about license expiration
+* Fix Microcharts for Aggregates of Cloud Instances
+* Add more details to the Slack Test button
+* Fix issue with currency symbol in chargeback reports
+* Fix issue in reports for unknown flavors
+* Fix double counting for same device with multiple mountpoints
+  in disk.usage metric
+* Fix issue with capacity planning for flavors with no attached disk
+* Fix smartpurger to account for actual storage size to better estimate
+  disk used.
+
+
+v2.12.0
+=======
+* For chargeback report, administrator may configure the day of the month
+  on which the billing period starts, and consequently, the day on which
+  the report is generated.
+* Chargeback report includes any per-datapoint metadata that is posted for
+  a user-defined chargeback metric.
+* User may generate a report for a network device that shows a summary of
+  utilization over a user-specified time period.
+* Ceph monitoring has been re-designed to monitor the service metrics by an
+  Agent that runs on the ceph-monitor host.
+* In Heat plugin, move configuration of appformix_controller_url into the
+  global heat.conf file. Now, users no longer need to configure
+  appformix_controller_url in each OS::AppFormix::Alarm resource defined in
+  a Heat template.
+* Ansible playbooks support for multi-host HA deployment on 7 hosts.
+* Add support to install Agent on AWS Linux.
+* vCenter Adapter reads real-time metrics from vCenter APIs every 20
+  seconds, if available.  Otherwise, it reverts to reading historical Level
+  1 and Level 2 metrics every 60 seconds.
+* In Dashboard, instance charts display per-interface network metrics.
+  Alarms for instance network metrics already evaluate metrics on a
+  per-interface basis.
+* Add capability for user to initiate a test notification to Slack from the
+  Dashboard settings.
+* Improve display of charts on Windows operating system.
+* Improve rendering of lines on charts when data is missing for a time
+  period.  Previously, the line may overlap itself in time.  Now, dotted
+  lines are rendered to connect across a gap in metrics data.
+* Multi-cluster Dashboard can be configured to display a mix of OpenStack
+  and vCenter clusters.
+* In Dashboard, the Alarms panel displays any OS:AppFormix::Alarm defined
+  in Heat templates.
+* In Dashboard, for a public cloud instance (e.g., AWS, Azure, GCP),
+  display an icon if the Agent is installed on the instance.
+* In Dashboard, user may modify the network topology layout.
+* In Dashboard, user may configure chargeback aggregates for vCenter
+  chargeback functionality.
+* Fix issue in Firefox that composite alarms may not display in Dashboard.
+* Fix issue that health of OpenStack service (Keystone, Nova, Neutron) may
+  incorrectly report as bad when another service has bad health.
+* Fix issue in OpenStack host aggregate discovery that did not reflect
+  changes to host aggregates in AppFormix Controller.
+* Fix issue that a timeout opening a connection to Swift caused OpenStack
+  Adapter discovery process to stall.
+
+
+v2.11.3
+=======
+* Fix "Debug Shell Command Execution in AppFormix Agent" (CVE-2018-0015).
+  A malicious user with unrestricted access to the AppFormix application
+  management platform may be able to access a Python debug console and
+  execute system commands with root privilege.  Refer to
+  https://kb.juniper.net/JSA10843 for more information.
+* Fix issue with collection of OpenStack service API metrics on Red Hat
+  OpenStack Platform (RHOSP).
+* Fix issue that health of OpenStack service (Keystone, Nova, Neutron) may
+  incorrectly report as bad when another service has bad health.
+* Fix issue in OpenStack host aggregate discovery that did not reflect
+  changes to host aggregates in AppFormix Controller.
+* Support configuration of SNMP v3 to use NoAuthNoPriv security level.
+* In Dashboard, instance charts display per-interface network metrics.
+  Alarms for instance network metrics already evaluate metrics on a
+  per-interface basis.
+
+
+v2.11.2
+=======
+* Improve load time of the Dashboard.
+* Improve Ansible "docker" role to configure the Ansible SSH user as a
+  member of the Docker group, when the user is not root.  Add check that
+  Docker command may be issued by Ansible SSH user.
+* Fix Dashboard issue that returns an error when configuring subsequent
+  Alarms of different types between static and dynamic.
+* Fix issue that OpenStack Adapter discovery stalled when connection to
+  Swift could not be established.
+* Fix issues in discovery of AWS, Azure, and GCP instances that resulted in
+  duplicate instances.
+* Fix issue in underlay network topology that displayed network devices in
+  a single tier.
+* Fix issue that Agent may not report metrics after the managing AppFormix
+  Controller changes.
+* Fix issue in snmp_network_device_routing_engine that did not report
+  metrics from multiple routing engines in a device.
+* Fix issue in rabbitmq_usage to handle queue that are lacking valid
+  utilization data.
+
+
+v2.11.1
+=======
+* Add Slack as a Notification option
+* Fix issue in network device dynamic alarms
+* Fix issues in heartbeat which caused all instances on a host to report
+  missed heartbeat
+* Fix issue in Dashboard Chargeback view which affected CostManager and
+  BillHistory Pages
+* Fix issue in standalone playbooks which could fail sometimes on Master
+  Auth Token generation
+* Fix issue in display of long alarm rules on the dashboard
+* Fix issues in GCP when showing project charts and heartbeat for GCP instances
+* Fix issue in chargeback page which led to user getting logged out
+* Add Full MetatData of Alarm in the v2.0 API
+* Fix issue in Adding RabbitMq Clusters on dashboard
+* Fix issue when dashboard not accepting tokens greater than 1 month
+
+
+v2.11.0
+=======
+* Google Cloud Platform (GCP) Adapter discovers Google Compute Engine (GCE)
+  instances and imports Stackdriver metrics for Charts, static or dynamic
+  Alarms and Heat Map.  In addition, AppFormix Agent may be installed
+  inside of GCE instances for more detailed and responsive monitoring.
+* Add Reports for cloud instances running on AWS, Azure, and GCE.
+  In addition, Reports include a "right size" recommendation to
+  identify underutilized instances.
+* AppFormix Controller supports authentication using AWS and Azure identity
+  services.  Users ca authenticate with the credentials used in AWS or Azure.
+* Add appformix_standalone.yml playbook to deploy AppFormix without any
+  adapter.  Using the standalone playbook users can now install AppFormix
+  in enviornments like NFX, MX etc where there are no cloud management
+  systems like Openstack or Vmware.
+* User can create aggregates of network devices. Alarms and SLAs may be
+  configured for a network device aggregate, to limit the policy rules to a
+  subset of network devices.
+* Add vCenter Multiple Cluster View
+* Add vCenter datastore monitoring with static and dynamic Alarms, Charts
+  and Heat Map
+* Chargeback is available for vCenter clusters. User may set rates for
+  vCpu, Memory and Disk resources.
+
+
+v2.10.0
+=======
+* Add support for monitoring network devices using JTI (Junos Telemetry Interface)
+* Add support for Contrail 3.0.2
+* Add support for HEAT autoscaling using AppFormix alarms
+* Add API to fetch network device metrics
+* Add additional metrics for capacity planning
+* Add support for monitoring mysql and rabbit using the agent
+
+
+v2.9.6
+======
+* Fix ansible compatibility issue. AppFormix now supports Ansible version
+  1.9.6 and 2.1.2 to 2.3.
+* Increase API timeout for enviornments where it takes longer to get
+  OpenStack tokens.
+
+
+v2.9.5
+======
+* Fix bug in the deployment of mongo cluster in HA playbook
+* Fix issue in configuring appformix setup when "SkipIpLookup" is set
+* Add parity in default configuration between single node and HA deployment
+
+
+v2.9.4
+======
+* Handle network delays in mongo replica set configuration in the HA ansible playbooks
+* Add Ansible 2.3 compatibilty for AWS and Azure playbooks
+* HA playbooks renamed from *_scale.yml to *_ha.yml
+
+
+v2.9.3
+======
+* Fix HA ansible playbooks to pull haproxy and keepalived images.
+* Fix issue of instance heartbeat not getting triggered on new installs.
+
+
+v2.9.2
+======
+* Fix dashboard issue in displaying Scheduling SLA.
+* Fix issue with fetching Alarm Details using the API.
+* Update SDK to use 'AuthType' in request headers when
+  making requests to AppFormix  controller.
+* Add log rotation for Azure/AWS/Vcenter adapter log files.
+
+
+v2.9.1
+======
+* Fix issue in ansible playbook to update license information
+
+
+v2.9.0
+======
+* Add support for AppFormix AuthTokens. Admins can now create auth_tokens
+  which can be used for authentication in addition to the auth service
+  configured.
+* Ansible playbooks now support 3-node or 5-node AppFormix platform
+  deployment for high availability.
+* Redesigned Network Topology Page to load faster.
+* AWS Adapter discovers EC2 instances and imports CloudWatch metrics
+  for Charts and static or dynamic Alarms.  In addition, AppFormix Agent
+  may be installed inside of EC2 instances for more detailed and
+  responsive monitoring.
+* Azure Adapter discovers cloud instances and imports Azure Monitor
+  metrics for Charts and static or dynamic Alarms.  In addition,
+  AppFormix Agent may be installed inside of Azure instances for
+  more detailed and responsive monitoring.
+* Add historical Capacity Planning charts for vCenter for available
+  and used resources.
+* Add metrics for the number of API calls made to OpenStack services.
+  Total count and count of status code family (e.g., 2xx, 3xx, 4xx, 5xx)
+  are available. In addition, user can determine which OpenStack services
+  receive the most requests, and which services are generating the most errors.
+* Add support for user defined SLA types in addition to Health/Risk.
+  Users can now create multiple alarms and group them together to be applied with
+  user defined thresholds and weights.
+* Add charts, static/dynamic alarms and Heat Map support for
+  vCenter Cluster Metrics eg: Cpu and Memory usage for the vCenter Cluster
+
+
+v2.8.0
+======
+* Improve the peformance of the Dashboard Heat Map and Network Topology for
+  environments that have a large number of instances.
+* OpenStack Adapter discovers Heat Stack resource groups, and configures
+  aggregrates in AppFormix to group virtual machines.
+* AppFormix Platform components are distributed in separate files.  Users
+  must download the appformix-platform-images-<version>.tar.gz and file(s)
+  for adapter(s) appropriate to the environment.  The Ansible variable
+  'appformix_docker_images_file' is deprecated.  User must define Ansible
+  variable 'appformix_docker_images' to specify the list of files to load.
+* In Dashboard, user may configure whether the head or tail of a long
+  hostname is truncated in the display.
+* In Dashboard, error messages were formerly displayed for a fixed amount
+  of time and then automatically cleared.  Now, require user to explicitly
+  close the notification box that displays the error.
+* In REST API v2.0, add DELETE method for reports endpoints to allow
+  deletion of a report.
+* Improve some Ansible configuration steps to wait for completion of
+  asynchronous tasks.
+* Add Ansible role to configure monitoring of ScaleIO storage cluster.
+  Details of ScaleIO storage cluster can be provided in Ansible variables.
+* Add Ansible variable 'appformix_use_hypervisor_hostname' that controls
+  whether 'host_ip' (default) or 'hypervisor_hostname' field of an
+  OpenStack hypervisor is used as the address by which to connect to Agent.
+* Fix issue with metric collection for vCenter hypervisor that affected
+  some environments when hypervisor IP address could not be determined.
+
+
+v2.7.3
+======
+* Fix issue that capacity planning data did not get purged according to the
+  retention policy configured in the Storage settings.
+
+
+v2.7.2
+======
+* AppFormix platform now uses Docker CE version 17.03, in order to support
+  IPv6 protocol between AppFormix components.  As before, Docker is
+  installed by the prerequisites.yml playbook (via provided "docker" role).
+  Currently, this is supported when AppFormix platform host uses Ubuntu
+  distribution.
+* Fix issue that user cannot login to Dashboard after AppFormix platform
+  host is rebooted (or AppFormix platform containers are restarted).
+* Fix issue that did not produce correct reason of SLA violation for a
+  network device.
+
+
+v2.7.1
+======
+* Fix issue that Agent did not report plugin metrics to DataManager.
+* Fix issue in Dashboard Network Topology that user cannot move the popup
+  window that displays top 5 network flows for a Contrail vRouter.
+
+
+v2.7.0
+======
+* Add monitoring of a remote host using SNMP (versions 2c or 3) and IPMI to
+  collect metrics.  Metrics for remote hosts are available for charts,
+  alarms, and SLA profiles.
+* Add monitoring of a network device.  AppFormix data model now includes a
+  network device object.  Agent(s) running on the AppFormix Platform host
+  collect metrics using SNMP (versions 2c or 3).  Metrics from network
+  devices are available for charts, alarms, and SLA profiles.
+* Add overlay view in the Network Topology that displays configured network
+  devices.
+* In Network Topology panel, add debug mode that displays the top 5 network
+  flows on a Contrail vRouter, as determined by bytes transmitted.  Details
+  of the flows are displayed, including source and destination address and
+  port, packets, bytes, virtual network, and more.
+* In Services Dashboard, add Swift container size and object count.
+* In Department Reports, add raw metering data for Ironic instances (active
+  time, allocated time, suspended time) and Swift storage (maximum size of
+  each container over the reporting period).
+* In the Dashboard Alarms panel, add timestamp to details that are
+  displayed for an event in the history.
+* Fix issue that affected evaluation of SLA profiles for Aggregates.
+
+
+v2.6.1
+======
+* Add Storage retention category for dynamic alarm training data.
+* Reduce storage requirements for OpenStack service metrics.
+* Only display a single toggle that controls whether an Alarm is enabled.
+* Fix Infrastructure Dashboard display issue in Firefox.
+* Fix issue that Agent cannot read instance metrics for some versions of
+  libvirt on CentOS 7.  Agent is compatible with libvirt 1.1.1 or later.
+
+
+v2.6.0
+======
+* Add capability for user to define additional metrics that are included in
+  reports.  This is to support tracking and reporting of external resource
+  allocations.
+* Department reports include the raw metering data that is used for
+  computing chargeback costs, including user-defined metrics.
+* vCenter Adapter discovers Datacenters from VMware vCenter API.  Metrics
+  for a Datacenter include counts of operations on virtual machines,
+  such as create, destroy, shutdown, and vMotion.
+* Capacity planning functionality is available for VMware vCenter.
+  Predictive determination of resource exhaustion for CPU, memory, and
+  storage.  Display the available resources and number of allocated virtual
+  machines.
+* Add capability to define Composite Alarms that are a combination of
+  multiple Alarm rules.  Alarm rules may be combined in an Any, All, or
+  Weighted manner.
+* In Dashboard, add capability to duplicate an existing Alarm configuration
+  as the basis for defining a new Alarm.
+* In Dashboard, display units for metrics in the Network Topology view.
+* In Dashboard, improve charts with smoothed lines.
+* Fix issue in Network Topology panel that metric popup window sometimes
+  overflowed beyond edge of panel, making a portion not visible.
+* Fix issue with vCenter Adapter that deleted Alarm rules for active hosts
+  when one host was removed from AppFormix.
+
+
+v2.5.3
+======
+* In Dashboard, fix display position of instance memory information pop-up.
+* Fix compatibility issue with Contrail v3.0.x.
+* Fix logrotate for appformix-openstack-adapter uWSGI log file.
+
+
+v2.5.2
+======
+* Add metric for per-core user-space CPU usage on a host.
+* Improve Ansible playbook to not restart containers if database schema
+  update is not required.
+* Fix error in database translation script that failed to properly
+  translate schema if schema version was not present in the database.
+
+
+v2.5.1
+======
+* Fix issue that Ansible cannot create the vCenter Adapter container
+  because image is not found.
+* Fix issue that Agent does not report metrics for instances on compute
+  hosts running CentOS or Red Hat Enterprise Linux.
+* Improve formatting of Infrastructure Dashboard panel in Firefox.
+* Improve efficiency of Ansible playbook when Docker images have already
+  been loaded.
+
+
+v2.5.0
+======
+* Add monitoring of hypervisors and virtual machines managed by VMware
+  vCenter.  Charts, Alarms, SLA Health and Risk policies, and Heat Map
+  are supported for Level 1 and 2 metrics from vCenter.
+* Add monitoring of ScaleIO storage cluster.  Metrics are available in
+  charts and alarms for performance and capacity of the storage cluster.
+  Monitor the state of the components that provide the cluster, including
+  MDM, SDS, SDC.  On compute hosts, metrics for per-instance latency and
+  throughput to attached ScaleIO volumes.
+* Improved Capacity Planning functionality for OpenStack.  User can view
+  the available CPU, memory, local disk resources on hosts, and a
+  prediction of the exhaustion date for each resource.  User may also query
+  if a future allocation may be satisfied.  Reduced Dashboard load time.
+* User may configure SLA Health and Risk policies for a Project or an
+  Aggregate of hosts and instances.
+* Add new policy type "Scheduling".  The scheduling policy may be applied
+  to hosts.  The state of whether a host is meeting the policy may be
+  queried by a scheduler when placing VMs, in order to schedule VMs only on
+  hosts that are meeting the rules of the policy.
+* A Dynamic Alarm may be configured with a "monthly" learning period.
+  The baseline is computed once per week, using the last 4 weeks of data
+  with per-hour resolution.
+* A Dynamic Alarm will use the most recently available historical data to
+  compute baseline at the time an Alarm is created.  It will continue to
+  update the baseline periodically, as before.
+* Chargeback adds "OS Licenses" rate card.  An hourly rate may be
+  configured for each Glance image discovered, so that the cost of
+  operating system license or support may be accounted.
+* Network Topology panel displays overlay network for OpenStack
+  environments that are not using Contrail.  Previously, Contrail was a
+  requirement for the overlay topology view.
+* Re-designed style of Infrastructure Dashboard panel with a pie chart to
+  display the number of elements that are good, at-risk, and bad according
+  to the user-defined SLA policies.
+* In the Dashboard panel for an instance, add pagination to the history of
+  instance states provided in the "Instance Actions" list.
+* Add configuration parameters to Ansible appformix_openstack_config role
+  to support override of the advertised URL endpoint for Keystone, Nova,
+  Neutron, and Cinder.  This is helpful in environments where AppFormix
+  Platform contacts OpenStack services via a proxy.
+* Add network metrics for DPDK and SR-IOV interface.  These additional
+  metrics are available for Charts and Alarms, when Contrail is installed.
+* User may configure an Alarm to monitor the per-core CPU usage of a host.
+
+
+v2.4.3
+======
+* Add support for Ansible versions 2.1.2 through 2.2.2.
+* Fix issue that Agent did not report instance metrics when Agent was
+  running inside of a virtual machine, and the monitored instances were
+  nested virtual machines.
+* Fix issue that metrics from a plugin appeared twice in the list of
+  available metrics in the Alarm configuration panel on the Dashboard.
+
+
+v2.4.2
+======
+* Improve load time of the Planning panel in the Dashboard.
+* In Dashboard Reports panel, provide user with a visual indicator that a
+  report is being retrieved after clicking to display a report.
+* Fix issue that database translation fails to update the database when
+  upgrading to v2.4.1 from a version older than v2.4.0.
+* Fix Dashboard issues with size and display of pop-up boxes, such as the
+  alarm detail on charts or the information box for instance.memory.usage.
+* Fix issue that Network Topology would not load if a virtual network was
+  defined in Contrail, but not OpenStack.
+* Fix issue that event was not delivered to Notification Service.
+* Fix issue in Service Dashboard that did not display correct status of
+  some processes of an OpenStack service.
+* Fix Keystone v3 driver to honor the 'endpoint_override' configuration
+  setting.  This is useful for cases when user needs to override the URLs
+  advertised by the Keystone endpoint list.  For example, when the
+  advertised address cannot be reached from AppFormix Platform host, and
+  different address must be used to connect to OpenStack services.
+* Fix issue that displayed incorrect reason string for SLA policy violation
+  when threshold of a rule was zero.
+* Fix issue that displays "Initializing..." in Host resource usage pie
+  charts when there are zero instances scheduled on a Host.
+* Fix issue that did not display flavor details for an instance that had a
+  private flavor.  In OpenStack, a private flavor may only be used by a
+  subset of projects.
+
+
+v2.4.1
+======
+* Fix Dashboard issue that did not properly arrange elements on the
+  Infrastructure Dashboard panel.
+* Fix Dashboard issue in which the paginated list of hosts did not contain
+  all hosts.
+* Fix Dashboard issue that the Reports panel did not display an error when
+  a report failed to be generated.
+* Fix Dashboard issue that underlay network topology view did not display
+  when virtual machines did not exist.
+* Fix Dashboard issue that displayed overlapping descriptions for Contrail
+  alarms.
+* Fix issue that active alerts appear multiple times in the Alarm history.
+* Fix issue that reports and capacity planning had no data for some hosts.
+* Reduce duplicate error messages in Agent log when optional dependencies
+  are not present, such as rdmsr, smartmontools, libvirt.
+* Fix issue that Agent did not correctly report heartbeat for KVM virtual
+  machines on Red Hat Enterprise Linux 7.3.
+* Fix Agent handling when information about CPU cores is not present.
+* Improve Ansible module that configures plugins to handle when plugin
+  configuration changes (e.g., list of metrics published by plugin).
+* Fix issue that SLA policy monitoring did not detect changes in state
+  after a Service Alarm was deleted.
+* Improve error handling in OpenStack Adapter discovery process to handle
+  failed requests to OpenStack services.  An error with one OpenStack
+  request was affecting discovery of other elements.
+* Fix issue in Contrail Adapter that caused an IPAM removed from Contrail
+  to not be deleted from AppFormix Controller configuration.
+
+
+v2.4.0
+======
+* Tenant users can view cost of projects of which they are members.
+* Virtual networks are discovered from OpenStack Neutron and OpenContrail.
+  User can view all instances attached to a virtual network.  Instance
+  summary shows list of IP addresses on each virtual network to which an
+  instance is attached.
+* Network Topology has overlay view to show virtual networks, virtual
+  routers, and instances, and network metric heat map for links.
+* In the Dashboard, instance summary includes a list of storage volumes
+  attached to the instance.
+* Capacity Planning can display the usage and available capacity on a
+  per-project basis.
+* In Heat Map, add capability to filter by an aggregate or virtual network.
+* In Chargeback, add virtual network and subnet allocations to cost report.
+* In Capacity Planning, fix issue in the calculation of the 60-minute peak
+  usage that did not use the proper rolling 60-minute interval.
+* User may configure SLA Health and Risk policies for infrastructure
+  services: Nova, Neutron, Keystone, Contrail.
+* Contrail service dashboard display status of alarms configured in
+  Contrail.
+* User may configure a severity for a Service Alarm rule.
+* Display banner on Dashboard when license has expired.
+* Add new host metrics to monitor changes to the status of hardware:
+  host.cpu.cores.offline_count, host.cpu.cores.state_transition,
+  host.nics.down_count, host.nics.state_transition,
+  network.interfaces.link_detect_transition, disk.detect_change.
+* Fix issue in host report that displayed an incorrect number for allocated
+  vcpu, memory, and disk hours, in certain cases when OpenStack Nova APIs
+  do not report complete information because of the Keystone access control
+  policy.
+* Fix issue in Agent to reconnect to libvirtd on lost connection.
+
+
+v2.3.2
+======
+* Improve Alarm pop-up on Charts to fit information without scrolling.
+* Fix issue on Charts when sorting elements by instance metric.
+* Ansible playbook supports installing Docker v1.9.1 on Ubuntu 16.04
+
+
+v2.3.1
+======
+* Fix issue with how DataManager handled connection timeout to MongoDB.
+
+
+v2.3.0
+======
+* Support SLA policy for OpenStack services (Keystone, Nova, Neutron).
+  Re-design the SLA policy settings page.
+* Add a weighted scheme for rules in an SLA policy.  Each rule is assigned
+  a weight, and the SLA policy is triggered when the combined weights of
+  active rules exceed a threshold.
+* Redesign Service Dashboard to show a summary of service availability and
+  a timeline of availability.
+* SLA policy configuration only allows rules with scope that matches the
+  scope of the policy.
+* SLA policy can contain rules with dynamic thresholds.
+* Do not report missed heartbeat (instance.heartbeat metric) if an
+  instance has been shutdown by the user.
+* Add support to Ansible to deploy AppFormix Agent to OpenStack controller
+  hosts to monitor the hosts on which OpenStack services execute.
+* Add Agent plugin to collect metrics for a Zookeeper service on a host.
+* Dynamic alarms may be configured for metrics from plugins.
+* In Chargeback, a default Department may be configured to capture any
+  unallocated project costs.
+* In Network Topology panel, add heat map coloring for a selected metric.
+* Add log rotation for the DataManager mongo.log file.
+* Allow Alarm to be configured for instance.disk.usage metric.
+* Redesigned Capacity Planning panel to display 4 charts.  User can zoom
+  in/out on the charts.
+* Add metrics monitor health of Contrail BGP and XMPP peer connections.
+* Fix issue in DataManager where connections to MongoDB were lost, and
+  could prevent users from logging into the Dashboard.
+* Fix issue that returned incorrect URL in redirect when AppFormix is
+  setup behind a load-balancer that terminates HTTPS connections and uses
+  HTTP to connect the AppFormix Dashboard.
+
+
+v2.2.0
+======
+* Add Network Topology panel to display routers, switches, and hosts as a
+  network topology graph.  In addition, add a Chart view that displays
+  interface counters for Network Devices.  This functionality requires
+  Contrail service to be configured.
+* Service Alarms can be configured with a dynamic threshold that is set by
+  machine learning over a user-specified duration.
+* Capacity planning accounts for ephemeral disk in flavor types.
+* Add capability in Ansible to configure which Contrail service to
+  monitor.  If user defines 'contrail_host', 'contrail_user', and
+  'contrail_password', then Ansible will configure AppFormix to monitor
+  the Contrail service.
+* Configure the appformix-mongo container to require user authentication.
+* Add capability in Ansible playbook to load AppFormix Docker images from
+  a tarball, instead of pulling from registry.
+* Improve error message displayed for incorrect login in OpenStack
+  environments that are using Keystone v2 authentication.
+* In the Dashboard, add an information icon that displays a description of
+  the instance.memory.usage metric when it is selected in a chart.
+* Fix issue in Service Alarm that may display incorrect sample value when
+  the alert was active for more than one entity.
+* Fix issue with the data displayed in micro-charts for a host.
+* Fix issue with formatting on the Infrastructure Dashboard page.
+* Fix issue that allowed rate card to be configured with invalid tiers.
+
+
+v2.1.1
+======
+* Fix issue in Infrastructure Dashboard to display only sections
+  appropriate for the role of a user.
+* Fix issue in Alarms panel that did not properly display long entity
+  names.
+* Fix issue in Heat Map in which Instance details pop-up box may be
+  obscured at the edges of the window.
+* Fix navigation issues in the guided tour.
+
+
+v2.1.0
+======
+* User may configure Nagios-style plugins to provide additional metrics
+  for a host.  Agent parses metrics from output of plugin and pushes
+  metrics into the AppFormix data platform.  Charts display the metrics
+  and static alarms may be configured for the metrics.
+* Redesigned Alarms view in Dashboard that provides current view of
+  Alarms across the infrastructure, including current active alerts,
+  context that triggerd Alarm, and ability to search for Alarms.
+* Health and Risk profiles can be configured for OpenStack services.
+* Redesigned Infrastructure Dashboard to display infrastructure health in
+  sections for Infrastructure Services, Physical Infrastructure, Virtual
+  Infrastructure, and Public Cloud Infrastructure.
+* Add per-instance network usage to reports.
+* User can select to display 2 or 4 charts on a page in Dashboard.
+* Reports on Dashboard display network I/O for hosts and instances.
+* Add variable to Ansible playbooks to support skipping Docker pull when
+  image is already present on the host.
+* Chargeback panel displays message to configure rate card and departments
+  if user has not yet configured those settings.
+* Fix Heat Map issue that did not update the color of instances based on
+  resource consumption.
+* Fix issue with appformix_bare_host Ansible role that failed when the
+  name of a host contained "." in Ansible inventory (e.g., as in an IP
+  address or fully-qualified domain name).
+
+
+v2.0.0
+=======
+* New Dynamic Alarms module automatically determines alarm threshold using
+  machine learning over a user-specified duration.
+* Alarms for services may be configured with type 'alert' to provide a
+  stateful alarm that is 'active' or 'inactive'.
+* Add Host metrics for OpenContrail vRouter.
+* Add monitoring of availability of OpenContrail control plane services.
+* Use AppFormix Agent to monitor host on which AppFormix platform runs.
+* Improve ServiceNow notifier to send Alarm description in a field that is
+  displayed on the index of incidents.
+* Display each physical network interface counters in the Host charts.
+* Add appformix.agent.response_time metric for Host.
+* Provide interactive API documentation via swagger-ui.
+* Support configuration of username and password for collections in MongoDB
+* Modify network ingress and egress metrics for a Host to only report data
+  from physical interfaces.
+* Fix issue with Host network ingress and egress metrics swapped.
+* Fix Controller issue that did not propagate configured OpenStack
+  credentials properly to all services.
+* Fix Dashboard issue in which peaks are lost when charts are zoomed.
+
+
+v1.13.3
+=======
+* Change the frequency of requests to Cinder quota API from 1 minute to 1 hour
+  because the Cinder service creates multiple authentication tokens per
+  request.  In environments with many projects, this can overwhelm the
+  Keystone service and MySQL table that stores tokens.
+
+
+v1.13.2
+=======
+* Improve Ansible appformix_openstack_config role to workaround issue in
+  Ansible (https://github.com/ansible/ansible-modules-core/issues/265).
+  AppFormix Ansible roles are now compatible with Ansible 1.9.6.
+* Fix Dashboard issue that did not return user to the Notification Settings
+  after login to PagerDuty for establishing API connection.
+* Fix issue in Dashboard that displayed wrong values in charts when
+  navigating between charts for All Hosts and All Aggregates.
+* Fixed failure to discover Volumes with unrecognized "downloading" status.
+
+
+v1.13.1
+=======
+* Fix Dashboard misalignment of instance health and risk status.
+
+
+v1.13.0
+=======
+* Month-to-date Chargeback report is auto-generated every hour.
+* Chargeback "Cost Manager" panel displays a summary of costs for the
+  current and previous month, and also a pie chart organized by
+  Department.
+* Dashboard displays version of AppFormix control plane components in
+  Settings page.
+* User can create Service Alarms for API latency of OpenStack
+  services: Keystone, Nova, Neutron.
+* Agent can be configured to run as a non-root user.  When run as a
+  non-root user, some host metrics are unavailable.  See
+  /opt/appformix/manager/README in the Agent for details.
+* Reduce number of worker threads in Controller.
+
+
+v1.12.2
+=======
+* Improvements to OpenStack Adapter to simplify steps for users to remove
+  hosts using Ansible playbook.  Users need to add appformix_state=absent
+  for a host in the 'compute' group  of inventory and run the playbook.
+* Fix issue that Alarms may not trigger because the Agent gets configured
+  with incorrect URL for DataManager.
+* Fix issue in which Controller starts more periodic worker threads than
+  required.
+* Fix issue in Dashboard with date selection in OpenStack Services page.
+* Fix issue that causes some user details to be remembered after logout.
+* Fix issue of database upgrade script being killed due to a bug in Ansible
+  v1.9.3 'docker' module.
+* Fix issue that Dashboard tour gets stuck in a loop loading the page.
+* Fix issue in OpenStack Adapter that did not remove Instances belonging
+  to a host that had been removed from the OpenStack cluster.
+* Fix issue when after an Agent restarted, Controller did not reconfigure
+  the Agent with Alarm rules for Instance aggregrates.
+* Fix issue in Dashboard rate card settings in which the input box did not
+  close after an invalid input.
+* Dashboard performance improvement for OpenStack Services charts and
+  Capacity Planning panel.
+
+
+v1.12.1
+=======
+* Fix issue with Dashboard login when URL does not specify a port number
+  (i.e., when using HTTP default port 80).
+* Fix error in Ansible playbook that caused failure to pull appformix/dns
+  Docker image.
+
+
+v1.12.0
+=======
+* AppFormix supports Keystone domain-scoped authentication. Users using
+  Keystone domain scoped authentication with LDAP can now use their LDAP
+  usernames/password to log into AppFormix.
+* Dashboard chart detail overlay now shows only those series that are
+  selected to be displayed in the chart.
+* Alarms may be configured for instances in an Instance Aggregates.
+* Service Alarms for OpenStack metrics may now be configured with a
+  threshold that is a percentage of host capacity or project quota.
+* Dashboard URLs are not prefixed with '/appformix'.  This assists users
+  that choose to setup AppFormix Dashboard behind load balancers with all
+  '/appformix' routes going to Appformix.
+* Add new configAdmin account role.  Users with a role that matches the
+  configAdmin role will have permission to configure settings in AppFormix,
+  such as chargeback rates.
+* Chargeback automatically generates a monthly report.
+* New format for Chargeback report that is downloaded in HTML format.
+* New Chargeback report provides overview and detailed usage.  The report may
+  be downloaded in both HTML and PDF formats.
+* Fix issue of Agent reporting libvirt storage driver error.
+* OpenStack Adapter resumes discovery to same state as previously
+  configured when last running.
+* Fix issues for Cross-Origin Resource Sharing (CORS) in the Dashboard.
+* Improved user interface for selecting date range to generate a report.
+* Performance improvements in DataManager.
+
+
+v1.11.0
+=======
+* Dashboard URL links to the page being viewed.  A new scheme for URLs in
+  the location bar of the browser allows users to share links to pages in
+  the Dashboard.
+* Modify CSV format of reports to represent the data in tables that with
+  one row per host or per instance.  This enables easier manipulation of
+  the data in a spreadsheet.
+* Improve Dashboard performance to handle of many at-risk instances.
+* Add Ansible role to configure RabbitMQ monitoring credentials.
+* Add Ansible role to configure MySQL monitoring credentials.
+* Dashboard displays charts for Instance aggregates.
+* User may configure HTTPS for communication between AppFormix control
+  plane services.
+* Improve robustness of host heartbeat check.
+* Alarm may be configured for an OpenStack metrics at the cluster, host,
+  and project level.  Examples include heartbeats for services (e.g.,
+  nova, keystone), allocated disk on a host, number of instances in a
+  project.
+* Consolidated Agent logs into a single file.  The "outfile" and "errfile"
+  are no longer present.  All logs are written to appformix_manager.log.
+* Fixed issue in which an Instance in "Error" state was not shown to have
+  Bad Health status in the Dashboard.
+* Fixed failure to discover Volumes that had unrecognized status, such as
+  "detaching" or "maintenance".
+* Fixed issue in HeatMap that causes high CPU utilization in browser.
+
+
+v1.10.0
+=======
+* Re-designed user experience for configurig rate cards for Billing.
+  - User can define rate card in advance of effective date.
+  - User can view history of rate cards.
+  - Billing supports separate rate card per storage type.
+  - Storage billing computes cost using GB-month unit.
+* Capacity Planning panel display peak capacity and usage over 10-minute,
+  60-minute, or 1-day intervals.
+* Display the status of Instances in the Dashboard view of infrastructure.
+  List Instances that are "SHUTOFF" at the end of the list.
+* Controller notifies Dashboard when host or aggregate is created or
+  deleted.
+* When user creates a new Alarm, Dashboard displays status of Alarm as
+  'In Progress' until it is configured.
+* User may configure an alarm when infrastructure services (Rabbit, MySQL,
+  various OpenStack core services) miss a heartbeat.
+* Dashboard Chart displays timestamp in the detail box that follows mouse
+  over a chart.
+* Dashboard supports testing a configured Notification endpoint. User
+  may trigger a POST of a sample notification payload to the endpoint.
+  Dashboard displays HTTP request and response.
+* User may define multiple HTTP headers to be included in POST to a
+  Notification endpoint.
+* Change how Docker apt repository key is fetched by Ansible 'docker'
+  role.  Use HTTP as most network policies allow HTTP traffic, but may
+  block traffic to GPG keyserver port 11371.
+* Fix issue in which DataManager did not reconnect to MongoDB.
+* Fix issue in volume discovery when host attributes are not populated in
+  the Cinder definition of the volume.
+
+
+v1.9.1
+======
+* Capacity Planning panel displays all of the Flavor series on the charts,
+  by default.  Previously, only 10 flavors were displayed by default, and
+  as a result, it could appear that the charts were incorrect.
+* Capacity data is collected every 10 minutes instead of every 1 day.
+* Add cleanup_appformix_openstack.yml playbook to uninstall and remove all
+  log files, configuration files, and MongoDB data.
+* Fix formatting issue in Capacity Planning that caused the "Available
+  Capacity" table to cover the charts.
+* Fix issue in which historical data for RabbitMQ and MySQL services was
+  not displayed after upgrading from earlier than v1.7.0 release.
+* Fix error that may occur during Discovery for a PUT operation to modify
+  project details.
+
+
+v1.9.0
+======
+* For a Custom Notification endpoint, a user may specify a HTTP header to
+  be sent with the POST.
+* Improved Heat Map display. Added ability to filter by project, health
+  status, or risk status.
+* Fix an issue in which Dashboard needed to be reloaded to display latest
+  list of instances after an instance is added or deleted.
+* Fix an issue in which Dashboard needed to be reloaded to display latest
+  list of projects after a project is added or deleted.
+* Display additional Alarm details in the pop-up info box on charts.
+* Storage settings displays both the data size and the actual size on
+  disk.  Use a single submit button to set the storage policy.
+* In Notification settings, add scrollbars to display entries that are
+  too wide to fit within the window.
+* In Alarm configuration, display the name of custom services in the
+  selection list.
+
+
+v1.8.2
+======
+* Add metrics to charts for number of IPv4 and IPv6 rules in iptables.
+* HeatMap displays all hosts when Infrastructure context is selected.
+* Add Dashboard view for "All Services" context.
+* Ansible role to configure AppFormix for OpenStack accepts the endpoint
+  override parameter to override the Identity URL used by Keystone client.
+* Ansible appformix_openstack_config role requires OpenStack parameters
+  that are mandatory for Controller and OpenStack Adapter.
+* When requesting an authentication token from Keystone, only consider
+  those projects that are enabled.
+* Fix name displayed for RabbitMQ cluster nodes in drop-down menu.
+* Fix issue in which the Alarms panel may not display the proper instance
+  name for an alarm.
+* Fix minor formatting issues in Infrastructure Dashboard panel and All
+  Services Dashboard panel.
+
+
+v1.8.1
+======
+* Fix issue during instance discovery in which instance name does not get
+  configured in the Controller.
+
+
+v1.8.0
+======
+* User may add a Notification Service that uses HTTPS as the protocol
+  in the URL.  User may also specify the certificate to verify, if the
+  service uses a self-signed certificate.
+* Add OpenStack service monitor that displays the availability of Nova,
+  Neutron, and Keystone.
+* A new appformix-dns container provides DNS service to AppFormix
+  control plane services.  The DNS service is configured with hostname
+  mappings from the /etc/hosts of the AppFormix Controller Host.  This
+  resolves connectivity issues between Controller and Agent in environment
+  where hostnames of compute nodes cannot be resolved by DNS.
+* OpenStack Adapter configures Controller when an instance name changes.
+* Reduce the frequency at which Agent reads S.M.A.R.T. counters of disks.
+* Redis is configured to use password authentication.
+* Dashboard displays status of an instance, e.g., running, shutdown.
+* Dashboard has new Billing panel. Reports for Departments are now
+  displayed in this new panel. User may select a monthly billing cycle
+  to generate a Department report.
+* Improve Dashboard compatibility with Internet Explorer 11.
+* In Dashboard, user may edit details of a Notification Service.
+* In Dashboard, display the metadata associated with an Alarm in the
+  pop-up box on the charts.
+* In Dashboard, fix issue in which ServiceNow notifier did not get
+  deleted.
+
+
+v1.7.3
+======
+* Fix issue in which Agent may not receive configuration from Controller
+  after Agent is restarted.
+* Restrict access to Redis server that runs on the AppFormix Controller.
+  By default, Redis will not accept connections from external clients.
+  User may optionally configure the port to be exposed by using a parameter
+  to the appformix_redis Ansible role.
+
+
+v1.7.2
+======
+* Add new MySQL monitoring panel in Dashboard.
+* User may now configure multiple MySQL databases to be monitored.  An
+  Alarm may be configured for any or all of the databases or cluster nodes.
+* Add API to modify display name of a RabbitMQ or MySQL cluster.
+* The sliding panel for Alarms on the Charts page is no longer partially
+  shown on the side of the page when "hidden".
+* Fix issue that Dashboard did not properly inform user when incorrect
+  RabbitMQ credentials were configured.
+* Fix issue in which RabbitMQ monitoring process could crash when
+  collecting data from the RabbitMQ management plugin.
+* Fix display issues for RabbitMQ charts in Dashboard.
+* Dashboard no longer requires page to be refreshed after the addition of a
+  RabbitMQ or MySQL cluster.
+* HeatMap displays host metrics when mouse hovers over a host.
+* HeatMap displays instances discovered CloudWatch module (e.g., from AWS).
+* Fix issues with scrolling in the HeatMap.
+
+
+v1.7.1
+======
+* Fix navigation of RabbitMQ clusters in Dashboard.
+* Fix data retrieval for RabbitMQ Dashboard.
+* Fix Alarm creation panel in Dashboard to provide proper scope selection
+  for RabbitMQ service.
+
+
+v1.7.0
+======
+* User may now configure multiple RabbitMQ clusters to be monitored.  An
+  Alarm may be configured for any or all of the clusters, nodes, and queues.
+* New Dashboard panel to view multiple RabbitMQ clusters.
+* Fix Alarm input panel to retrieve the latest service details, such as
+  nodes and queues.
+* Fix an error configuring an Alarm for MySQL.
+* Move Agent log file to /var/log/appformix/manager/appformix_manager.log.
+
+
+v1.6.6
+======
+* Fix issue in which Alarms would not appear in Dashboard in some cases.
+
+
+v1.6.5
+======
+* Fix issue in which Agent may not receive configuration from Controller
+  after Agent is restarted.
+* Fix host.disk.usage.bytes not showing in the list of metrics.
+* Change name of disk.usage metric to disk.usage.percent.
+
+
+v1.6.4
+======
+* Fix issue with disk usage metric always reporting zero.
+* Improve robustness of how Controller reconfigures Agent after the Agent
+  restarts. This handles uncommon cases when simultaneous configuration
+  requests are made for the same entity.
+
+
+v1.6.3
+======
+* Agent reports disk usage metrics for NVM Express (NVMe) storage drives.
+* Fix Alarm creation panel in Dashboard to provide proper scope selection for
+  RabbitMQ and MySQL services.
+* OpenStack Adapter retries to connect to MongoDB if connection fails.
+* Fix capacity estimation for "All Aggregates" that formerly included hosts
+  that were not part of any host aggregate.
+
+
+v1.6.2
+======
+* Resolve issue with Agent not reporting any data for compute hosts that
+  have NVMe storage drives.
+
+
+v1.6.1
+======
+* The appformix_openstack.yml Ansible playbook installs Docker and
+  docker-py on the AppFormix controller host.  These packages have always
+  been required, but now the playbook installs for the user.
+* The appformix_openstack.yml Ansible playbook performs Docker login to
+  authenticate with the AppFormix Docker Registry.
+* Change default configuration of Controller and OpenStack Adapter to use
+  IP address of the controller host, instead of hostnames that may not be
+  resolvable from compute hosts or inside of the AppFormix containers.
+* Fix appformix_datamanager Ansible role to only recreate the DataManager
+  container when there is a change to the container parameters.
+
+
+v1.6.0
+======
+* The appformix_openstack.yml Ansible playbook uses OpenStack environment
+  variables (e.g., from an openrc file) to configure AppFormix OpenStack
+  Adapter.  Installation and configuration is now fully automated without
+  entering configuration values in the Dashboard.
+* Installation pulls Docker images from registry.appformix.com.  Prior to
+  running the appformix_openstack.yml playbook, user must first
+  authenticate using "docker login registry.appformix.com".
+* Dashboard client accesses all AppFormix services over a single port.
+  This change makes it easier to configure networking via a proxy or
+  load-balancer because the Dashboard client performs all communication
+  over the host and port specified in the URL supplied to the browser.
+* Add ability to configure nightly backup of MongoDB used by AppFormix.
+  User can restore from a backup file by passing additional argument to
+  the appformix_openstack.yml playbook.
+* License file is now required during installation.  The license file is
+  passed as an argument to appformix_openstack.yml playbook.
+* Add new playbook (reset_appformix_openstack.yml) that performs full
+  reset of AppFormix.
+* Additional metrics available for alarms:
+  * Host CPU interrupts
+  * Host network iptables IPv4 rule count
+  * Host network iptables IPv6 rule count
+* Additional metrics available for both charts and alarms:
+  * Host memory dirty page rate
+  * Host memory page_fault rate
+  * Host memory page_in_out rate
+* Add a new HeatMap view in the Dashboard that displays a graphical
+  overview of all hosts and instances and the resource consumption by each.
+* Show status of Redis and Mongo that are used by the AppFormix services.
+* Fix issue displaying Report with large number of instances.
+* Fix sort functionality in Chart view.
+
+
+v1.5.8
+======
+* User can configure which Keystone roles will see Admin View in the Dashboard.
+
+
+v1.5.6
+======
+
+* Resolve nginx "readv() denied" on a UNIX domain socket on Linux 3.16.
+  This release includes a workaround for a known issue in the Linux 3.1.6
+  kernel.  For understanding of the kernel issue, refer to:
+  https://bugs.launchpad.net/ubuntu/+source/lxc/+bug/1446906.
+* Single Ansible playbook (appformix_openstack.yml) deploys AppFormix.
+  Previously, there were separate playbooks for controller and compute.
+* Ansible playbooks and roles work with Ansible 1.9.3 and docker-py 1.3.1.
+

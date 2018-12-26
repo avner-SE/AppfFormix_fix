@@ -1,0 +1,120 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "jnx_js_spu_snmp_device_info_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_jnx_js_spu_mib",
+        "PluginPrefix": "jnx_js_spu",
+        "EntityType": ["network_device"]
+    },
+    "MetricMap": [
+        {
+            "Name": "jnxJsSPUMonitoringFPCIndex",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringSPUIndex",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringCPUUsage",
+            "Units": "Percent"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringMemoryUsage",
+            "Units": "Percent"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringCurrentFlowSession",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringMaxFlowSession",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringCurrentCPSession",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringMaxCPSession",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringNodeIndex",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringFlowSessIPv4",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringFlowSessIPv6",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringCPSessIPv4",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringCPSessIPv6",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringCurrentTotalSession",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringMaxTotalSession",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsClusterMonitoringNodeIndex",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsNodeCurrentTotalSession",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsNodeMaxTotalSession",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsNodeSessionCreationPerSecond",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsNodeSessCreationPerSecIPv4",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsNodeSessCreationPerSecIPv6",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsNodeCurrentTotalSessIPv4",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsNodeCurrentTotalSessIPv6",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringTotalSessIPv4",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxJsSPUMonitoringTotalSessIPv6",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "jnx_js_spu_snmp_device_info",
+    "PluginName": "jnx_js_spu_snmp_device_info",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "enterprises.2636.3.39.1.12"
+    ],
+    "State": "enabled"
+}

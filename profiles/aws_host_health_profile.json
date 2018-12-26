@@ -1,0 +1,34 @@
+{
+    "rules": [
+        {
+            "Name": "aws_host_heartbeat_health",
+            "EventRuleId": "Aws_Host_Heartbeat_Health",
+            "EventRuleScope": "aws_host",
+            "MetricType": "heartbeat",
+            "AggregationFunction": "sum",
+            "ComparisonFunction": "equal",
+            "Threshold": 0,
+            "IntervalCount": 1,
+            "IntervalsWithException": 1,
+            "IntervalDuration": "1s",
+            "Mode": "alert",
+            "CreatedBy": "system",
+            "Severity": "critical",
+            "DisplayEvent": false,
+            "Module": "health/risk"
+        }
+    ],
+    "profile": {
+        "CompositeAlarmScope": "aws_host",
+        "CompositeAlarmType": "health",
+        "ObjectId": "all",
+        "Rulesets": [
+            {
+                "RuleList": ["Aws_Host_Heartbeat_Health"],
+                "WeightList": [1],
+                "Threshold": 1,
+                "RulesetObjectId": "all"
+            }
+        ]
+    }
+}

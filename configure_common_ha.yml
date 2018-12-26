@@ -1,0 +1,139 @@
+---
+#
+# Configure AppFormix
+#
+# This playbook should not be called if appformix_state == 'absent'.
+#
+
+# Add appformix_controller as bare host.
+# appformix_controller needs to be setup with the right credentials
+# before these roles are executed.
+- hosts: appformix_controller
+  roles:
+    - appformix_defaults
+    - { role: appformix_license,
+        license_action: 'update',
+        when: appformix_license is defined }
+    - { role: appformix_network_device_csv,
+        when: network_device_csv_file is defined }
+
+# Add appformix_controller as bare host.
+# appformix_controller needs to be setup with the right credentials
+# before these roles are executed.
+- hosts: appformix_controller
+  roles:
+    - appformix_defaults
+    - { role: appformix_bare_host,
+        appformix_tag: "{{ appformix_controller_tag }}",
+        when: appformix_state != 'absent' }
+
+- hosts: appformix_controller_master
+  vars:
+    appformix_bare_host_source: 'remote.host'
+  roles:
+    - appformix_defaults
+    - { role: appformix_remote_host,
+        when: appformix_state != 'absent' }
+
+- hosts: bare_host
+  roles:
+    - appformix_defaults
+    - { role: appformix_bare_host,
+        when: appformix_state != 'absent' }
+
+- hosts: appformix_network_agents
+  tags: appformix_network_device_config
+  roles:
+    - appformix_defaults
+    - { role: appformix_bare_host,
+        appformix_tag: "{{ appformix_network_agents_tag }}",
+        when: appformix_state != 'absent' }
+
+# If appformix_network_agents is empty, the above task will not run, then we
+# run ths following task to post hosts in appformix_controller to
+# appformix_network_agents aggregate
+- hosts: appformix_controller
+  tags: appformix_network_device_config
+  roles:
+    - appformix_defaults
+    - { role: appformix_bare_host,
+        appformix_tag: "{{ appformix_network_agents_tag }}",
+        when: "groups['appformix_network_agents'] | default([]) | length == 0" }
+
+# Add openstack_controllers as bare hosts and install agent on them for
+# monitoring.
+- hosts: openstack_controller
+  roles:
+    - appformix_defaults
+    - { role: appformix_bare_host,
+        appformix_tag: "{{ appformix_openstack_controller_tag }}",
+        when: appformix_state != 'absent' }
+
+- hosts: appformix_controller:compute:openstack_controller
+  tags: appformix_plugin
+  roles:
+    - { role: appformix_plugin,
+        copy_user_defined_plugin_files: True,
+        copy_control_plane_plugin_config_files: True,
+        copy_plugin_config: True,
+        restore_backup_files: True,
+        when: appformix_state != 'absent' }
+
+- hosts: appformix_controller_master
+  roles:
+    - appformix_defaults
+    - { role: appformix_analytics_profile,
+        when: appformix_state != 'absent',
+        tags: ['appformix_analytics_profile'] }
+    - { role: appformix_service_connectivity,
+        when: appformix_state != 'absent' }
+    - { role: appformix_plugin,
+        certified_plugin: True,
+        user_defined_plugins: True,
+        update_control_plane_plugin: True,
+        when: appformix_state != 'absent',
+        tags: ['appformix_plugin'] }
+    - { role: appformix_network_device_config,
+        when: network_device_file_name is defined and appformix_state != 'absent',
+        tags: ['appformix_network_device_config'] }
+    - { role: appformix_process_set_monitors,
+        when: process_set_monitors_file_name is defined and appformix_state != 'absent',
+        tags: ['appformix_process_set_monitors'] }
+
+- hosts: appformix_controller:appformix_network_agents
+  roles:
+    - appformix_defaults
+    - { role: appformix_snmp_mib_install,
+        when: user_defined_mib_location is defined and appformix_state != 'absent',
+        tags: ['appformix_network_device_config'] }
+
+- hosts: ceph_osd
+  roles:
+    - appformix_defaults
+    - { role: appformix_bare_host,
+        when: appformix_state != 'absent',
+        appformix_tag: "{{ appformix_ceph_osd_tag }}" }
+
+- hosts: ceph_monitor
+  roles:
+    - appformix_defaults
+    - { role: appformix_bare_host,
+        appformix_tag: "{{ appformix_ceph_monitor_tag }}",
+        when: appformix_state != 'absent' }
+
+- hosts: appformix_controller
+  tags: [ appformix_northstar_config ]
+  roles:
+    - appformix_defaults
+    - { role: appformix_northstar_config,
+        when: appformix_northstar_monitoring_enabled|bool == True }
+
+- hosts: appformix_controller_master
+  vars:
+    register_nfx150: true
+    appformix_kvm_instance_discovery: true
+  roles:
+    - appformix_defaults
+    - { role: appformix_bare_host,
+        appformix_tag: "{{ appformix_nfx150_tag }}",
+        when: nfx150 | length > 0 }

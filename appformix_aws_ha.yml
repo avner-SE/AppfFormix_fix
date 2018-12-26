@@ -1,0 +1,29 @@
+---
+# Install AppFormix components for a HA setup on Aws
+#
+# For an HA deployment, define the following variables in group_vars/all file:
+# 1) appformix_vip: "{{ appformix_vip }}"
+#
+
+- include: prerequisites.yml
+  tags: ['prerequisites']
+  vars:
+    state: present
+
+- include: deploy_ha.yml
+  vars:
+    aws_platform_enabled: true
+    install_keepalived_flag: false
+    appformix_images:
+      - "{{ appformix_controller_image }}"
+      - "{{ appformix_dashboard_image }}"
+      - "{{ appformix_datamanager_image }}"
+      - "{{ appformix_aws_adapter_image }}"
+      - "{{ appformix_keepalived_image }}"
+      - "{{ appformix_haproxy_image }}"
+  tags: ['deploy']
+
+- include: configure_aws_ha.yml
+  vars:
+    aws_platform_enabled: true
+  tags: ['configure']

@@ -1,0 +1,21 @@
+{
+  "AdminRoles": {{ appformix_infrastructure_view_roles }},
+  "AzureAdapterIp": "{{ appformix_vip }}",
+  "AzureAdapterPort": "{{ appformix_vip_api_port_http }}",
+  "AzureAdapterSSLPort": "{{ appformix_vip_api_port_https }}",
+  "AzureClientId": "{{ appformix_azure_adapter_client_id }}",
+  "AzureSecretAccessKey": "{{ appformix_azure_adapter_secret_key }}",
+  "AzureSubscriptionId": "{{ appformix_azure_adapter_subscription_id }}",
+  "AzureTenant": "{{ appformix_azure_adapter_tenant_id }}",
+  "ControllerIp": "{{ appformix_vip }}",
+  "ControllerPort": "{{ appformix_vip_api_port_http }}",
+  "ControllerSSLPort": "{{ appformix_vip_api_port_https }}",
+  "ConfigAdminRoles": {{ appformix_administrator_roles }},
+  "ReadOnlyAdminRoles": {{ appformix_read_only_infrastructure_view_roles }},
+  "DatamanagerIp": "{{ appformix_vip }}",
+  "DatamanagerPort": "{{ appformix_vip_api_port_http }}",
+  "DatamanagerSSLPort": "{{ appformix_vip_api_port_https }}",
+  "InternalAPIPort": "{{ appformix_vip_api_port }}",
+  "SSLEnabled": {{ (appformix_ssl_enabled|bool) }},
+  "VerboseMode": true
+}

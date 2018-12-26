@@ -1,0 +1,12 @@
+---
+#
+# Uninstall AppFormix and remove all data, configuration, and log files.
+#
+# This clean_appformix_openstack_ha.yml playbook will remove
+# all data used by AppFormix.
+#
+
+
+- include: clean_appformix_ha.yml
+  vars:
+    network_device_discovery_enabled: true

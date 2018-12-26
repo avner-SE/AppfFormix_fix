@@ -1,0 +1,22 @@
+---
+# Install AppFormix for OpenStack
+
+- include: prerequisites.yml
+  tags: ['prerequisites']
+  vars:
+    state: present
+
+- include: deploy.yml
+  vars:
+    openstack_platform_enabled: True
+    appformix_images:
+      - "{{ appformix_controller_image }}"
+      - "{{ appformix_dashboard_image }}"
+      - "{{ appformix_datamanager_image }}"
+      - "{{ appformix_openstack_adapter_image }}"
+  tags: ['deploy']
+
+- include: configure_openstack.yml
+  vars:
+    openstack_platform_enabled: True
+  tags: ['configure']

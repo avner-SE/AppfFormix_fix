@@ -1,0 +1,2 @@
+auth_post_url: "{{ appformix_vip_url }}/appformix/v1.0/auth_credentials"
+appformix_vcenter_adapter_auth_type: "vcenter"

@@ -1,0 +1,26 @@
+---
+appformix_mongo_state: "{{ appformix_state }}"
+appformix_mongo_scripts_dir: "{{ appformix_install_dir }}/mongo/scripts"
+
+# NOTE: The directory specified in appformix_mongo_data_dir is a
+#       host-volume mounted inside of the Docker container.  Mongo
+#       will write DB data to this directory.  Changing the value of
+#       this variable after initial installation will cause database
+#       to be reset.
+#
+#       As such, this variable should be defined in a manner such that
+#       it will always have the same value when the role executed.
+#       Best practice recommendation is to define it as a host
+#       variable or group variable in the inventory.
+appformix_mongo_data_dir: "{{ appformix_install_dir }}/mongo/data"
+
+
+# If appformix_mongo_backup_dir is defined, then backups will be
+# enabled.  A backup file will be stored nightly in this directory.
+appformix_mongo_backup_dir: ""
+
+# If appformix_mongo_backup_file is defined, then the DB will be
+# restored from the file.
+appformix_mongo_backup_file: ""
+
+appformix_mongo_docker_ports: "{{ appformix_mongo_exposed_port is defined | ternary(['%s:%s'|format(appformix_mongo_exposed_port | default(''), appformix_mongo_port)], []) }}"

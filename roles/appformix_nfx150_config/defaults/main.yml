@@ -1,0 +1,14 @@
+---
+appformix_manager_package_file: "{{ playbook_dir }}/appformix-manager_{{ appformix_manager_version }}_all.deb"
+appformix_lxc_conf: "appformix_lxc.xml"
+appformix_lxc_conf_path: "/var/public/{{ appformix_lxc_conf }}"
+appformix_vnf_conf: "appformix_vnf.conf"
+appformix_platform_install_dir: "/tmp/lxc"
+appformix_lxc_setup_script: "appformix_lxc_setup.py"
+appformix_lxc_state_script: "appformix_lxc_state.py"
+appformix_vnf_clean: "clean"
+# Setup IP in Subnet of virbr0 for in-band interface
+appformix_lxc_container_hypervisor_ip: '192.0.2.1'
+appformix_lxc_container_default_ip: '192.0.2.4'
+appformix_lxc_container_default_subnet: '255.255.255.0'
+appformix_lxc_container_default_gateway: '192.0.2.254'

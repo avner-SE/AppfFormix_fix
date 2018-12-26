@@ -1,0 +1,45 @@
+# PRE: User must be able to run Docker commands
+#
+# PARAMETERS:
+#   appformix_redis_image: Redis image to run
+#
+#   appformix_redis_exposed_port: If defined, specifies the host port on which
+#                                 Redis listens for external connections.
+#
+---
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: item is undefined or item == ""
+  with_items:
+    - appformix_host_redis_conf_dir
+    - appformix_host_redis_conf_file
+
+- name: Ensure "{{ appformix_host_redis_conf_dir }}" directory exists
+  become: yes
+  file:
+    path: "{{ appformix_host_redis_conf_dir }}"
+    state: "{{ (appformix_redis_state == 'absent') | ternary('absent','directory') }}"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy redis configuration file to the Management host
+  become: yes
+  template:
+    src: "redis.conf"
+    dest: "{{ appformix_host_redis_conf_file }}"
+    owner: root
+    group: root
+    mode: 0444
+  when: appformix_redis_state != "absent"
+
+- name: Start AppFormix Redis container
+  docker:
+      name: appformix-redis
+      image: "{{ appformix_redis_image }}"
+      state: "{{ appformix_redis_state }}"
+      restart_policy: always
+      net: "{{ appformix_network }}"
+      ports: "{{ appformix_redis_docker_ports }}"
+      volumes: "{{ appformix_redis_volumes }}"
+      command: redis-server "{{ appformix_container_redis_conf_file }}"

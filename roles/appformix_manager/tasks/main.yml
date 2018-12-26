@@ -1,0 +1,6 @@
+---
+- include: present.yml
+  when: appformix_manager_state != 'absent'
+
+- include: absent.yml
+  when: appformix_manager_state == 'absent'

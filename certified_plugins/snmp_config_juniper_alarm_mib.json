@@ -1,0 +1,37 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_network_device_alarm_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_juniper_alarm_mib",
+        "PluginPrefix": "alarm",
+        "EntityType": ["network_device"]
+    },
+    "MetricMap": [
+        {
+            "Name": "jnxYellowAlarmCount",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxYellowAlarmLastChange",
+            "Units": "Time"
+        },
+        {
+            "Name": "jnxRedAlarmCount",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxRedAlarmLastChange",
+            "Units": "Time"
+        }
+    ],
+    "PluginId": "snmp_network_device_alarm",
+    "PluginName": "snmp_network_device_alarm",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "1.3.6.1.4.1.2636.3.4.2"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

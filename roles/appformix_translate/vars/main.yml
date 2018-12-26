@@ -1,0 +1,9 @@
+---
+# Constants defined for the appformix_translate role.
+# These should not be overridden.
+
+appformix_translate_volumes:
+    - "{{ appformix_log_dir }}/translate/appformix/:/var/log/appformix"
+    - "{{ appformix_install_dir }}/etc:/etc/appformix"
+    - "/etc/hosts:/etc/dnsmasq/hosts"
+    - "/etc/resolv.conf:/etc/dnsmasq/resolv.conf"

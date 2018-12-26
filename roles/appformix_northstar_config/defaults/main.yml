@@ -1,0 +1,6 @@
+---
+northstar_user_name: "{{ lookup('env', 'NORTHSTAR_USERNAME') | default('', true) }}"
+northstar_password: "{{ lookup('env', 'NORTHSTAR_PASSWORD') | default('', true) }}"
+northstar_controller_url: "{{ lookup('env','NORTHSTAR_CONTROLLER_URL') | default('', true) }}"
+northstar_tenant_id: "{{ lookup('env','NORTHSTAR_TENANT_ID') | default('', true) }}"
+northstar_topology_id: "{{ lookup('env','NORTHSTAR_TOPOLOGY_ID') | default('', true) }}"

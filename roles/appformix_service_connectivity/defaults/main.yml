@@ -1,0 +1,2 @@
+---
+profile_post_url: "{{ appformix_vip_url }}/appformix/v1.0/service_group_config"

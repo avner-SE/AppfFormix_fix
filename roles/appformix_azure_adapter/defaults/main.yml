@@ -1,0 +1,6 @@
+---
+# Default values for the appformix_azure_adapter role.  These can be
+# overridden when including the role.
+appformix_azure_adapter_version: "{{ appformix_version }}"
+appformix_azure_adapter_state: "{{ appformix_state }}"
+appformix_azure_adapter_pull: "missing"

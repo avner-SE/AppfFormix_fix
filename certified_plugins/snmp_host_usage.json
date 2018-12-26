@@ -1,0 +1,95 @@
+{
+    "AggregateId": "appformix_platform",
+    "Collection": "snmp_host_pythonchecksnmppy_collection",
+    "Config": {
+        "CommandLine": "python check_snmp.py"
+    },
+    "MetricMap": [
+        {
+            "Name": "memory_swap_available",
+            "Units": "MB"
+        },
+        {
+            "Name": "memory_swap_available_percentage",
+            "Units": "%"
+        },
+        {
+            "Name": "memory_swap_used",
+            "Units": "MB"
+        },
+        {
+            "Name": "memory_swap_used_percentage",
+            "Units": "%"
+        },
+        {
+            "Name": "memory_available",
+            "Units": "MB"
+        },
+        {
+            "Name": "memory_available_percentage",
+            "Units": "%"
+        },
+        {
+            "Name": "memory_used",
+            "Units": "MB"
+        },
+        {
+            "Name": "memory_used_percentage",
+            "Units": "%"
+        },
+        {
+            "Name": "memory_shared",
+            "Units": "MB"
+        },
+        {
+            "Name": "memory_buffer",
+            "Units": "MB"
+        },
+        {
+            "Name": "memory_cached",
+            "Units": "MB"
+        },
+        {
+            "Name": "cpu_idle_percentage",
+            "Units": "%"
+        },
+        {
+            "Name": "cpu_used_percentage",
+            "Units": "%"
+        },
+        {
+            "Name": "cpu_user_percentage",
+            "Units": "%"
+        },
+        {
+            "Name": "cpu_system_percentage",
+            "Units": "%"
+        },
+        {
+            "Name": "cpu_interrupt",
+            "Units": "count/s"
+        },
+        {
+            "Name": "cpu_context_switch",
+            "Units": "count/s"
+        },
+        {
+            "Name": "disk_used",
+            "Units": "MB"
+        },
+        {
+            "Name": "disk_available",
+            "Units": "MB"
+        },
+        {
+            "Name": "disk_used_percentage",
+            "Units": "%"
+        }
+    ],
+    "PluginId": "pythonchecksnmppy",
+    "PluginName": "snmp",
+    "PluginType": "command",
+    "Scope": "snmp_host",
+    "State": "enabled",
+    "status": "success"
+}

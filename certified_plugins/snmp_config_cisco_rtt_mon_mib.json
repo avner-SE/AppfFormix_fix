@@ -1,0 +1,59 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_network_device_rtt_mon_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_cisco_rtt_mon_mib",
+        "EntityType": [
+            "network_device"
+        ],
+        "PluginPrefix": "rtt_mon"
+    },
+    "MetricMap": [
+        {
+            "Name": "rttMonApplMaxPacketDataSize",
+            "Units": "Bytes"
+        },
+        {
+            "Name": "rttMonApplNumCtrlAdminEntry",
+            "Units": "Count"
+        },
+        {
+            "Name": "rttMonApplReset",
+            "Units": "Count"
+        },
+        {
+            "Name": "rttMonApplPreConfigedReset",
+            "Units": "Count"
+        },
+        {
+            "Name": "rttMonApplProbeCapacity",
+            "Units": "Count"
+        },
+        {
+            "Name": "rttMonApplFreeMemLowWaterMark",
+            "Units": "Count"
+        },
+        {
+            "Name": "rttMonApplLatestSetError",
+            "Units": "Count"
+        },
+        {
+            "Name": "rttMonApplResponder",
+            "Units": "Count"
+        },
+        {
+            "Name": "rttMonApplLpdGrpStatsReset",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "snmp_network_device_rtt_mon",
+    "PluginName": "snmp_network_device_rtt_mon",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "1.3.6.1.4.1.9.9.42"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

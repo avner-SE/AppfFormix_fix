@@ -1,0 +1,25 @@
+---
+- name: Create logrotate directories
+  become: yes
+  file:
+    path: "{{appformix_log_rotate_dir}}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+    recurse: yes
+
+- name: Copy Container Logrotate Conf Files to Management host
+  become: yes
+  template:
+    src: "{{item}}"
+    dest: "{{appformix_log_rotate_dir}}/{{item}}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - nginx
+    - controller
+    - dashboard
+    - datamanager
+    - adapter

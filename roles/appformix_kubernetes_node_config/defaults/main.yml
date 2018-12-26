@@ -1,0 +1,1 @@
+appformix_manager_kubernetes_token_file: '/opt/appformix/manager/kubelet_token_file'

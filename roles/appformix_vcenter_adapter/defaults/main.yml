@@ -1,0 +1,5 @@
+---
+# Default values for the appformix_vcenter_adapter role.  These can be
+# overridden when including the role.
+appformix_vcenter_adapter_state: "{{ appformix_state }}"
+appformix_vcenter_adapter_pull: 'missing'

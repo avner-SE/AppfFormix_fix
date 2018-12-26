@@ -1,0 +1,38 @@
+
+---
+#
+# Configure AppFormix
+#
+# This playbook should not be called if appformix_state == 'absent'.
+#
+
+- hosts: appformix_controller
+  tags: [ appformix_controller ]
+  roles:
+    - appformix_defaults
+    - { role: appformix_standalone_config, when: appformix_state != 'absent' }
+
+# For standalone, appformix-controller is seeded with an value in
+# APPFORMIX_AUTH_CREATOR_TOKEN (Ansible value is 'master_auth_creator_token').
+# In appformix_standalone.yml, 'master_auth_creator_token' is set to
+# 'default_master_auth_creator_token' for both deploy.yml and
+# configure_standalone.yml sub-playbooks.  Then, 'master_auth_creator_token'
+# can be used to create the master auth token.  The master auth token is saved
+# in a file on AppFormix Platform host, and also stored in 'master_auth_token'
+# Ansible variable of appformix_controller host.
+#
+- hosts: appformix_controller
+  # Define master_auth_creator_token which is required for Master Auth Token
+  vars:
+    master_auth_creator_token: "{{ default_master_auth_creator_token }}"
+  tags: [ appformix_controller, appformix_config ]
+  roles:
+    - appformix_defaults
+    - { role: appformix_master_auth, when: appformix_state != 'absent',
+        auth_token: '{{ master_auth_creator_token }}', auth_type: 'appformix' }
+
+- include: configure_common.yml
+  vars:
+    auth_token: "{{ hostvars[groups['appformix_controller'][0]]['master_auth_token'] }}"
+    auth_type: "appformix"
+  when: appformix_state != 'absent'

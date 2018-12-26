@@ -1,0 +1,28 @@
+---
+# Install AppFormix dependencies
+#
+# Arguments:
+#   state: 'present' or 'absent' (Default: 'present')
+#
+# This playbook can also be used to uninstall dependencies that were installed
+# for AppFormix.  Please note that because some dependencies may have already
+# been installed before this playbook was used, you should check whether you
+# want these software packages uninstalled before using this playbook with
+# state=absent.
+#
+
+- hosts: appformix_controller
+  environment: "{{ prerequisites_env | default({}) }}"
+  roles:
+    - appformix_defaults
+    - { role: docker,
+        docker_state: '{{ state | default("present") }}',
+        tag: 'install_docker' }
+    - { role: nfx150_prerequisites,
+        when: nfx150 | length > 0 }
+
+- hosts: appformix_controller:appformix_network_agents
+  roles:
+    - appformix_defaults
+    - agentless_plugin_prerequisites
+    - jti_prerequisites

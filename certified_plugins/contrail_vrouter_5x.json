@@ -1,0 +1,106 @@
+{
+    "Collection": "server_contrail_vrouter_metrics_collection",
+    "Config": {
+        "CommandLine": "python check_contrail_vrouter_v5x.py"
+    },
+    "MetricMap": [
+        {
+            "Name": "aged_flows",
+            "Units": "count"
+        },
+        {
+            "Name": "total_flows",
+            "Units": "count"
+        },
+        {
+            "Name": "exception_packets",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_flow_queue_limit_exceeded",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_flow_table_full",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vlan_fwd_enq",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vlan_fwd_tx",
+            "Units": "count"
+        },
+        {
+            "Name": "flow_export_drops",
+            "Units": "count"
+        },
+        {
+            "Name": "flow_export_sampling_drops",
+            "Units": "count"
+        },
+        {
+            "Name": "flow_rate_active_flows",
+            "Units": "count"
+        },
+        {
+            "Name": "flow_rate_deleted_flows",
+            "Units": "count"
+        },
+        {
+            "Name": "flow_rate_added_flows",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_discard",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_pull",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_flow_no_memory",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_flow_invalid_protocol",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_flow_action_drop",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_interface_drop",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_duplicated",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_push",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_invalid_nh",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_invalid_protocol",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vhost_ds_drop_pkts",
+            "Units": "count"
+        }
+    ],
+    "PluginId": "pythoncheckcontrailvrouterv5xpy",
+    "PluginName": "contrail.vrouter.v5",
+    "PluginType": "command",
+    "Scope": "host",
+    "State": "enabled",
+    "status": "success"
+}

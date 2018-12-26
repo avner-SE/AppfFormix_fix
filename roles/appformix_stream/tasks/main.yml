@@ -1,0 +1,44 @@
+# Requires: Ansible 1.9.6
+#
+# User must be able to run Docker commands
+#
+# Parameters:
+#   appformix_docker_registry: specifies the host and port of a Docker Registry.
+#       If not defined or set to empty string, then images on the target Docker
+#       Engine will be used.  The latter is useful for development hosts where
+#       the image was built.
+#
+#   appformix_controller_version: version of the Controller image
+#
+---
+- name: Create AppFormix Stream log directories
+  file: path="{{item}}" state=directory mode=755
+  become: true
+  with_items:
+    - /var/log/appformix/stream/appformix
+    - /var/log/appformix/stream/nginx
+
+- name: Start AppFormix Stream container
+  docker:
+      name: appformix-stream
+      image: "{{ appformix_stream_image }}"
+      state: "{{ appformix_stream_state }}"
+      restart_policy: always
+      dns: ["127.0.0.1"]
+      net: "{{ appformix_network }}"
+      ports: "{{ appformix_stream_ports }}"
+      pull: "{{ appformix_stream_pull }}"
+      volumes: "{{ appformix_stream_volumes }}"
+      env:
+        APPFORMIX_STREAM: '1'
+        MONGO_HOST: "{{ appformix_mongo_host }}"
+        MONGO_PORT: "{{ appformix_mongo_port }}"
+        MONGO_USERNAME: "{{ appformix_mongo_username }}"
+        MONGO_PASSWORD: "{{ appformix_mongo_password }}"
+        MONGO_REPLICA_SET_NAME: "{{ appformix_mongo_replica_set }}"
+        REDIS_HOST: "{{ appformix_redis_host }}"
+        REDIS_PORT: "{{ appformix_redis_port }}"
+        REDIS_LOCAL_HOST: "{{ appformix_redis_local_host }}"
+        REDIS_LOCAL_PORT: "{{ appformix_redis_local_port }}"
+        REDIS_PASSWORD: "{{ appformix_redis_password }}"
+        APPFORMIX_AUTH_CREATOR_TOKEN: "{{master_auth_creator_token}}"

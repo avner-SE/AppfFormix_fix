@@ -1,0 +1,283 @@
+SNMP MIBs
+=========
+
+1. 
+
+OID :: "[u'1.3.6.1.4.1.9.9.42']"
+
+Name                                                                                Units
+====                                                                                =====
+rttMonApplMaxPacketDataSize                                                         Bytes
+rttMonApplNumCtrlAdminEntry                                                         Count
+rttMonApplReset                                                                     Count
+rttMonApplPreConfigedReset                                                          Count
+rttMonApplProbeCapacity                                                             Count
+rttMonApplFreeMemLowWaterMark                                                       Count
+rttMonApplLatestSetError                                                            Count
+rttMonApplResponder                                                                 Count
+rttMonApplLpdGrpStatsReset                                                          Count
+
+2. 
+
+OID :: "[u'1.3.6.1.4.1.9.9.42.1.1.8.1']"
+
+Name                                                                                Units
+====                                                                                =====
+rttMonApplSupportedProtocolsValid                                                   Number
+
+3. 
+
+OID :: "[u'1.3.6.1.4.1.9.2.1']"
+
+Name                                                                                Units
+====                                                                                =====
+freeMem                                                                             Bytes
+bufferElFree                                                                        Count
+bufferElMax                                                                         Count
+bufferElHit                                                                         Count
+bufferElMiss                                                                        Count
+bufferElCreate                                                                      Count
+bufferSmSize                                                                        Count
+bufferSmTotal                                                                       Count
+bufferSmFree                                                                        Count
+bufferSmMax                                                                         Count
+bufferSmHit                                                                         Count
+bufferSmMiss                                                                        Count
+bufferSmTrim                                                                        Count
+bufferSmCreate                                                                      Count
+bufferBgSize                                                                        Count
+bufferBgTotal                                                                       Count
+bufferBgFree                                                                        Count
+bufferBgMax                                                                         Count
+bufferBgHit                                                                         Count
+bufferBgMiss                                                                        Count
+bufferBgTrim                                                                        Count
+bufferBgCreate                                                                      Count
+bufferMdSize                                                                        Count
+bufferMdTotal                                                                       Count
+bufferMdFree                                                                        Count
+bufferMdMax                                                                         Count
+bufferMdHit                                                                         Count
+bufferMdMiss                                                                        Count
+bufferMdTrim                                                                        Count
+bufferMdCreate                                                                      Count
+bufferLgSize                                                                        Count
+bufferLgTotal                                                                       Count
+bufferLgFree                                                                        Count
+bufferLgMax                                                                         Count
+bufferLgHit                                                                         Count
+bufferLgMiss                                                                        Count
+bufferLgTrim                                                                        Count
+bufferLgCreate                                                                      Count
+busyPer                                                                             Count
+avgBusy1.0                                                                          Count
+avgBusy5.0                                                                          Count
+idleCount                                                                           Count
+idleWired                                                                           Count
+
+4. 
+
+OID :: "[u'NETWORK_DEVICE_SYSTEM_METRICS_MIB']"
+
+Name                                                                                Units
+====                                                                                =====
+hrSystemUptime                                                                      Seconds
+hrSystemInitialLoadDevice                                                           Count
+hrSystemNumUsers                                                                    Count
+hrSystemProcesses                                                                   Count
+hrSystemMaxProcesses                                                                Count
+hrMemorySize                                                                        KBytes
+
+5. 
+
+OID :: "[u'1.3.6.1.2.1.25.2']"
+
+Name                                                                                Units
+====                                                                                =====
+hrStorageUsed                                                                       Bytes
+hrStorageAllocationUnits                                                            Bytes
+hrStorageSize                                                                       Bytes
+hrStorageAllocationFailures                                                         Count
+
+6. 
+
+OID :: "[u'IF-MIB::ifXTable']"
+
+Name                                                                                Units
+====                                                                                =====
+ifHCInBroadcastPkts                                                                 Packets/s
+ifHCOutOctets                                                                       Octets/s
+ifHCOutUcastPkts                                                                    Packets/s
+ifHCInMulticastPkts                                                                 Packets/s
+ifHCInUcastPkts                                                                     Packets/s
+ifHCInOctets                                                                        Octets/s
+ifOutBroadcastPkts                                                                  Packets/s
+ifOutMulticastPkts                                                                  Packets/s
+ifInBroadcastPkts                                                                   Packets/s
+ifInMulticastPkts                                                                   Packets/s
+ifHighSpeed                                                                         Mbps
+ifHCOutMulticastPkts                                                                Packets/s
+ifHCOutBroadcastPkts                                                                Packets/s
+ifHCOutBandwidth                                                                    Mbps
+ifHCInBandwidth                                                                     Mbps
+ifHCInLinkUtilization                                                               %
+ifHCOutLinkUtilization                                                              %
+
+7. 
+
+OID :: "[u'IP-MIB::ipInReceives']"
+
+Name                                                                                Units
+====                                                                                =====
+ipInReceives                                                                        Count
+
+8. 
+
+OID :: "[u'IPV6-MIB::ipv6IfTable']"
+
+Name                                                                                Units
+====                                                                                =====
+ipv6IfOperStatus                                                                    Count
+ipv6IfReasmMaxSize                                                                  Count
+ipv6IfAdminStatus                                                                   Count
+ipv6IfIdentifierLength                                                              Count
+ipv6IfEffectiveMtu                                                                  Count
+
+9. 
+
+OID :: "[u'enterprises.2636.3.39.1.12']"
+
+Name                                                                                Units
+====                                                                                =====
+jnxJsSPUMonitoringFPCIndex                                                          Count
+jnxJsSPUMonitoringSPUIndex                                                          Count
+jnxJsSPUMonitoringCPUUsage                                                          Percent
+jnxJsSPUMonitoringMemoryUsage                                                       Percent
+jnxJsSPUMonitoringCurrentFlowSession                                                Count
+jnxJsSPUMonitoringMaxFlowSession                                                    Count
+jnxJsSPUMonitoringCurrentCPSession                                                  Count
+jnxJsSPUMonitoringMaxCPSession                                                      Count
+jnxJsSPUMonitoringNodeIndex                                                         Count
+jnxJsSPUMonitoringFlowSessIPv4                                                      Count
+jnxJsSPUMonitoringFlowSessIPv6                                                      Count
+jnxJsSPUMonitoringCPSessIPv4                                                        Count
+jnxJsSPUMonitoringCPSessIPv6                                                        Count
+jnxJsSPUMonitoringCurrentTotalSession                                               Count
+jnxJsSPUMonitoringMaxTotalSession                                                   Count
+jnxJsClusterMonitoringNodeIndex                                                     Count
+jnxJsNodeCurrentTotalSession                                                        Count
+jnxJsNodeMaxTotalSession                                                            Count
+jnxJsNodeSessionCreationPerSecond                                                   Count
+jnxJsNodeSessCreationPerSecIPv4                                                     Count
+jnxJsNodeSessCreationPerSecIPv6                                                     Count
+jnxJsNodeCurrentTotalSessIPv4                                                       Count
+jnxJsNodeCurrentTotalSessIPv6                                                       Count
+jnxJsSPUMonitoringTotalSessIPv4                                                     Count
+jnxJsSPUMonitoringTotalSessIPv6                                                     Count
+
+10. 
+
+OID :: "[u'1.3.6.1.4.1.2636.3.4.2']"
+
+Name                                                                                Units
+====                                                                                =====
+jnxYellowAlarmCount                                                                 Count
+jnxYellowAlarmLastChange                                                            Time
+jnxRedAlarmCount                                                                    Count
+jnxRedAlarmLastChange                                                               Time
+
+11. 
+
+OID :: "[u'enterprises.2636.3.1.13.1']"
+
+Name                                                                                Units
+====                                                                                =====
+jnxOperating1MinLoadAvg                                                             Count
+jnxOperating15MinLoadAvg                                                            Count
+jnxOperatingMemory                                                                  MB
+jnxOperatingHeap                                                                    MB
+jnxOperatingBuffer                                                                  MB
+jnxOperatingDRAMSize                                                                MB
+jnxOperatingTemp                                                                    C
+jnxOperatingState                                                                   Number
+jnxOperatingCPU                                                                     %
+
+12. 
+
+OID :: "[u'JUNIPER-FIREWALL-MIB::jnxFWCounterDisplayFilterName']"
+
+Name                                                                                Units
+====                                                                                =====
+jnxFWCounterPacketCount                                                             Packets
+jnxFWCounterByteCount                                                               Bytes
+
+13. 
+
+OID :: "[u'JUNIPER-IPv6-MIB::jnxIpv6StatsReceives']"
+
+Name                                                                                Units
+====                                                                                =====
+jnxIpv6StatsReceives                                                                Count
+
+14. 
+
+OID :: "[u'JUNIPER-PFE-MIB::jnxPfeMemoryUkernFreePercent']"
+
+Name                                                                                Units
+====                                                                                =====
+jnxPfeMemoryUkernFreePercent                                                        Count
+
+15. 
+
+OID :: "[u'JUNIPER-SUBSCRIBER-MIB::jnxSubscriberTotalCount']"
+
+Name                                                                                Units
+====                                                                                =====
+jnxSubscriberTotalCount                                                             Count
+
+16. 
+
+OID :: "[u'TCP-MIB::tcp']"
+
+Name                                                                                Units
+====                                                                                =====
+tcpMaxConn                                                                          Count
+tcpActiveOpens                                                                      Count
+tcpPassiveOpens                                                                     Count
+tcpAttemptFails                                                                     Count
+tcpEstabResets                                                                      Count
+tcpCurrEstab                                                                        Count
+tcpInSegs                                                                           Count
+tcpOutSegs                                                                          Count
+tcpRetransSegs                                                                      Count
+tcpInErrs                                                                           Count
+tcpOutRsts                                                                          Count
+
+17. 
+
+OID :: "[u'UCD-SNMP-MIB::memory']"
+
+Name                                                                                Units
+====                                                                                =====
+memIndex                                                                            Count
+memTotalSwap                                                                        Count
+memAvailSwap                                                                        Count
+memTotalReal                                                                        Count
+memAvailReal                                                                        Count
+memTotalFree                                                                        Count
+memMinimumSwap                                                                      Count
+memShared                                                                           Count
+memBuffer                                                                           Count
+memCached                                                                           Count
+memSwapError                                                                        Count
+
+18. 
+
+OID :: "[u'UDP-MIB::udp']"
+
+Name                                                                                Units
+====                                                                                =====
+udpInDatagrams                                                                      Count
+udpNoPorts                                                                          Count
+udpInErrors                                                                         Count
+udpOutDatagrams                                                                     Count

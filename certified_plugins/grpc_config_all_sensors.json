@@ -1,0 +1,1698 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "grpc_usage_collection",
+    "MetricMap": [],
+    "PluginId": "grpc_network_device",
+    "PluginName": "grpc_network_device",
+    "PluginType": "control_plane",
+    "Scope": "grpc_network_device",
+    "State": "enabled",
+    "Config": {
+        "SensorMap": {
+            "/arp-information/ipv4/neighbors/neighbor/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_arp_information_sensor",
+                "EntityType": ["neighbor"],
+                "Collection": "grpc_config_arp_information_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "seconds",
+                        "Name": "expiry"
+                    }
+                ]
+            },
+            "/bgp-rib/afi-safis/afi-safi/ipv4-unicast/loc-rib/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_bgp_ipv4_local_rib_sensor",
+                "EntityType": ["network_device"],
+                "Collection": "grpc_config_bgp_ipv4_local_rib_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "Count",
+                        "Name": "num-routes"
+                    }
+                ]
+            },
+            "/bgp-rib/afi-safis/afi-safi/ipv6-unicast/loc-rib/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_bgp_ipv6_local_rib_sensor",
+                "EntityType": ["network_device"],
+                "Collection": "grpc_config_bgp_ipv6_local_rib_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "Count",
+                        "Name": "num-routes"
+                    }
+                ]
+            },
+            "/bgp-rib/afi-safis/afi-safi/ipv4-unicast/neighbors/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_bgp_ipv4_neighbors_rib_sensor",
+                "EntityType": ["neighbor"],
+                "Collection": "grpc_config_bgp_ipv4_neighbors_rib_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "Count",
+                        "Name": "adj-rib-in-pre.num-routes"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "adj-rib-out-pre.num-routes"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "adj-rib-in-post.num-routes"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "adj-rib-out-post.num-routes"
+                    }
+                ]
+            },
+            "/bgp-rib/afi-safis/afi-safi/ipv6-unicast/neighbors/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_bgp_ipv6_neighbors_rib_sensor",
+                "EntityType": ["neighbor"],
+                "Collection": "grpc_config_bgp_ipv6_neighbors_rib_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "Count",
+                        "Name": "adj-rib-in-pre.num-routes"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "adj-rib-out-pre.num-routes"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "adj-rib-in-post.num-routes"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "adj-rib-out-post.num-routes"
+                    }
+                ]
+            },
+            "/components/": {
+                "ConfigFile": "grpc_config_components_sensor",
+                "Collection": "grpc_config_components_sensor_collection",
+                "EntityType": ["fpc", "pic", "power", "fan", "routing_engine"],
+                "SensorType": "normal",
+                "MetricMap": [
+                    {
+                        "Name": "temperature",
+                        "Units": "Celsius"
+                    },
+                    {
+                        "Name": "temperature-cpu",
+                        "Units": "Celsius"
+                    },
+                    {
+                        "Name": "temperature-intake",
+                        "Units": "Celsius"
+                    },
+                    {
+                        "Name": "cpu-utilization-user",
+                        "Units": "%"
+                    },
+                    {
+                        "Name": "cpu-utilization-background",
+                        "Units": "%"
+                    },
+                    {
+                        "Name": "cpu-utilization-interrupt",
+                        "Units": "%"
+                    },
+                    {
+                        "Name": "cpu-utilization-kernel",
+                        "Units": "%"
+                    },
+                    {
+                        "Name": "cpu-utilization-idle",
+                        "Units": "%"
+                    },
+                    {
+                        "Name": "cpu-utilization-total",
+                        "Units": "%"
+                    },
+                    {
+                        "Name": "memory-utilization-buffer",
+                        "Units": "MB"
+                    },
+                    {
+                        "Name": "memory-utilization-heap",
+                        "Units": "MB"
+                    },
+                    {
+                        "Name": "memory-dram-installed",
+                        "Units": "MB"
+                    },
+                    {
+                        "Name": "memory-dram-used",
+                        "Units": "MB"
+                    }
+                ]
+            },
+            "/interfaces/": {
+                "ConfigFile": "grpc_config_interface_sensor",
+                "Collection": "grpc_config_interface_sensor_collection",
+                "EntityType": ["interface", "queue"],
+                "SensorType": "normal",
+                "MetricMap": [
+                    {
+                        "Name": "oper-status",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "admin-status",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "in-octets",
+                        "Units": "Octets/s"
+                    },
+                    {
+                        "Name": "in-pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "out-octets",
+                        "Units": "Octets/s"
+                    },
+                    {
+                        "Name": "out-pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "out-multicast-pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "out-broadcast-pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "out-unicast-pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "carrier-transitions",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "out-errors",
+                        "Units": "Error/s"
+                    },
+                    {
+                        "Name": "queue.pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "queue.bytes",
+                        "Units": "Bytes/s"
+                    },
+                    {
+                        "Name": "queue.allocated-buffer-size",
+                        "Units": "Bytes"
+                    }
+                ]
+            },
+            "/junos/npu-memory/": {
+              "SensorType": "normal",
+                "ConfigFile": "grpc_config_junos_npu_memory_sensor",
+                "EntityType": ["fpc"],
+                "Collection": "grpc_config_junos_npu_memory_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Name": "mem-util-size",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "mem-util-allocated",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "mem-util-utilization",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "mem-util-bytes-allocated",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "mem-util-allocation-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "mem-util-free-count",
+                        "Units": "Count"
+                    }
+                ]
+            },
+            "/junos/rsvp-interface-information/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_rsvp_interface",
+                "EntityType": ["interface", "rsvp_message"],
+                "Collection": "grpc_config_rsvp_interface_collection",
+                "MetricMap": [
+                    {
+                        "Name": "authentication-flag",
+                        "Units": "boolean"
+                    },
+                    {
+                        "Name": "aggregate-flag",
+                        "Units": "boolean"
+                    },
+                    {
+                        "Name": "protect-flag",
+                        "Units": "boolean"
+                    },
+                    {
+                        "Name": "message-statistics-messages-sent",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "message-statistics-messages-received",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "message-statistics-messages-sent-5seconds",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "message-statistics-messages-received-5seconds",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "bandwidth-priority-0-total-reserved-bandwidth",
+                        "Units": "bps"
+                    },
+                    {
+                        "Name": "bandwidth-priority-1-total-reserved-bandwidth",
+                        "Units": "bps"
+                    },
+                    {
+                        "Name": "bandwidth-priority-2-total-reserved-bandwidth",
+                        "Units": "bps"
+                    },
+                    {
+                        "Name": "bandwidth-priority-3-total-reserved-bandwidth",
+                        "Units": "bps"
+                    },
+                    {
+                        "Name": "bandwidth-priority-4-total-reserved-bandwidth",
+                        "Units": "bps"
+                    },
+                    {
+                        "Name": "bandwidth-priority-5-total-reserved-bandwidth",
+                        "Units": "bps"
+                    },
+                    {
+                        "Name": "bandwidth-priority-6-total-reserved-bandwidth",
+                        "Units": "bps"
+                    },
+                    {
+                        "Name": "bandwidth-priority-7-total-reserved-bandwidth",
+                        "Units": "bps"
+                    }
+                ]
+            },
+            "/junos/services/label-switched-path/usage/": {
+                "ConfigFile": "grpc_config_lsp_sensor",
+                "Collection": "grpc_config_lsp_sensor_collection",
+                "EntityType": ["lsp"],
+                "SensorType": "normal",
+                "MetricMap": [
+                    {
+                        "Name": "mpls_lsps_constrained-path_tunnels_tunnel_packets",
+                        "Units": "packets/s"
+                    },
+                    {
+                        "Name": "mpls_lsps_constrained-path_tunnels_tunnel_bytes",
+                        "Units": "bytes/s"
+                    }
+                ]
+            },
+            "/junos/services/segment-routing/interface/egress/usage/": {
+                "ConfigFile": "grpc_config_segment_routing_egress_usage",
+                "Collection": "grpc_config_segment_routing_egress_usage_collection",
+                "EntityType": ["segment_routing"],
+                "SensorType": "normal",
+                "MetricMap": [
+                    {
+                        "Name": "mpls_signalling-protocols_segment-routing_interfaces_interface_out-pkts",
+                        "Units": "packets/s"
+                    },
+                    {
+                        "Name": "mpls_signalling-protocols_segment-routing_interfaces_interface_out-octets",
+                        "Units": "bytes/s"
+                    }
+                ]
+            },
+            "/junos/services/segment-routing/interface/ingress/usage/": {
+                "ConfigFile": "grpc_config_segment_routing_ingress_usage",
+                "Collection": "grpc_config_segment_routing_ingress_usage_collection",
+                "EntityType": ["segment_routing"],
+                "SensorType": "normal",
+                "MetricMap": [
+                    {
+                        "Name": "mpls_signalling-protocols_segment-routing_interfaces_interface_in-pkts",
+                        "Units": "packets/s"
+                    },
+                    {
+                        "Name": "mpls_signalling-protocols_segment-routing_interfaces_interface_in-octets",
+                        "Units": "bytes/s"
+                    }
+                ]
+            },
+            "/junos/services/segment-routing/sid/usage/": {
+                "ConfigFile": "grpc_config_segment_routing_sid_usage",
+                "Collection": "grpc_config_segment_routing_sid_usage_collection",
+                "EntityType": ["segment_routing"],
+                "SensorType": "normal",
+                "MetricMap": [
+                    {
+                        "Name": "mpls_signalling-protocols_segment-routing_aggregate-sid-counters_aggregate-sid-counter_in-pkts",
+                        "Units": "packets/s"
+                    }
+                ]
+            },
+            "/junos/system/linecard/cpu/memory/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_linecard_cpu_memory_sensor",
+                "EntityType": ["kernel"],
+                "Collection": "grpc_config_linecard_cpu_memory_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Name": "mem-util-size",
+                        "Units": "bytes"
+                    },
+                    {
+                        "Name": "mem-util-allocated",
+                        "Units": "bytes"
+                    },
+                    {
+                        "Name": "mem-util-utilization",
+                        "Units": "%"
+                    },
+                    {
+                        "Name": "mem-util-allocations",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "mem-util-frees",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "mem-util-failed",
+                        "Units": "Count"
+                    }
+                ]
+            },
+            "/junos/system/linecard/firewall/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_firewall_sensor",
+                "EntityType": ["firewall"],
+                "Collection": "grpc_config_firewall_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Name": "memory-usage.heap.allocated",
+                        "Units": "bytes"
+                    }
+                ]
+            },
+            "/junos/system/linecard/interface/": {
+                "ConfigFile": "grpc_config_interface_sensor",
+                "Collection": "grpc_config_interface_sensor_collection",
+                "EntityType": ["interface", "queue"],
+                "SensorType": "normal",
+                "MetricMap": [
+                    {
+                        "Name": "oper-status",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "admin-status",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "in-octets",
+                        "Units": "Octets/s"
+                    },
+                    {
+                        "Name": "in-pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "out-octets",
+                        "Units": "Octets/s"
+                    },
+                    {
+                        "Name": "out-pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "out-multicast-pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "out-broadcast-pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "out-unicast-pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "carrier-transitions",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "out-errors",
+                        "Units": "Error/s"
+                    },
+                    {
+                        "Name": "queue.pkts",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "queue.bytes",
+                        "Units": "Bytes/s"
+                    },
+                    {
+                        "Name": "queue.allocated-buffer-size",
+                        "Units": "Bytes"
+                    }
+                ]
+            },
+            "/junos/system/linecard/intf-exp/":{
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_intf_exp_sensor",
+                "EntityType": ["interface"],
+                "Collection": "grpc_config_intf_exp_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "Count",
+                        "Name": "oper-status"
+                    }
+                ]
+            },
+            "/junos/system/linecard/npu/memory/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_linecard_npu_memory_sensor",
+                "EntityType": ["fpc"],
+                "Collection": "grpc_config_linecard_npu_memory_sensor_collection",
+                "MetricMap": [
+                     {
+                         "Name": "mem-util-size",
+                         "Units": "bytes"
+                     },
+                     {
+                         "Name": "mem-util-allocated",
+                         "Units": "bytes"
+                     },
+                     {
+                         "Name": "mem-util-utilization",
+                         "Units": "%"
+                     },
+                     {
+                         "Name": "mem-util-bytes-allocated",
+                         "Units": "bytes"
+                     },
+                     {
+                         "Name": "mem-util-allocation-count",
+                         "Units": "Count"
+                     },
+                     {
+                         "Name": "mem-util-free-count",
+                         "Units": "Count"
+                     }
+                ]
+            },
+            "/junos/system/linecard/npu/utilization/":{
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_npu_utilization_sensor",
+                "EntityType": ["fpc"],
+                "Collection": "grpc_config_npu_utilization_sensor_collection",
+                "MetricMap": [
+                {
+                        "Name": "util-metric",
+                        "Units": "Count"
+                },
+                {
+                        "Name": "util-average-util",
+                        "Units": "Byte"
+                },
+                {
+                        "Name": "util-highest-util",
+                        "Units": "Byte"
+                },
+                {
+                        "Name": "util-lowest-util",
+                        "Units": "Byte"
+                },
+                {
+                        "Name": "util-average-cache-hit-rate",
+                        "Units": "%'"
+                },
+                {
+                        "Name": "util-highest-cache-hit-rate",
+                        "Units": "%'"
+                },
+                {
+                        "Name": "util-lowest-cache-hit-rate",
+                        "Units": "%'"
+                },
+                {
+                        "Name": "util-disp-0-pkts-rate",
+                        "Units": "Packets/s"
+                },
+                {
+                        "Name": "util-disp-1-pkts-rate",
+                        "Units": "Packets/s"
+                },
+                {
+                        "Name": "util-disp-2-pkts-rate",
+                        "Units": "Packets/s"
+                },
+                {
+                        "Name": "util-disp-3-pkts-rate",
+                        "Units": "Packets/s"
+                }
+                ]
+            },
+            "/junos/system/linecard/optics/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_optics_sensor",
+                "EntityType": ["interface"],
+                "Collection": "grpc_config_optics_sensor_collection",
+                "MetricMap": [
+                     {
+                         "Name": "optics_type",
+                         "Units": "Count"
+                     },
+                     {
+                         "Name": "module_temp",
+                         "Units": "C"
+                     },
+                     {
+                         "Name": "module_temp_high_alarm_threshold",
+                         "Units": "C"
+                     },
+                     {
+                         "Name": "module_temp_low_alarm_threshold",
+                         "Units": "C"
+                     },
+                     {
+                         "Name": "module_temp_high_warning_threshold",
+                         "Units": "C"
+                     },
+                     {
+                         "Name": "module_temp_low_warning_threshold",
+                         "Units": "C"
+                     },
+                     {
+                         "Name": "laser_output_power_high_alarm_threshold_dbm",
+                         "Units": "dbm"
+                     },
+                     {
+                         "Name": "laser_output_power_low_alarm_threshold_dbm",
+                         "Units": "dbm"
+                     },
+                     {
+                         "Name": "laser_output_power_high_warning_threshold_dbm",
+                         "Units": "dbm"
+                     },
+                     {
+                         "Name": "laser_output_power_low_warning_threshold_dbm",
+                         "Units": "dbm"
+                     },
+                     {
+                         "Name": "laser_rx_power_high_alarm_threshold_dbm",
+                         "Units": "dbm"
+                     },
+                     {
+                         "Name": "laser_rx_power_low_alarm_threshold_dbm",
+                         "Units": "dbm"
+                     },
+                     {
+                         "Name": "laser_rx_power_high_warning_threshold_dbm",
+                         "Units": "dbm"
+                     },
+                     {
+                         "Name": "laser_rx_power_low_warning_threshold_dbm",
+                         "Units": "dbm"
+                     },
+                     {
+                         "Name": "laser_bias_current_high_alarm_threshold",
+                         "Units": "mA"
+                     },
+                     {
+                         "Name": "laser_bias_current_low_alarm_threshold",
+                         "Units": "mA"
+                     },
+                     {
+                         "Name": "laser_bias_current_high_warning_threshold",
+                         "Units": "mA"
+                     },
+                     {
+                         "Name": "laser_bias_current_low_warning_threshold",
+                         "Units": "mA"
+                     },
+                     {
+                         "Name": "module_temp_high_alarm",
+                         "Units": "C"
+                     },
+                     {
+                         "Name": "module_temp_low_alarm",
+                         "Units": "C"
+                     },
+                     {
+                         "Name": "module_temp_high_warning",
+                         "Units": "C"
+                     },
+                     {
+                         "Name": "module_temp_low_warning",
+                         "Units": "C"
+                     },
+                     {
+                         "Name": "lane_number",
+                         "Units": "Count"
+                     },
+                     {
+                         "Name": "lane_laser_temperature",
+                         "Units": "C"
+                     },
+                     {
+                         "Name": "lane_laser_output_power_dbm",
+                         "Units": "dbm"
+                     },
+                     {
+                         "Name": "lane_laser_receiver_power_dbm",
+                         "Units": "dbm"
+                     },
+                     {
+                         "Name": "lane_laser_bias_current",
+                         "Units": "mA"
+                     },
+                     {
+                         "Name": "lane_laser_output_power_high_alarm",
+                         "Units": "mW"
+                     },
+                     {
+                         "Name": "lane_laser_output_power_low_alarm",
+                         "Units": "mW"
+                     },
+                     {
+                         "Name": "lane_laser_output_power_high_warning",
+                         "Units": "mW"
+                     },
+                     {
+                         "Name": "lane_laser_output_power_low_warning",
+                         "Units": "mW"
+                     },
+                     {
+                         "Name": "lane_laser_receiver_power_high_alarm",
+                         "Units": "mW"
+                     },
+                     {
+                         "Name": "lane_laser_receiver_power_low_alarm",
+                         "Units": "mW"
+                     },
+                     {
+                         "Name": "lane_laser_receiver_power_high_warning",
+                         "Units": "mW"
+                     },
+                     {
+                         "Name": "lane_laser_receiver_power_low_warning",
+                         "Units": "mW"
+                     },
+                     {
+                         "Name": "lane_laser_bias_current_high_alarm",
+                         "Units": "mA"
+                     },
+                     {
+                         "Name": "lane_laser_bias_current_low_alarm",
+                         "Units": "mA"
+                     },
+                     {
+                         "Name": "lane_laser_bias_current_high_warning",
+                         "Units": "mA"
+                     },
+                     {
+                         "Name": "lane_laser_bias_current_low_warning",
+                         "Units": "mA"
+                     },
+                     {
+                         "Name": "lane_tx_loss_of_signal_alarm",
+                         "Units": "Count"
+                     },
+                     {
+                         "Name": "lane_rx_loss_of_signal_alarm",
+                         "Units": "Count"
+                     },
+                     {
+                         "Name": "lane_tx_laser_disabled_alarm",
+                         "Units": "Count"
+                     }
+                ]
+            },
+            "/junos/system/linecard/packet/usage/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_pkt_usage_sensor",
+                "EntityType": ["components"],
+                "Collection": "grpc_config_pkt_usage_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Name": "ts-input-packets",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "ts-output-packets",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "ts-fabric-input-packets",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "ts-fabric-input-packets-pps",
+                        "Units": "pps"
+                    },
+                    {
+                        "Name": "ts-fabric-output-packets",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "ts-fabric-output-packets-pps",
+                        "Units": "pps"
+                    },
+                    {
+                        "Name": "lpbk-packets",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "lpbk-packets-bytes",
+                        "Units": "bytes"
+                    },
+                    {
+                        "Name": "lpbk-packets-pps",
+                        "Units": "pps"
+                    },
+                    {
+                        "Name": "lpbk-packets-bps",
+                        "Units": "bps"
+                    },
+                    {
+                        "Name": "hwds-normal",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "hwds-fabric",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "ts-input-packets",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "ts-input-packets-pps",
+                        "Units": "pps"
+                    },
+                    {
+                        "Name": "ts-output-packets",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "ts-fabric-input-packets",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "ts-fabric-input-packets-pps",
+                        "Units": "pps"
+                    },
+                    {
+                        "Name": "ts-fabric-output-packets",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "ts-fabric-output-packets-pps",
+                        "Units": "pps"
+                    },
+                    {
+                        "Name": "lpbk-packets",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "lpbk-packets-bytes",
+                        "Units": "bytes"
+                    },
+                    {
+                        "Name": "lpbk-packets-pps",
+                        "Units": "pps"
+                    },
+                    {
+                        "Name": "lpbk-packets-bps",
+                        "Units": "bps"
+                    },
+                    {
+                        "Name": "hwds-normal",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "hwds-fabric",
+                        "Units": "Count"
+                    }
+                ]
+            },
+            "/junos/system/linecard/qmon-sw/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_qmon_sw_sensor",
+                "EntityType": [
+                    "queue"
+                ],
+                "Collection": "grpc_config_qmon_sw_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "Count/s",
+                        "Name": "egress.packets"
+                    },
+                    {
+                        "Units": "Bytes/s",
+                        "Name": "egress.bytes"
+                    }
+                ]
+            },
+            "/junos/system/subscriber-management/client-protocols/dhcp/v6/": {
+                "ConfigFile": "grpc_config_dhcp6_sensor",
+                "Collection": "grpc_config_dhcp6_sensor_collection",
+                "EntityType": ["network_device"],
+                "SensorType": "normal",
+                "MetricMap": [
+                    {
+                        "Name": "dropped-total",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "dropped-bad-read",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "dropped-short-packet",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "dropped-no-interface",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "dropped-no-routing-instance",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "dropped-no-safd",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "dropped-no-memory",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "dropped-recovery-in-progress",
+                        "Units": "Count"
+                    }
+                ]
+            },
+            "/junos/system/subscriber-management/client-protocols/dhcp/v4/": {
+                "ConfigFile": "grpc_config_dhcp4_sensor",
+                "Collection": "grpc_config_dhcp4_sensor_collection",
+                "EntityType": ["dhcp", "network_device"],
+                "SensorType": "normal",
+                "MetricMap": [
+                  {
+                      "Name": "dropped-total",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-bad-read",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-short-packet",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-no-interface",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-no-routing-instance",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-no-memory",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-recovery-in-progress",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-total",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-bad-hware",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-bootp-pkt",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-bad-bootp-opcode",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-bad-options",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-bad-address",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-no-address",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-no-interface-cfg",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-no-local-address",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-short-pkt",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-no-bad-send",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-no-option60",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-no-option82",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-authentication",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-dynamic-profile",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-no-license",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-no-bad-dhcp-opcode",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-no-options",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-hop-limit",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-ttl-expired",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-bad_udp-checksum",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-inactive-vlan",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-era-start-failed",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-client-lookup",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4server-lease-time-violation",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "offer-delayed",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "offer-delay-in-progress",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "offer-delay-total",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4server-boot-request",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4server-decline",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4server-discover",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4server-inform",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4server-release",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4server-request",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4server-renew",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4server-rebind",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4server-lease-query",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4server-bulklease-query",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4server-boot-reply",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4server-offer",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4server-boot-ack",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4server-nak",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4server-force-renew",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4server-unassigned",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4server-unknown",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4server-active",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4server-query-done",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4server-binding",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4server-init",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4server-bound",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4server-selecting",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4server-requesting",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4server-renew",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4server-release",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-server-restoring",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-total",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-bad-hardware",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-bootp-packet",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-bootp-packet",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-bad-bootp-opcode",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-bad-address",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-no-address",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-no-interface-cfg",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-no-local-address",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-short-packet",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-bad-send",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-option-60",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-relay-option",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-option-82",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-authentication",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-dynamic-profile",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-license",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-bad-dhcp-opcode",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-no-options",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-hop-limit",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-ttl-expired",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-bad-udp-checksum",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-inactive-vlan",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-era-start-failed",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-client-lookup",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-proxy-no-server-addr",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-lease-time-violation",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-leasequery-repl-no-circuitid",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-leasequery-repl-with-error-code",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-leasequery-repl-with-query-term",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-older-leasequery-reply",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-abort-leasequery-reply-proc",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-during-leasequery-reply",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "dropped-v4relay-relay-source-no-lpbk-interface",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "v4relay-bootp-request-rcvd",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-decline",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-discover",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-inform",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-release",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-request",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-leaseactive",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-leaseunassigned",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-leaseunknown",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-leasequerydone",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "v4relay-bootp-reply-rcvd",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-offer",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-ack",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-nak",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-recv-v4relay-forcerenew",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "v4relay-bootp-reply-sent",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4relay-decline",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4relay-discover",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4relay-inform",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4relay-release",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "msg-sent-v4relay-request",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "v4relay-bootp-forwarded-total",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "v4relay-bootp-request-fwd",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "v4relay-bootp-reply-fwd",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4relay-binding",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4relay-init",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4relay-bound",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4relay-selecting",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4relay-requesting",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4relay-renew",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4relay-release",
+                      "Units": "Count"
+                  },
+                  {
+                      "Name": "binding-state-v4relay-restoring",
+                      "Units": "Count"
+                  }
+                ]
+            },
+            "/junos/system/subscriber-management/infra/sdb/statistics/": {
+                "ConfigFile": "grpc_config_sdb_stats_sensor",
+                "Collection": "grpc_config_sdb_stats_sensor_collection",
+                "EntityType": ["network_device"],
+                "SensorType": "normal",
+                "MetricMap": [
+                    {
+                        "Name": "active-state-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "configured-state-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "dhcp-client-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "dhcp-client-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "essm-client-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "init-state-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "l2tp-client-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "mlppp-client-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "ppp-client-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "pppoe-client-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "static-client-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "terminated-state-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "terminating-state-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "total-client-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "total-state-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "vlan-client-count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "vpls-pw-client-count",
+                        "Units": "Count"
+                    }
+                ]
+            },
+            "/junos/task-memory-information/task-memory-overall-report/task-memory-stats-list/task-memory-stats/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_task_memory_information_tms_sensor",
+                "EntityType": ["network_device"],
+                "Collection": "grpc_config_task_memory_information_tms_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "Count",
+                        "Name": "tms-allocs"
+                    },
+                    {
+                        "Units": "bytes",
+                        "Name": "tms-alloc-bytes"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "tms-max-allocs"
+                    },
+                    {
+                        "Units": "bytes",
+                        "Name": "tms-max-bytes"
+                    }
+                ]
+            },
+            "/junos/task-memory-information/task-memory-overall-report/task-size-block-list/task-size-block/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_task_memory_information_tsb_sensor",
+                "EntityType": ["network_device"],
+                "Collection": "grpc_config_task_memory_information_tsb_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "Count",
+                        "Name": "tsb-size"
+                    },
+                    {
+                        "Units": "bytes",
+                        "Name": "tsb-alloc-bytes"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "tsb-allocs"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "tsb-max-allocs"
+                    },
+                    {
+                        "Units": "bytes",
+                        "Name": "tsb-max-bytes"
+                    },
+                    {
+                        "Units": "bytes",
+                        "Name": "tsb-free-bytes"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "tlv-discard"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "tlv-unknown"
+                    }
+                  ]
+            },
+            "/lacp/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_lacp",
+                "EntityType": [
+                    "interface"
+                ],
+                "Collection": "grpc_config_lacp_collection",
+                "MetricMap": [
+                    {
+                        "Name": "lacp-rx-errors",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "lacp-errors",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "lacp-unknown-errors",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "lacp-tx-errors",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "lacp-in-pkts",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "lacp-out-pkts",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "distributing",
+                        "Units": "boolean"
+                    },
+                    {
+                        "Name": "aggregatable",
+                        "Units": "boolean"
+                    },
+                    {
+                        "Name": "collecting",
+                        "Units": "boolean"
+                    }
+                ]
+            },
+            "/lldp/interfaces/interface/neighbors/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_lldp_neighbor_sensor",
+                "EntityType": ["network_device"],
+                "Collection": "grpc_config_lldp_neighbor_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "seconds",
+                        "Name": "age"
+                    }
+                ]
+            },
+            "/lldp/interfaces/interface/state/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_lldp_interface_state_sensor",
+                "EntityType": ["interface"],
+                "Collection": "grpc_config_lldp_interface_state_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "Count",
+                        "Name": "enabled"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "frame-in"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "frame-out"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "frame-error-in"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "frame-error-out"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "frame-discard"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "tlv-discard"
+                    },
+                    {
+                        "Units": "Count",
+                        "Name": "tlv-unknown"
+                    }
+                ]
+            },
+            "/nd6-information/": {
+                "SensorType": "normal",
+                "ConfigFile": "grpc_config_nd6_information_sensor",
+                "EntityType": ["neighbor"],
+                "Collection": "grpc_config_nd6_information_sensor_collection",
+                "MetricMap": [
+                    {
+                        "Units": "seconds",
+                        "Name": "expiry"
+                    }
+                ]
+            }
+        }
+    }
+}

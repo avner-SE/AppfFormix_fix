@@ -1,0 +1,103 @@
+---
+# Install AppFormix components on the Management host
+#
+# Arguments:
+#   appformix_ssl_cert : path to SSL certificate file (optional)
+#   appformix_ssl_key  : path to SSL private key file (optional)
+#   appformix_license  : path to AppFormix license file (optional)
+#
+# To enable HTTPS protocol for REST APIs, pass an SSL certificate
+# and private key as arguments when running this playbook (e.g.,
+# "-e 'appformix_ssl_cert=...' -e 'appformix_ssl_key=...'")
+#
+- include: prerequisites.yml
+  tags: ['prerequisites']
+  vars:
+    state: present
+
+- hosts: appformix_controller
+  vars:
+    appformix_images:
+      - "{{ appformix_controller_image }}"
+      - "{{ appformix_dashboard_image }}"
+      - "{{ appformix_datamanager_image }}"
+      - "{{ appformix_azure_adapter_image }}"
+  roles:
+    - appformix_defaults
+    - appformix_filesystem
+    - {role: appformix_network, when: appformix_state != 'absent' }
+    - {role: appformix_docker_images, when: appformix_state != 'absent' }
+    - appformix_translate
+
+- hosts: appformix_controller
+  tags: appformix_controller
+  vars:
+    azure_platform_enabled: true
+  roles:
+    - { role: appformix_certs, when: appformix_ssl_cert is defined and appformix_ssl_key is defined }
+    - { role: appformix_license, when: appformix_license is defined }
+    - appformix_redis
+    - appformix_mongo
+    - appformix_datamanager
+    - appformix_dashboard
+    - { role: appformix_datamanager, datamanager_action: "configure" }
+
+- hosts: compute
+  tags: appformix_manager
+  roles:
+    - appformix_manager
+
+- hosts: appformix_controller
+  tags: [ appformix_controller, appformix_config ]
+  roles:
+    - appformix_defaults
+    - { role: appformix_azure_config, when: appformix_state != 'absent' }
+
+- hosts: localhost
+  tags: [appformix_config]
+  roles:
+    - appformix_defaults
+    - { role: azure_token, when: appformix_state != 'absent' }
+
+- hosts: appformix_controller
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: 'azure'
+  roles:
+    - appformix_defaults
+    - { role: appformix_license, license_action: 'update', when: appformix_license is defined }
+
+- hosts: appformix_controller
+  tags: [ appformix_controller, appformix_config ]
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: 'azure'
+  roles:
+    - appformix_defaults
+    - { role: appformix_master_auth, when: appformix_state != 'absent' }
+
+- hosts: bare_host
+  tags: [ appformix_manager, appformix_config ]
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: 'azure'
+  roles:
+    - appformix_defaults
+    - appformix_manager
+    - { role: appformix_bare_host, when: appformix_state != 'absent' }
+
+# Add controllers as bare hosts and install agent on the
+# them for monitoring. Also create an 'appformix_controller' tag
+# to distinguish them from the compute nodes.
+# Controller needs to be setup with the right credentials
+# before these roles are executed.
+- hosts: appformix_controller
+  tags: [ appformix_controller, appformix_controller_agent ]
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: 'azure'
+  roles:
+    - appformix_manager
+    - appformix_defaults
+    - { role: appformix_bare_host, appformix_tag: "{{ appformix_controller_tag }}",
+        when: appformix_state != 'absent' }

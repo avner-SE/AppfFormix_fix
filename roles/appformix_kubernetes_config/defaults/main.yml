@@ -1,0 +1,5 @@
+---
+kubernetes_cluster_url: ''
+kubernetes_username: ''
+kubernetes_password: ''
+kubernetes_auth_token: ''

@@ -1,0 +1,35 @@
+{
+    "AggregateId": "openstack_controller",
+    "Collection": "host_pythoncheckheavyhitterspy_collection",
+    "Config": {
+        "CommandLine": "python check_heavy_hitters.py"
+    },
+    "MetricMap": [
+        {
+            "Name": "nova_api",
+            "Units": ""
+        },
+        {
+            "Name": "neutron",
+            "Units": ""
+        },
+        {
+            "Name": "keystone",
+            "Units": ""
+        },
+        {
+            "Name": "glance",
+            "Units": ""
+        },
+        {
+            "Name": "cinder_api",
+            "Units": ""
+        }
+    ],
+    "PluginId": "pythoncheckheavyhitterspy",
+    "PluginName": "heavy_hitters.logparser",
+    "PluginType": "top_n",
+    "Scope": "host",
+    "State": "enabled",
+    "status": "success"
+}

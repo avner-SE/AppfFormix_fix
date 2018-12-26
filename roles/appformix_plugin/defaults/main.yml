@@ -1,0 +1,18 @@
+---
+appformix_plugin_backup_remote_dir: "{{ appformix_install_dir }}/plugins"
+appformix_plugin_dir: "{{ appformix_install_dir }}/manager/tailwind_manager"
+plugin_post_url: "{{ appformix_vip_url }}/appformix/v1.0/plugin_definition"
+aggr_post_url: "{{ appformix_vip_url }}/appformix/v1.0/aggregate_definition"
+task_url: "{{ appformix_vip_url }}/appformix/v1.0/task/"
+remote_plugin_post_file: "/tmp/plug1n.json"
+local_plugin_post_file: "/tmp/plug1n.json"
+restore_backup_files: False
+copy_files: False
+configure_plugin: False
+certified_plugin: False
+copy_plugin_config: False
+user_defined_plugins: False
+copy_user_defined_plugin_files: False
+update_control_plane_plugin: False
+copy_control_plane_plugin_config_files: False
+aggregate_id: ""

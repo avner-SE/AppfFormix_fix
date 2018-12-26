@@ -1,0 +1,11 @@
+---
+- name: Post ScaleIO configuration to AppFormix Platform
+  appformix_scaleio:
+    url: "{{ appformix_vip_url }}"
+    name: '{{ scaleio_cluster.name | default("default_scaleio_cluster") }}'
+    host: '{{ scaleio_cluster.host | default(omit) }}'
+    port: '{{ scaleio_cluster.port | default(80, true) }}'
+    username: '{{ scaleio_cluster.username | default(omit) }}'
+    password: '{{ scaleio_cluster.password | default(omit) }}'
+  delegate_to: localhost
+  when: scaleio_cluster is defined

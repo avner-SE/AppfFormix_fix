@@ -1,0 +1,32 @@
+{
+    "rules": [
+        {
+            "Name": "contrail_heartbeat",
+            "EventRuleId": "CONTRAIL_HEARTBEAT",
+            "MetricType": "contrail.cluster.heartbeat",
+            "AggregationFunction": "value",
+            "ComparisonFunction": "equal",
+            "Threshold": 0,
+            "ServiceType": "contrail",
+            "Module": "service_alarms",
+            "ObjectList": ["all"],
+            "Mode": "alert",
+            "MetricScope": "cluster",
+            "CreatedBy": "system",
+            "DisplayEvent": false
+        }
+    ],
+    "profile": {
+        "CompositeAlarmScope": "Contrail",
+        "CompositeAlarmType": "risk",
+        "ObjectId": "all",
+        "Rulesets": [
+            {
+                "RuleList": ["CONTRAIL_HEARTBEAT"],
+                "WeightList": [1],
+                "Threshold": 1,
+                "RulesetObjectId": "all"
+            }
+        ]
+    }
+}

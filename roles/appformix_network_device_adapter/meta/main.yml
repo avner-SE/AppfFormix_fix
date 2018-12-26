@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: appformix_defaults }
+  - { role: appformix_mongo, when: install_mongo == "yes" }

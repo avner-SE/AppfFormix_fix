@@ -1,0 +1,66 @@
+---
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: '{{ item }} is undefined or {{ item }} == ""'
+  with_items:
+    - appformix_gcp_adapter_version
+    - appformix_gcp_service_credentials_file
+
+- name: Create AppFormix GCP Adapter log directories
+  file: path="{{item}}" state=directory mode=755
+  become: true
+  with_items:
+    - "{{ appformix_log_dir }}/gcp_adapter/appformix"
+    - "{{ appformix_log_dir }}/gcp_adapter/nginx"
+
+- name: Create AppFormix GCP Adapter Credentials directory
+  file: path="{{item}}" state=directory mode=755
+  become: true
+  with_items:
+    - "{{ appformix_install_dir }}/etc/gcp/"
+
+- name: Copy AppFormix GCP License to the Management Host
+  become: yes
+  copy:
+    src: "{{ appformix_gcp_service_credentials_file }}"
+    dest: "{{ appformix_install_dir }}/etc/gcp/service_credentials.json"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Start AppFormix GCP Adapter container
+  docker:
+    name: appformix-gcp-adapter
+    image: "{{appformix_docker_registry}}appformix/gcp_adapter:{{appformix_gcp_adapter_version}}"
+    state: "{{ appformix_gcp_adapter_state }}"
+    restart_policy: always
+    dns: ["127.0.0.1"]
+    net: "{{ appformix_network }}"
+    ports: "{{ appformix_gcp_adapter_ports }}"
+    pull: "{{ appformix_gcp_adapter_pull }}"
+    volumes: "{{ appformix_gcp_adapter_volumes }}"
+    env:
+      MONGO_HOST: "{{ appformix_mongo_host }}"
+      MONGO_PORT: "{{ appformix_mongo_port }}"
+      MONGO_USERNAME: "{{ appformix_mongo_username }}"
+      MONGO_PASSWORD: "{{ appformix_mongo_password }}"
+      REDIS_HOST: "{{ appformix_redis_host }}"
+      REDIS_PORT: "{{ appformix_redis_port }}"
+      REDIS_PASSWORD: "{{ appformix_redis_password }}"
+      GOOGLE_APPLICATION_CREDENTIALS: /etc/gcp/service_credentials.json
+      LOG_ROTATE_MAX_COUNT: "{{ appformix_log_rotate_max_count }}"
+      LOG_ROTATE_MAX_BYTES: "{{ appformix_log_rotate_max_bytes }}"
+      LOG_ROTATE_MAX_HOURS: "{{ appformix_log_rotate_max_hours }}"
+
+#- name: Wait for AppFormix GCP Adapter to be ready
+#  wait_for: port={{ appformix_gcp_adapter_port_http }} timeout=20
+#
+#- name: Wait for AppFormix GCP Adapter to be ready (SSL Enabled)
+#  wait_for: port={{ appformix_gcp_adapter_port_https }} timeout=20
+#  when: appformix_ssl_enabled
+
+# These facts are set on the host to which this role is being applied
+- name: Export parameters to other plays
+  set_fact:
+    appformix_gcp_adapter_port_http: "{{ appformix_gcp_adapter_port_http }}"
+    appformix_gcp_adapter_port_https: "{{ appformix_gcp_adapter_port_https }}"

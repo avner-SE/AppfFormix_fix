@@ -1,0 +1,26 @@
+---
+service_alarm_post_url: "{{ appformix_vip_url }}/appformix/v1.0/service_alarm"
+alarm_post_url: "{{ appformix_vip_url }}/appformix/v1.0/event_rule_definition"
+profile_post_url: "{{ appformix_vip_url }}/appformix/v1.0/analytics_definition"
+openstack_service_profiles:
+  - { filename: profiles/nova_health_profile.json }
+  - { filename: profiles/nova_risk_profile.json }
+  - { filename: profiles/keystone_health_profile.json }
+  - { filename: profiles/keystone_risk_profile.json }
+  - { filename: profiles/neutron_health_profile.json }
+  - { filename: profiles/neutron_risk_profile.json }
+  - { filename: profiles/contrail_health_profile.json }
+  - { filename: profiles/contrail_risk_profile.json }
+
+network_device_profiles:
+  - { filename: profiles/network_device_health_profile.json }
+  - { filename: profiles/network_device_risk_profile.json }
+
+virtual_network_profiles:
+  - { filename: profiles/virtual_network_risk_profile.json }
+  - { filename: profiles/virtual_network_health_profile.json }
+
+aws_profiles:
+  - { filename: profiles/aws_host_health_profile.json }
+  - { filename: profiles/aws_host_risk_profile.json }
+  - { filename: profiles/aws_health_risk_transition_rules.json }

@@ -1,0 +1,6 @@
+# Playbook to cleanup AppFormix on AWS CSO.
+
+- include: clean_appformix_ha.yml
+  vars:
+    openstack_platform_enabled: true
+    aws_platform_enabled: true

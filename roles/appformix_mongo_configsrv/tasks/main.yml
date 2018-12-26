@@ -1,0 +1,75 @@
+---
+# The configsrv maintains information on the different shards, which includes
+# heartbeats and consensus details for the different shards. If this directory
+# is not cleaned between consecutive installs then adding a shard to the cluster
+# fails as the same shard appears with different ids in the configsrv journal
+# files.
+- name: Ensure AppFormix Mongo ConfigSrv data directory is always empty
+  become: yes
+  file:
+      path: "{{ appformix_mongo_configsrv_data_dir }}"
+      state: absent
+      owner: root
+      group: root
+      mode: 0755
+
+- name: Ensure AppFormix Mongo ConfigSrv data and scripts directory exist
+  when: appformix_mongo_configsrv_state != 'absent'
+  become: yes
+  file:
+      path: "{{ item }}"
+      state: directory
+      owner: root
+      group: root
+      mode: 0755
+  with_items:
+    - "{{ appformix_mongo_configsrv_data_dir }}"
+    - "{{ appformix_mongo_configsrv_script_dir }}"
+
+- name: Copy the keyfile for authentication
+  become: true
+  copy: src=secret dest={{ appformix_mongo_configsrv_data_dir }}/secret owner=root group=root mode=0400
+  when: appformix_mongo_configsrv_state != 'absent'
+
+- name: Copy "{{ appformix_mongo_add_users_script }}" script to the Management host
+  become: yes
+  copy:
+    src: "{{ appformix_mongo_add_users_script }}"
+    dest: "{{ appformix_mongo_configsrv_script_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+  when: appformix_mongo_configsrv_state != 'absent'
+
+- name: Start AppFormix Mongo ConfigSrv Container
+  docker:
+      name: "{{ appformix_mongo_configsrv_name }}"
+      image: "{{ appformix_mongo_configsrv_image }}"
+      state: "{{ appformix_mongo_configsrv_state }}"
+      restart_policy: always
+      net: "{{ appformix_network }}"
+      hostname: "{{ inventory_hostname }}"
+      expose:
+      - "{{ appformix_mongo_configsrv_port }}"
+      ports:
+      - "{{ appformix_mongo_configsrv_docker_ports }}"
+      volumes: "{{ appformix_mongo_configsrv_volumes }}"
+      command: mongod
+               --noprealloc
+               --smallfiles
+               --configsvr
+               --dbpath "{{ appformix_mongo_configsrv_data_dir_container }}"
+               --port "{{ appformix_mongo_configsrv_port }}"
+               --keyFile "{{ appformix_mongo_configsrv_data_dir_container }}/secret"
+
+- name: Check AppFormix Mongo ConfigSrv Container is started
+  wait_for: host={{ inventory_hostname }} port={{ appformix_mongo_configsrv_exposed_port }} state=started timeout={{ appformix_mongo_configsrv_start_timeout }}
+  delegate_to: localhost
+  when: appformix_mongo_configsrv_state != 'absent'
+
+- name: Run "{{ appformix_mongo_add_users_script }}" script inside appformix-mongo-configsrv container
+  when: appformix_mongo_configsrv_state != 'absent'
+  ignore_errors: yes
+  command: docker exec appformix-mongo-configsrv \
+           mongo --nodb "{{ appformix_mongo_configsrv_script_dir_container }}/{{ appformix_mongo_add_users_script }}" \
+           --eval "PORT={{ appformix_mongo_configsrv_port }}; USERNAME=\"{{ appformix_mongo_username }}\"; PASSWORD=\"{{ appformix_mongo_password }}\""

@@ -1,0 +1,4 @@
+---
+cluster_config_url: "{{ appformix_vip_url }}/appformix/v1.0/cluster_definition"
+
+appformix_multicluster_config_dir: "{{ appformix_install_dir }}/etc/multicluster_config"

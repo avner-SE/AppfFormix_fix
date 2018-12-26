@@ -1,0 +1,25 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_juniper_ipv6_mib_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_juniper_ipv6_mib",
+        "PluginPrefix": "juniper_ipv6",
+        "EntityType": ["network_device"]
+    },
+    "MetricMap": [
+        {
+            "Name": "jnxIpv6StatsReceives",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "snmp_juniper_ipv6_mib",
+    "PluginName": "snmp_juniper_ipv6_mib",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "JUNIPER-IPv6-MIB::jnxIpv6StatsReceives"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

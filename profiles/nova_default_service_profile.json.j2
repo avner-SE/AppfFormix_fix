@@ -1,0 +1,20 @@
+{
+    "ServiceGroupName": "AppformixNovaServiceGroup",
+    "Endpoints": [
+        {
+            "Url": "{{ nova_url }}",
+            "EndpointName": "novaEndpoint",
+            "Method": "GET",
+            "Interval": 2
+        }
+    ],
+    "ServiceGroupId": "NovaServiceGroupId",
+    "RefreshTokenData": {
+        "RefreshToken": "False",
+        "Username": "admin",
+        "AuthType": "openstack",
+        "Password": "{{ }}",
+        "AuthUrl": "{{ }}",
+        "Project": ""
+    }
+}

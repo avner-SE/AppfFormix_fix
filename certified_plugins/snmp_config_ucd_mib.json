@@ -1,0 +1,65 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_ucd_mib_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_ucd_mib",
+        "PluginPrefix": "ucd_mib",
+        "EntityType": ["network_device"]
+    },
+    "MetricMap": [
+        {
+            "Name": "memIndex",
+            "Units": "Count"
+        },
+        {
+            "Name": "memTotalSwap",
+            "Units": "Count"
+        },
+        {
+            "Name": "memAvailSwap",
+            "Units": "Count"
+        },
+        {
+            "Name": "memTotalReal",
+            "Units": "Count"
+        },
+        {
+            "Name": "memAvailReal",
+            "Units": "Count"
+        },
+        {
+            "Name": "memTotalFree",
+            "Units": "Count"
+        },
+        {
+            "Name": "memMinimumSwap",
+            "Units": "Count"
+        },
+        {
+            "Name": "memShared",
+            "Units": "Count"
+        },
+        {
+            "Name": "memBuffer",
+            "Units": "Count"
+        },
+        {
+            "Name": "memCached",
+            "Units": "Count"
+        },
+        {
+            "Name": "memSwapError",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "snmp_ucd_mib",
+    "PluginName": "snmp_ucd_mib",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "UCD-SNMP-MIB::memory"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

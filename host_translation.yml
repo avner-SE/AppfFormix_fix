@@ -1,0 +1,29 @@
+- name: Fail if host translation attempted for non scale setups
+  hosts: localhost
+  tasks:
+    - fail: msg="AppFormix scale setups available for 3, 5 or 7 nodes"
+      when: not ( (groups['appformix_controller'] | length) == 3 or (groups['appformix_controller'] | length) == 5 or (groups['appformix_controller'] | length) == 7 )
+
+# Translations for appformix_controller_master and workers
+- hosts: localhost
+  tasks:
+    - add_host: name={{ item }} group=appformix_controller_master
+      with_items: "{{ groups.appformix_controller[0] }}"
+    - add_host: name={{ item }} group=appformix_controller_worker
+      with_items: "{{ groups.appformix_controller[1:] }}"
+
+# Translations for appformix_mongo_replica_master and slaves
+- hosts: localhost
+  tasks:
+    - add_host: name={{ item }} group=appformix_mongo_replica_master
+      with_items: "{{ groups.appformix_controller_master }}"
+    - add_host: name={{ item }} group=appformix_mongo_replica_slaves
+      with_items: "{{ groups.appformix_controller_worker }}"
+
+# Translations for appformix_mongos_client and appformix_mongo_configsrv
+- hosts: localhost
+  tasks:
+    - add_host: name={{ item }} group=appformix_mongos_client
+      with_items: "{{ groups.appformix_controller }}"
+    - add_host: name={{ item }} group=appformix_mongo_configsrv
+      with_items: "{{ groups.appformix_controller }}"

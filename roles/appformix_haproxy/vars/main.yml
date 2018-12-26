@@ -1,0 +1,35 @@
+---
+appformix_haproxy_dir_state: "{{ (appformix_haproxy_state == 'absent') | ternary('absent','directory') }}"
+
+appformix_haproxy_cfg_file_http: "haproxy_template.cfg"
+appformix_haproxy_cfg_file_https: "haproxy_ssl_template.cfg"
+appformix_haproxy_cfg_file: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_haproxy_cfg_file_https, appformix_haproxy_cfg_file_http) }}"
+
+appformix_haproxy_ssl_pem_file_host: "{{appformix_install_dir}}/etc/cert/appformix.pem"
+appformix_haproxy_ssl_pem_file_container: "/usr/local/etc/haproxy/appformix.pem"
+appformix_haproxy_volumes_http:
+    - "{{ appformix_haproxy_host_config_dir }}/{{ appformix_haproxy_cfg_file }}:/usr/local/etc/haproxy/haproxy.cfg:ro"
+    - "{{ appformix_haproxy_host_scripts_dir }}:/haproxy"
+appformix_haproxy_volumes_https:
+    - "{{ appformix_haproxy_host_config_dir }}/{{ appformix_haproxy_cfg_file }}:/usr/local/etc/haproxy/haproxy.cfg:ro"
+    - "{{ appformix_haproxy_host_scripts_dir }}:/haproxy"
+    - "{{ appformix_haproxy_ssl_pem_file_host }}:{{ appformix_haproxy_ssl_pem_file_container }}:ro"
+appformix_haproxy_volumes: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_haproxy_volumes_https, appformix_haproxy_volumes_http) }}"
+
+appformix_haproxy_socket_stat_file: "/usr/local/etc/haproxy/haproxy.sock"
+
+appformix_haproxy_exposed_docker_ports_mapping:
+    - "{{ appformix_haproxy_stats_port }}:{{ appformix_haproxy_stats_port }}"
+    - "{{ appformix_haproxy_dashboard_port }}:{{ appformix_haproxy_dashboard_port }}"
+    - "{{ appformix_redis_port }}:{{ appformix_redis_port }}"
+    - "{{ appformix_haproxy_peer_port_dashboard }}:{{ appformix_haproxy_peer_port_dashboard }}"
+    - "{{ appformix_haproxy_peer_port_redis }}:{{ appformix_haproxy_peer_port_redis }}"
+
+appformix_haproxy_internal_docker_ports_list:
+    - "{{ appformix_haproxy_stats_port }}"
+    - "{{ appformix_haproxy_dashboard_port }}"
+    - "{{ appformix_redis_port }}"
+    - "{{ appformix_haproxy_peer_port_dashboard }}"
+    - "{{ appformix_haproxy_peer_port_redis }}"
+
+appformix_worker_count: "{{ groups['appformix_controller_worker'] | length }}"

@@ -1,0 +1,123 @@
+# PRE: User must be able to run Docker commands
+#
+# PARAMETERS:
+#   appformix_mongo_image: Mongo image to run
+#
+#   appformix_mongo_exposed_port: If defined, specifies the host port on which
+#                                 Mongo is accessible for external connections.
+#
+
+---
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: item is undefined or item == ""
+  with_items:
+   - appformix_host_mongo_conf_dir
+   - appformix_host_mongo_conf_file
+
+- name: Ensure "{{ appformix_host_mongo_conf_dir }}" directory exists
+  become: yes
+  file:
+    path: "{{ appformix_host_mongo_conf_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy mongo configuration file to the Management host
+  become: yes
+  template:
+    src: "mongo.conf"
+    dest: "{{ appformix_host_mongo_conf_file }}"
+    owner: root
+    group: root
+    mode: 0444
+
+- name: Start AppFormix Mongo container
+  docker:
+      name: appformix-mongo
+      image: "{{ appformix_mongo_image }}"
+      state: "{{ appformix_mongo_state }}"
+      restart_policy: always
+      net: "{{ appformix_network }}"
+      ports: "{{ appformix_mongo_docker_ports }}"
+      volumes: "{{ appformix_mongo_volumes }}"
+      command: mongod --config "{{ appformix_container_mongo_conf_file }}"
+
+- name: Copy "{{ appformix_mongo_credentials_script }}" script to platform host
+  become: yes
+  template:
+    src: "{{ appformix_mongo_credentials_script }}"
+    dest: "{{ appformix_host_mongo_conf_dir }}"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Copy "{{ appformix_mongo_auth_script }}" script to platform host
+  become: yes
+  copy:
+    src: "{{ appformix_mongo_auth_script }}"
+    dest: "{{ appformix_host_mongo_conf_dir }}"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Copy appformix-mongo script to platform host
+  become: yes
+  copy:
+    src: appformix-mongo
+    dest: "{{ appformix_bin_dir }}"
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Copy "{{ appformix_mongo_add_users_script }}" script to the Management host
+  become: yes
+  copy:
+    src: "{{ appformix_mongo_add_users_script }}"
+    dest: "{{ appformix_host_mongo_conf_dir }}"
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Run "{{ appformix_mongo_add_users_script }}" script inside appformix-mongo container
+  when: appformix_mongo_state != 'absent'
+  command: docker exec appformix-mongo \
+           mongo --nodb \
+           "{{ appformix_container_mongo_conf_dir }}/{{ appformix_mongo_credentials_script }}" \
+           "{{ appformix_container_mongo_conf_dir }}/{{ appformix_mongo_add_users_script }}"
+
+- name: Ensure scripts directory exists
+  file: path={{ appformix_mongo_scripts_dir }} state={{ appformix_mongo_scripts_state }} owner=root group=root mode=0755
+  become: yes
+
+- name: Ensure backup directory exists
+  become: yes
+  file: path={{ appformix_mongo_backup_dir }} state=directory owner=root group=root mode=0755
+  when: appformix_mongo_backup_dir != ''
+
+- name: Copy Mongo backup script to the management host
+  copy: src={{ item }} dest={{ appformix_mongo_scripts_dir }} force=yes owner=root group=root mode=0755
+  become: yes
+  when: appformix_mongo_scripts_state != 'absent'
+  with_items:
+    - "backup_appformix_db.sh"
+    - "restore_appformix_db.sh"
+
+- name: Start cron job for Mongo backup
+  become: yes
+  cron:
+      state: "{{ appformix_mongo_backup_state }}"
+      name: "appformix_mongo_backup"
+      user: root
+      minute: "0"
+      hour: "0"
+      job: "{{ appformix_mongo_scripts_dir }}/backup_appformix_db.sh {{ appformix_mongo_username }} {{ appformix_mongo_password }} {{ appformix_mongo_backup_dir }} {{ appformix_mongo_docker_backup_dir }}"
+      cron_file: appformix_mongo_backup
+
+- name: Restore Mongo backup
+  become: yes
+  when: appformix_mongo_state != 'absent' and appformix_mongo_backup_file != '' and appformix_mongo_backup_dir != ''
+  shell: "{{ appformix_mongo_scripts_dir }}/restore_appformix_db.sh {{ appformix_mongo_username }} {{ appformix_mongo_password }} {{ appformix_mongo_backup_file }} {{ appformix_mongo_backup_dir }} {{ appformix_mongo_docker_backup_dir }}"
+  tags:
+      - appformix_mongo_restore

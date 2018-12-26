@@ -1,0 +1,70 @@
+{
+    "Collection": "host_pythoncheckzookeeperpy_collection",
+    "Config": {
+        "CommandLine": "python check_zookeeper.py"
+    },
+    "MetricMap": [
+        {
+            "Name": "zk_avg_latency",
+            "Units": "ms"
+        },
+        {
+            "Name": "zk_max_latency",
+            "Units": "ms"
+        },
+        {
+            "Name": "zk_min_latency",
+            "Units": "ms"
+        },
+        {
+            "Name": "zk_num_alive_connections",
+            "Units": "count"
+        },
+        {
+            "Name": "zk_approximate_data_size",
+            "Units": "bytes"
+        },
+        {
+            "Name": "zk_packets_received",
+            "Units": "count"
+        },
+        {
+            "Name": "zk_packets_sent",
+            "Units": "count"
+        },
+        {
+            "Name": "zk_outstanding_requests",
+            "Units": "count"
+        },
+        {
+            "Name": "zk_znode_count",
+            "Units": "count"
+        },
+        {
+            "Name": "zk_watch_count",
+            "Units": "count"
+        },
+        {
+            "Name": "zk_ephemerals_count",
+            "Units": "count"
+        },
+        {
+            "Name": "zk_followers",
+            "Units": "count"
+        },
+        {
+            "Name": "zk_synced_followers",
+            "Units": "count"
+        },
+        {
+            "Name": "zk_pending_syncs",
+            "Units": "count"
+        }
+    ],
+    "PluginId": "pythoncheckzookeeperpy",
+    "PluginName": "zookeeper.node",
+    "PluginType": "command",
+    "Scope": "host",
+    "State": "enabled",
+    "status": "success"
+}

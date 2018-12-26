@@ -1,0 +1,22 @@
+---
+# Install AppFormix for Aws
+
+- include: prerequisites.yml
+  tags: ['prerequisites']
+  vars:
+    state: present
+
+- include: deploy.yml
+  vars:
+    aws_platform_enabled: true
+    appformix_images:
+      - "{{ appformix_controller_image }}"
+      - "{{ appformix_dashboard_image }}"
+      - "{{ appformix_datamanager_image }}"
+      - "{{ appformix_aws_adapter_image }}"
+  tags: ['deploy']
+
+- include: configure_aws.yml
+  vars:
+    aws_platform_enabled: true
+  tags: ['configure']

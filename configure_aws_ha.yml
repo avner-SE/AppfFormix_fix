@@ -1,0 +1,33 @@
+---
+#
+# Configure AppFormix for Aws
+#
+# This playbook should not be called if appformix_state == 'absent'.
+#
+
+- hosts: appformix_controller_master
+  tags: [ appformix_controller, appformix_config ]
+  roles:
+    - appformix_defaults
+    - { role: appformix_aws_config, when: appformix_state != 'absent' }
+
+- hosts: localhost
+  tags: [ appformix_config ]
+  roles:
+    - appformix_defaults
+    - { role: aws_token, when: appformix_state != 'absent' }
+
+- hosts: appformix_controller
+  tags: [ appformix_controller, appformix_config ]
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: 'aws'
+  roles:
+    - appformix_defaults
+    - { role: appformix_master_auth, when: appformix_state != 'absent' }
+
+- include: configure_common_ha.yml
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: 'aws'
+  when: appformix_state != 'absent'

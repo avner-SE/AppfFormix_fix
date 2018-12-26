@@ -1,0 +1,50 @@
+---
+- name: Ensure "{{ appformix_service_connectivity_controller_cert_dir }}" directory exists
+  become: yes
+  file:
+    path: "{{ appformix_service_connectivity_controller_cert_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: appformix_service_connectivity_profiles and appformix_service_connectivity_certs
+
+- name: Ensure "{{ appformix_service_connectivity_agent_cert_dir }}" directory exists
+  become: yes
+  file:
+    path: "{{ appformix_service_connectivity_agent_cert_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: appformix_service_connectivity_profiles and appformix_service_connectivity_certs
+
+- name: Copy Service SSL certificates to '{{ appformix_service_connectivity_controller_cert_dir }}'
+  become: yes
+  copy:
+    src: "{{ item }}"
+    dest: "{{ appformix_service_connectivity_controller_cert_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+  with_items: '{{ appformix_service_connectivity_certs }}'
+
+- name: Copy Service SSL certificates to '{{ appformix_service_connectivity_agent_cert_dir}}'
+  become: yes
+  copy:
+    src: "{{ item }}"
+    dest: "{{ appformix_service_connectivity_agent_cert_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+  with_items: '{{ appformix_service_connectivity_certs }}'
+
+- name: Configure OpenStack default service connectivity profile in Controller
+  appformix_service_connectivity:
+    json_file: ' {{ lookup( "template", item.connectivity_profiles ) }} '
+    profile_url: " {{ profile_post_url }} "
+    token: " {{ auth_token }} "
+    auth_type: " {{ auth_type }} "
+  delegate_to: localhost
+  with_items:
+    - "{{ appformix_service_connectivity_profiles }}"

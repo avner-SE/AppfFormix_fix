@@ -1,0 +1,63 @@
+{
+    "AggregateId": "openstack_controller",
+    "Collection": "host_pythoncheckcinderapilogspy_collection",
+    "Config": {
+        "CommandLine": "python check_cinder_api_logs.py"
+    },
+    "MetricMap": [
+        {
+            "Name": "TOTAL_2XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "TOTAL_4XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "TOTAL_5XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "POST_2XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "POST_4XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "POST_5XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "GET_2XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "GET_4XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "GET_5XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "PUT_2XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "PUT_4XX",
+            "Units": "count/min"
+        },
+        {
+            "Name": "PUT_5XX",
+            "Units": "count/min"
+        }
+    ],
+    "PluginId": "pythoncheckcinderapilogspy",
+    "PluginName": "cinder_api.logparser",
+    "PluginType": "command",
+    "Scope": "host",
+    "State": "enabled",
+    "status": "success"
+}

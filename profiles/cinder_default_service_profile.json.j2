@@ -1,0 +1,20 @@
+{
+    "ServiceGroupName": "AppformixCinderServiceGroup",
+    "Endpoints": [
+        {
+            "Url": "{{ cinder_url }}",
+            "EndpointName": "cinderEndpoint",
+            "Method": "GET",
+            "Interval": 2
+        }
+    ],
+    "ServiceGroupId": "CinderServiceGroupId",
+    "RefreshTokenData": {
+        "RefreshToken": "False",
+        "Username": "admin",
+        "AuthType": "openstack",
+        "Password": "{{ }}",
+        "AuthUrl": "{{ }}",
+        "Project": ""
+    }
+}

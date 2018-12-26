@@ -1,0 +1,32 @@
+vrrp_script check_haproxy {
+    script "nc -vz 127.0.0.1 {{ appformix_haproxy_stats_port }}"
+    interval 1
+    weight {{ keepalived_haproxy_check_script_weight }}
+    fall 3
+}
+
+vrrp_instance VI_1 {
+    interface {{ keepalived_vrrp_interface }}
+    state BACKUP
+    priority {{ keepalived_vrrp_priority }}
+
+    virtual_router_id {{ keepalived_vrrp_router_id }}
+    virtual_ipaddress {
+        {{ keepalived_vrrp_virtual_ip }} dev {{ keepalived_vrrp_interface }}
+    }
+    {% if keepalived_vrrp_secondary_virtual_ip and keepalived_vrrp_secondary_interface %}
+    virtual_ipaddress_excluded {
+        {{ keepalived_vrrp_secondary_virtual_ip }} dev {{ keepalived_vrrp_secondary_interface }}
+    }
+    {% endif %}
+
+    unicast_src_ip {{ keepalived_vrrp_src_ip }}
+    unicast_peer {
+    {% for host in keepalived_vrrp_peers|difference([inventory_hostname]) %}
+        {{ hostvars[host][hostvars[host]['keepalived_vrrp_interface_ansible']].ipv4.address }}
+    {% endfor %}
+    }
+    track_script {
+        check_haproxy
+    }
+}

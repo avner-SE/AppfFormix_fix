@@ -1,0 +1,101 @@
+---
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: '{{ item }} is undefined'
+  with_items:
+    - cluster_name
+    - cluster_controller_host
+    - cluster_controller_port
+    - cluster_auth_type
+    - cluster_username
+    - cluster_password
+    - cluster_token
+    - is_master_cluster
+
+- name: Ensure multicluster_config directory exists on management host
+  become: yes
+  file:
+      path: "{{ appformix_multicluster_config_dir }}"
+      state: "directory"
+      owner: root
+      group: root
+      mode: 0755
+
+- name: Copy JS script to encrypt password to management host
+  become: yes
+  template:
+      src: encrypt_cluster_pass.js
+      dest: "{{ appformix_multicluster_config_dir }}"
+      force: yes
+      owner: root
+      group: root
+      mode: 0755
+
+- name: Copy JS script to encrypt password to Dashboard container
+  become: yes
+  shell: docker cp "{{ appformix_multicluster_config_dir }}/encrypt_cluster_pass.js" appformix-dashboard:/dashboard
+
+- name: Encrypt password using JS script in Dashboard
+  become: yes
+  shell: docker exec appformix-dashboard bash -c "node /dashboard/encrypt_cluster_pass.js {{ cluster_password }}"
+  register: output_password
+
+- name: Encrypt token using JS script in Dashboard
+  become: yes
+  shell: docker exec appformix-dashboard bash -c "node /dashboard/encrypt_cluster_pass.js {{ cluster_token }}"
+  register: output_token
+
+- name: Encrypt appformix maaster token using JS script in Dashboard
+  become: yes
+  shell: docker exec appformix-dashboard bash -c "node /dashboard/encrypt_cluster_pass.js {{ auth_token }}"
+  register: output_auth_token
+
+- name: Get encrypted password and token from output of JS script
+  set_fact:
+    encrypted_password: "{{ output_password.stdout }}"
+    encrypted_token: "{{ (cluster_token == '') | ternary(output_auth_token.stdout, output_token.stdout) }}"
+
+- name: Add cluster to AppFormix Dashboard multicluster view
+  appformix_multicluster_config:
+    cluster_config_url: "{{ cluster_config_url }}"
+    token: "{{ auth_token }}"
+    auth_type: "{{ auth_type }}"
+    cluster_name: "{{ cluster_name }}"
+    cluster_controller_host: "{{ cluster_controller_host }}"
+    cluster_controller_port: "{{ (is_master_cluster == True) | ternary(multicluster_haproxy_port, cluster_controller_port) }}"
+    cluster_auth_type: "{{ cluster_auth_type }}"
+    cluster_username: "{{ cluster_username }}"
+    cluster_password: "{{ encrypted_password }}"
+    cluster_token: "{{ encrypted_token }}"
+    action: "{{ cluster_config_action }}"
+  when: cluster_config_action == 'add'
+  register: result
+  delegate_to: localhost
+
+- name: Get cluster ID
+  set_fact:
+    added_cluster_id: "{{ result.meta }}"
+    add_cluster_in_haproxy_config: "{{ result.changed }}"
+  when: cluster_config_action == 'add'
+
+- name: Remove cluster from AppFormix Dashboard multicluster view
+  appformix_multicluster_config:
+    cluster_config_url: "{{ cluster_config_url }}"
+    token: "{{ auth_token }}"
+    auth_type: "{{ auth_type }}"
+    cluster_name: "{{ cluster_name }}"
+    cluster_controller_host: "{{ cluster_controller_host }}"
+    cluster_controller_port: "{{ (is_master_cluster == True) | ternary(multicluster_haproxy_port, cluster_controller_port) }}"
+    cluster_auth_type: "{{ cluster_auth_type }}"
+    cluster_username: "{{ cluster_username }}"
+    cluster_password: "{{ encrypted_password }}"
+    cluster_token: "{{ encrypted_token }}"
+    action: "{{ cluster_config_action }}"
+  when: cluster_config_action == 'delete'
+  register: result
+  delegate_to: localhost
+
+- name: Get cluster ID
+  set_fact:
+    deleted_cluster_id: "{{ result.meta }}"
+  when: cluster_config_action == 'delete'

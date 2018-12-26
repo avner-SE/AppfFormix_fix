@@ -1,0 +1,5 @@
+---
+- name: Post Network Device config to controller
+  script: >
+      load_network_device.py {{ auth_token }} {{ auth_type }} {{ network_device_post_url }} {{ network_device_file_name }} {{ task_url }}
+  delegate_to: localhost

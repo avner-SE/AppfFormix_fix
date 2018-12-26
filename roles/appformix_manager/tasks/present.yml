@@ -1,0 +1,130 @@
+---
+- name: Copy AppFormix Agent to host
+  copy: src={{ package_dir }}/appformix-manager_{{ appformix_manager_version }}_all.deb dest=/tmp/
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Copy AppFormix Agent to host
+  copy: src={{ package_dir }}/appformix-manager-{{ appformix_manager_rpm_version }}-1.el7_1.noarch.rpm dest=/tmp/
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'RedHat'
+
+- name: Copy AppFormix Agent to host
+  copy: src={{ package_dir }}/appformix-manager-{{ appformix_manager_version }}-1.wrl7.noarch.rpm dest=/tmp/
+  when: ansible_distribution == 'Wrlinux'
+
+- name: Install AppFormix Agent on host
+  become: yes
+  apt: deb=/tmp/appformix-manager_{{ appformix_manager_version }}_all.deb state=installed
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Install AppFormix Agent on host
+  become: yes
+  yum: name=/tmp/appformix-manager-{{ appformix_manager_rpm_version }}-1.el7_1.noarch.rpm state=installed
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'RedHat'
+
+- name: Install AppFormix Agent on host
+  become: yes
+  yum: name=/tmp/appformix-manager-{{ appformix_manager_version }}-1.wrl7.noarch.rpm state=installed
+  when: ansible_distribution == 'Wrlinux'
+
+- name: Configure AppFormix Agent user in systemd service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_systemd_conf }}"
+      regexp: '^User='
+      line: 'User={{ appformix_agent_user }}'
+
+- name: Configure AppFormix Agent user in upstart service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_upstart_conf }}"
+      regexp: '^env AGENT_USER='
+      line: 'env AGENT_USER={{ appformix_agent_user }}'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Configure AppFormix Agent log rotate interval in systemd service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_systemd_conf }}"
+      regexp: '^Environment=LOG_ROTATE_MAX_HOURS='
+      line: 'Environment=LOG_ROTATE_MAX_HOURS={{ appformix_log_rotate_max_hours }}'
+
+- name: Configure AppFormix Agent log rotate interval in upstart service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_upstart_conf }}"
+      regexp: '^env LOG_ROTATE_MAX_HOURS='
+      line: 'env LOG_ROTATE_MAX_HOURS={{ appformix_log_rotate_max_hours }}'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Configure AppFormix Agent log rotate max count in systemd service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_systemd_conf }}"
+      regexp: '^Environment=LOG_ROTATE_MAX_COUNT='
+      line: 'Environment=LOG_ROTATE_MAX_COUNT={{ appformix_log_rotate_max_count }}'
+
+- name: Configure AppFormix Agent log rotate max count in upstart service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_upstart_conf }}"
+      regexp: '^env LOG_ROTATE_MAX_COUNT='
+      line: 'env LOG_ROTATE_MAX_COUNT={{ appformix_log_rotate_max_count }}'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Configure AppFormix Agent log rotate size in systemd service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_systemd_conf }}"
+      regexp: '^Environment=LOG_ROTATE_MAX_BYTES='
+      line: 'Environment=LOG_ROTATE_MAX_BYTES={{ appformix_log_rotate_max_bytes }}'
+
+- name: Configure AppFormix Agent log rotate size in upstart service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_upstart_conf }}"
+      regexp: '^env LOG_ROTATE_MAX_BYTES='
+      line: 'env LOG_ROTATE_MAX_BYTES={{ appformix_log_rotate_max_bytes }}'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Configure AppFormix Agent ceph keyring path in systemd service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_systemd_conf }}"
+      regexp: '^Environment=CEPH_KEY='
+      line: 'Environment=CEPH_KEY={{ ceph_keyring_file }}'
+  when: ceph_keyring_file is defined
+
+- name: Configure AppFormix Agent ceph keyring path in upstart service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_upstart_conf }}"
+      regexp: '^env CEPH_KEY='
+      line: 'env CEPH_KEY={{ ceph_keyring_file }}'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' and ceph_keyring_file is defined
+
+- name: Configure AppFormix Agent ceph config path in systemd service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_systemd_conf }}"
+      regexp: '^Environment=CEPH_CONF='
+      line: 'Environment=CEPH_CONF={{ ceph_conf_file }}'
+  when: ceph_conf_file is defined
+
+- name: Configure AppFormix Agent ceph config path in upstart service
+  become: yes
+  lineinfile:
+      dest: "{{ appformix_manager_upstart_conf }}"
+      regexp: '^env CEPH_CONF='
+      line: 'env CEPH_CONF={{ ceph_conf_file }}'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu' and ceph_conf_file is defined
+
+- name: Start AppFormix Agent
+  become: yes
+  service: name=appformix-manager state=started enabled=yes
+
+- name: Wait for AppFormix Agent to be ready
+  local_action:
+    module: wait_for
+      host={{ inventory_hostname }}
+      port={{ appformix_agent_port }}
+      timeout=60

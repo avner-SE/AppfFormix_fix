@@ -1,0 +1,25 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_ip_mib_metrics_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_ip_mib",
+        "PluginPrefix": "ip_mib",
+        "EntityType": ["network_device"]
+    },
+    "MetricMap": [
+        {
+            "Name": "ipInReceives",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "snmp_ip_mib_metrics",
+    "PluginName": "snmp_ip_mib_metrics",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "IP-MIB::ipInReceives"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

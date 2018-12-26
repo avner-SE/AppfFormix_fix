@@ -1,0 +1,13 @@
+---
+post_url: "{{ appformix_vip_url }}/appformix/v1.0/server_definition"
+task_url: "{{ appformix_vip_url }}/appformix/v1.0/task/"
+
+appformix_bare_host_source: "bare-metal"
+# Each of the servers, for which the bare host role
+# is called, is added to this aggregate. The value of this variable is
+# set by the playbook based on the server group for which the bare host
+# role is called (e.g. set to 'appformix_platform'
+# for appformix_controller servers, 'ceph_monitor' for ceph_monitor
+# servers, etc.)
+# The aggregate is created if it does not exist.
+appformix_tag: ''

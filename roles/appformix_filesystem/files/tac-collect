@@ -1,0 +1,53 @@
+#!/bin/bash
+output_dir=$(pwd)
+usage () {
+    cat <<USAGE
+Usage: /opt/appformix/bin/tac-collect [--full] [filename]
+Description: Collect logs and information about AppFormix and its control plane components to provide to Juniper TAC
+Parameters:
+--full           (optional) Collect more detailed information. By default
+                 collect a minimal amount of information containing most recent logs.
+filename         (optional) File into which to output the collected information.
+                 Default is appformix_tac_info.tgz in the current directory.
+USAGE
+    exit 1;
+}
+
+cleanup () {
+    if [ ! -z $temp_dir ]; then
+        rm -rf $temp_dir
+    fi
+}
+trap cleanup EXIT
+
+if [ $# -gt 2 ]; then
+    usage
+fi
+
+full="false"
+output_file="appformix_tac_info.tgz"
+until [ $# -eq 0 ]
+do
+    if [ $1 = "-h" ]; then
+        usage
+    elif [ $1 = "--full" ]; then
+        full="true"
+        shift
+    else
+        output_file="$1"
+        shift
+    fi
+done
+
+temp_dir=$(mktemp -d)
+echo "Creating archive $output_file"
+appformix_containers=`docker ps --format "{{.Names}}" | grep appformix`
+for name in $appformix_containers; do
+    docker exec -it $name ps -ef > ${temp_dir}/"$name"_ps_info.txt
+    docker logs $name > ${temp_dir}/"$name"_docker_log.txt
+done
+docker ps > ${temp_dir}/docker_info.txt
+sudo tar czf $output_dir/$output_file \
+    $( find /var/log/appformix/ -name "*.log") \
+    ${temp_dir}
+echo "$output_file is created."

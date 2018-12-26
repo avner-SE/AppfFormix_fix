@@ -1,0 +1,82 @@
+---
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: '{{ item }} is undefined or {{ item }} == ""'
+  with_items:
+    - appformix_lxc_container_image
+
+- name: Create NFX150 Install directories
+  become: yes
+  file:
+    path: "{{ appformix_platform_install_dir }}"
+    state: directory
+    mode: 0755
+    recurse: yes
+
+- name: Copy lxc setup script to Management host
+  become: yes
+  copy:
+    src: "{{ item }}"
+    dest: "{{ appformix_platform_install_dir }}"
+    mode: 0755
+  with_items:
+    - "{{ appformix_lxc_setup_script }}"
+    - "{{ appformix_lxc_state_script }}"
+
+- name: Copy NFX150 Installation Files to Management host
+  become: yes
+  template:
+    src: "{{ item }}"
+    dest: "{{ appformix_platform_install_dir }}"
+    mode: 0644
+  with_items:
+    - hosts
+    - hypervisor_ip
+    - "{{ appformix_lxc_conf }}"
+    - "{{ appformix_vnf_conf }}"
+
+- name: Copy NFX150 Interfaces Files to Management host
+  become: yes
+  template:
+    src: "interfaces"
+    dest: "{{appformix_platform_install_dir}}/interfaces_{{item}}"
+    mode: 0644
+  with_items: "{{ nfx150 }}"
+  when: appformix_state != 'absent'
+
+- name: Copy appformix manager package file to Management host
+  become: yes
+  copy:
+    src: "{{ appformix_manager_package_file }}"
+    dest: "{{ appformix_platform_install_dir }}/"
+    force: no
+  when: appformix_state != 'absent'
+
+
+- name: Copy appformix agent lxc image to Management host
+  become: yes
+  copy:
+    src: "{{ appformix_lxc_container_image }}"
+    dest: "{{ appformix_platform_install_dir }}/"
+    force: no
+  when: appformix_state != 'absent'
+
+
+- name: Configure VNF for LXC container
+  become: yes
+  script: configure_platform.sh {{ appformix_controller_image }} {{ appformix_platform_install_dir }} {{ item }} {{ hostvars[item]['nfx_user'] }} {{ hostvars[item]['nfx_pass']}} {{ appformix_lxc_conf }} {{ appformix_vnf_conf }} {{ appformix_lxc_setup_script }} {{ appformix_lxc_state_script }}
+  with_items: "{{ nfx150 }}"
+  when: appformix_state != 'absent'
+
+- name: Remove VNF for LXC container
+  become: yes
+  script: clean_platform.sh {{ appformix_controller_image }} {{ appformix_platform_install_dir }} {{ item }} {{ hostvars[item]['nfx_user'] }} {{ hostvars[item]['nfx_pass']}} {{ appformix_lxc_conf }} {{ appformix_vnf_clean }} {{ appformix_lxc_setup_script }}
+  with_items: "{{ nfx150 }}"
+  when: appformix_state == 'absent'
+
+- name: Remove NFX150 Installation Files
+  become: yes
+  file:
+    path: "{{ appformix_platform_install_dir }}"
+    state: absent
+  when: appformix_state == 'absent'

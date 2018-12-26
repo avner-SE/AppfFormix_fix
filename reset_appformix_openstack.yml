@@ -1,0 +1,36 @@
+# TODO: This script needs to change in the HA setup
+---
+# Reset AppFormix configuration of Agent on compute nodes.
+- hosts: compute
+  tasks:
+  - name: Reset AppFormix Agent on host
+    command: curl -s -X POST http://localhost:42595/appformix/v1.0/reset
+
+# Reset the AppFormix Controller configuration.
+- hosts: appformix_controller
+  tasks:
+  - name: Reset and drop AppFormix OpenStack Adapter database
+    tags:
+      - openstack
+    command: curl -s -X POST http://localhost:7500/appformix/v1.0/openstack_adapter/reset
+
+  - name: Restart AppFormix Openstack Adapter
+    become: yes
+    tags:
+      - openstack
+    command: docker restart appformix-openstack-adapter
+
+  - name: Reset AppFormix Controller
+    command: curl -s -X POST http://localhost:7000/appformix/v1.0/reset
+
+  - name: Reset AppFormix Data
+    become: yes
+    command: docker exec appformix-mongo bash -c "mongo events_db --eval 'db.dropDatabase()'"
+
+  - name: Reset AppFormix Analytics module
+    command: curl -s -X POST http://localhost:7000/appformix/v1.0/analytics_reset
+
+  - name: Reset AppFormix Dashboard
+    become: yes
+    file: state=absent path="{{ appformix_install_dir }}/etc/dashboard/userConfig.json"
+    ignore_errors: yes

@@ -1,0 +1,28 @@
+{
+    "State": "enabled",
+    "PluginType": "snmp_network_device",
+    "MetricMap": [
+        {
+            "Units": "Packets",
+            "Name": "jnxFWCounterPacketCount"
+        },
+        {
+            "Units": "Bytes",
+            "Name": "jnxFWCounterByteCount"
+        }
+    ],
+    "Scope": "snmp_network_device",
+    "Config": {
+        "PluginPrefix": "firewall",
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_juniper_firewall_mib",
+        "EntityType": ["firewall"]
+    },
+    "AggregateId": "appformix_network_agents",
+    "SnmpOIDList": [
+        "JUNIPER-FIREWALL-MIB::jnxFWCounterDisplayFilterName"
+    ],
+    "PluginName": "snmp_network_device_juniper_firewall",
+    "Collection": "snmp_network_device_juniper_firewall_collection",
+    "PluginId": "snmp_network_device_juniper_firewall"
+}

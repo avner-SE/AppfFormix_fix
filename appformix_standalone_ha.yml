@@ -1,0 +1,36 @@
+---
+# Install AppFormix Platform as standalone installation
+#
+# For the HA setup we need to declare following variables in the group_vars/all file:
+# 1) appformix_vip: "{{ appformix_vip }}"
+#
+# We also list all the nodes in the HA setup under appformix_controller group
+# in the inventory.
+
+- include: prerequisites.yml
+  tags: ['prerequisites']
+  vars:
+    state: present
+
+- include: deploy_ha.yml
+  tags: ['deploy']
+  vars:
+    openstack_platform_enabled: False
+    vcenter_platform_enabled: False
+    network_device_discovery_enabled: True
+    master_auth_creator_token: "{{default_master_auth_creator_token}}"
+    appformix_images:
+      - "{{ appformix_controller_image }}"
+      - "{{ appformix_dashboard_image }}"
+      - "{{ appformix_datamanager_image }}"
+      - "{{ appformix_network_device_adapter_image }}"
+      - "{{ appformix_keepalived_image }}"
+      - "{{ appformix_haproxy_image }}"
+
+- include: configure_standalone_ha.yml
+  tags: ['configure']
+  vars:
+    openstack_platform_enabled: False
+    vcenter_platform_enabled: False
+    master_auth_creator_token: "{{default_master_auth_creator_token}}"
+

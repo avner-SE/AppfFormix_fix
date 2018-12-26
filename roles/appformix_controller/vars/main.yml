@@ -1,0 +1,41 @@
+---
+# Constants defined for the appformix_controller role.
+# These should not be overridden.
+
+# First port in the pair is the external port on which the service listens.
+# It is a variable with a default value defined in defaults/main.yml.  This
+# variable can be overridden by the user.
+#
+# Second port in the pair is the port on which the service inside of the
+# container is listening.  This is considered a constant defined by the
+# container and service that runs inside.
+appformix_controller_docker_ports_http:
+    - "{{ appformix_controller_port_http }}:80"
+appformix_controller_docker_ports_https:
+    - "{{ appformix_controller_port_http }}:80"
+    - "{{ appformix_controller_port_https }}:443"
+appformix_controller_ports: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_controller_docker_ports_https, appformix_controller_docker_ports_http) }}"
+
+appformix_controller_volumes_http:
+    - "{{ appformix_log_dir }}/controller/appformix/:/var/log/appformix"
+    - "{{ appformix_log_dir }}/controller/nginx/:/var/log/nginx"
+    - "{{ appformix_install_dir }}/etc:/etc/appformix"
+    - "{{ appformix_install_dir }}/etc/logrotate/controller:/etc/logrotate.d/appformix"
+    - "{{ appformix_install_dir }}/etc/logrotate/nginx:/etc/logrotate.d/nginx"
+    - "/etc/hosts:/etc/dnsmasq/hosts"
+    - "/etc/resolv.conf:/etc/dnsmasq/resolv.conf"
+appformix_controller_volumes_https:
+    - "{{ appformix_log_dir }}/controller/appformix/:/var/log/appformix"
+    - "{{ appformix_log_dir }}/controller/nginx/:/var/log/nginx"
+    - "{{ appformix_install_dir }}/etc:/etc/appformix"
+    - "{{ appformix_install_dir }}/etc/cert/appformix.crt:/etc/nginx/ssl/nginx.crt:ro"
+    - "{{ appformix_install_dir }}/etc/cert/appformix.key:/etc/nginx/ssl/nginx.key:ro"
+    - "{{ appformix_install_dir }}/etc/logrotate/controller:/etc/logrotate.d/appformix"
+    - "{{ appformix_install_dir }}/etc/logrotate/nginx:/etc/logrotate.d/nginx"
+    - "/etc/hosts:/etc/dnsmasq/hosts"
+    - "/etc/resolv.conf:/etc/dnsmasq/resolv.conf"
+appformix_controller_volumes: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_controller_volumes_https, appformix_controller_volumes_http) }}"
+
+controller_master_config_json:
+  "EnableMaster": true
+appformix_controller_master_url: "{{ appformix_vip_url }}/appformix/v1.0/enable_master"

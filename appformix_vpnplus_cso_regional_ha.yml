@@ -1,0 +1,7 @@
+# Playbook to deploy AppFormix on Regional CSO.
+
+- include: appformix_openstack_ha.yml
+  vars:
+    aws_platform_enabled: false
+    openstack_platform_enabled: true
+    install_keepalived_flag: false

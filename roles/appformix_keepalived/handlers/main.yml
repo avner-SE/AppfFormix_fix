@@ -1,0 +1,4 @@
+---
+- name: restart keepalived
+  command: docker restart appformix-keepalived
+  when: not keepalived_container|changed

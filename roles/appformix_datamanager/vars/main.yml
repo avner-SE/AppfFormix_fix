@@ -1,0 +1,38 @@
+---
+# Constants defined for the appformix_datamanager role.
+# These should not be overridden.
+
+# First port in the pair is the external port on which the service listens.
+# It is a variable with a default value defined in defaults/main.yml.  This
+# variable can be overridden by the user.
+#
+# Second port in the pair is the port on which the service inside of the
+# container is listening.  This is considered a constant defined by the
+# container and service that runs inside.
+appformix_datamanager_docker_ports_http:
+    - "{{ appformix_datamanager_port_http }}:80"
+appformix_datamanager_docker_ports_https:
+    - "{{ appformix_datamanager_port_http }}:80"
+    - "{{ appformix_datamanager_port_https }}:443"
+appformix_datamanager_ports: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_datamanager_docker_ports_https, appformix_datamanager_docker_ports_http) }}"
+
+appformix_datamanager_volumes_http:
+    - "{{ appformix_log_dir }}/datamanager/appformix/:/var/log/appformix"
+    - "{{ appformix_log_dir }}/datamanager/nginx/:/var/log/nginx"
+    - "{{ appformix_install_dir }}/etc/logrotate/datamanager:/etc/logrotate.d/appformix"
+    - "{{ appformix_install_dir }}/etc/logrotate/nginx:/etc/logrotate.d/nginx"
+    - "/etc/hosts:/etc/dnsmasq/hosts"
+    - "/etc/resolv.conf:/etc/dnsmasq/resolv.conf"
+appformix_datamanager_volumes_https:
+    - "{{ appformix_log_dir }}/datamanager/appformix/:/var/log/appformix"
+    - "{{ appformix_log_dir }}/datamanager/nginx/:/var/log/nginx"
+    - "{{ appformix_install_dir }}/etc/cert/appformix.crt:/etc/nginx/ssl/nginx.crt:ro"
+    - "{{ appformix_install_dir }}/etc/cert/appformix.key:/etc/nginx/ssl/nginx.key:ro"
+    - "{{ appformix_install_dir }}/etc/logrotate/datamanager:/etc/logrotate.d/appformix"
+    - "{{ appformix_install_dir }}/etc/logrotate/nginx:/etc/logrotate.d/nginx"
+    - "/etc/hosts:/etc/dnsmasq/hosts"
+    - "/etc/resolv.conf:/etc/dnsmasq/resolv.conf"
+appformix_datamanager_volumes: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_datamanager_volumes_https, appformix_datamanager_volumes_http) }}"
+
+appformix_datamanager_writer_url: "{{ appformix_vip_url }}/version/2.0/data_manager_writer"
+

@@ -1,0 +1,42 @@
+# Add AppFormix License
+#
+# Arguments:
+#   appformix_license : path to AppFormix license file
+#
+# To enable features, pass a License file as an argument
+# when running this playbook (e.g., -e 'appformix_license=...')
+---
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: item is undefined or item == ""
+  with_items:
+    - appformix_license
+
+- name: Ensure "{{ appformix_license_dir }}" directory exists
+  become: yes
+  file:
+    path: "{{ appformix_license_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: license_action == 'create'
+
+- name: Copy AppFormix License to the Management host
+  become: yes
+  copy:
+    src: "{{ appformix_license }}"
+    dest: "{{ appformix_license_file }}"
+    owner: root
+    group: root
+    mode: 0600
+  when: license_action == 'create'
+
+- name: Update AppFormix License
+  uri:
+    url: "{{ appformix_features_url }}"
+    method: POST
+    HEADER_Content-Type: "application/json"
+    validate_certs: no
+  delegate_to: localhost
+  when: license_action == 'update'

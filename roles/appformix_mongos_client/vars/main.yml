@@ -1,0 +1,7 @@
+---
+appformix_mongos_client_container_conf: "{{ appformix_mongos_client_container_conf_dir }}/mongos.conf"
+appformix_mongos_client_volumes:
+    - "{{ appformix_host_mongos_client_conf_dir }}:{{ appformix_mongos_client_container_conf_dir }}"
+
+appformix_mongo_add_users_script: "add_mongodb_users.js"
+appformix_host_mongos_client_conf_dir_state: "{{ (appformix_mongos_client_state == 'absent') | ternary('absent','directory') }}"

@@ -1,0 +1,18 @@
+{
+  "ControllerIP": "{{ appformix_vip }}",
+  "ControllerPort": "{{ appformix_vip_api_port_http }}",
+  "ControllerSSLPort": "{{ appformix_vip_api_port_https }}",
+  "DatamanagerIP": "{{ appformix_vip }}",
+  "DatamanagerPort": "{{ appformix_vip_api_port_http }}",
+  "DatamanagerSSLPort": "{{ appformix_vip_api_port_https }}",
+  "InternalAPIPort": "{{ appformix_vip_api_port }}",
+  "KubernetesAdapterIP": "{{ appformix_vip }}",
+  "KubernetesAdapterPort": "{{ appformix_vip_api_port_http }}",
+  "KubernetesAdapterSSLPort": "{{ appformix_vip_api_port_https }}",
+  "KubernetesClusterUrl": "{{ kubernetes_cluster_url }}",
+  "KubernetesUsername": "{{ kubernetes_username }}",
+  "KubernetesPassword": "{{ kubernetes_password }}",
+  "KubernetesAuthToken": "{{ kubernetes_auth_token }}",
+  "SSLEnabled": {{ (appformix_ssl_enabled|bool) }},
+  "VerboseMode": true
+}

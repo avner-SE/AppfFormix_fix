@@ -1,0 +1,51 @@
+{
+    "AggregateId": "appformix_platform",
+    "Collection": "ipmi_host_pythoncheckipmipy_collection",
+    "Config": {
+        "CommandLine": "python check_ipmi.py"
+    },
+    "MetricMap": [
+        {
+            "Name": "power_overload",
+            "Units": "error"
+        },
+        {
+            "Name": "main_power_fault",
+            "Units": "error"
+        },
+        {
+            "Name": "power_control_fault",
+            "Units": "error"
+        },
+        {
+            "Name": "cooling_fan_fault",
+            "Units": "error"
+        },
+        {
+            "Name": "driver_fault",
+            "Units": "error"
+        },
+        {
+            "Name": "cpu1_temp",
+            "Units": "celsius"
+        },
+        {
+            "Name": "cpu2_temp",
+            "Units": "celsius"
+        },
+        {
+            "Name": "Vcpu1_voltage",
+            "Units": "V"
+        },
+        {
+            "Name": "Vcpu2_voltage",
+            "Units": "V"
+        }
+    ],
+    "PluginId": "pythoncheckipmipy",
+    "PluginName": "ipmi",
+    "PluginType": "command",
+    "Scope": "ipmi_host",
+    "State": "enabled",
+    "status": "success"
+}

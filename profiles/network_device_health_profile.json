@@ -1,0 +1,88 @@
+{
+    "rules": [
+        {
+            "Name": "network_device_collector_heartbeat",
+            "EventRuleId": "NETWORK_DEVICE_COLLECTOR_HEARTBEAT",
+            "MetricType": "device.collector.heartbeat",
+            "AggregationFunction": "sum",
+            "ComparisonFunction": "equal",
+            "Threshold": 0,
+            "IntervalDuration": "1s",
+            "IntervalsWithException": 1,
+            "IntervalCount": 1,
+            "Module": "alarms",
+            "Mode": "alert",
+            "EventRuleScope": "network_device",
+            "EventRuleType": "static",
+            "CreatedBy": "system",
+            "DisplayEvent": false
+        },
+        {
+            "Name": "network_device_snmp_heartbeat",
+            "EventRuleId": "NETWORK_DEVICE_SNMP_HEARTBEAT",
+            "MetricType": "device.snmp.heartbeat",
+            "AggregationFunction": "sum",
+            "ComparisonFunction": "equal",
+            "Threshold": 0,
+            "IntervalDuration": "1s",
+            "IntervalsWithException": 1,
+            "IntervalCount": 1,
+            "Module": "alarms",
+            "Mode": "alert",
+            "EventRuleScope": "network_device",
+            "EventRuleType": "static",
+            "CreatedBy": "system",
+            "DisplayEvent": false
+        },
+        {
+            "Name": "network_device_jti_heartbeat",
+            "EventRuleId": "NETWORK_DEVICE_JTI_HEARTBEAT",
+            "MetricType": "device.jti.heartbeat",
+            "AggregationFunction": "sum",
+            "ComparisonFunction": "equal",
+            "Threshold": 0,
+            "IntervalDuration": "1s",
+            "IntervalsWithException": 1,
+            "IntervalCount": 1,
+            "Module": "alarms",
+            "Mode": "alert",
+            "EventRuleScope": "network_device",
+            "EventRuleType": "static",
+            "CreatedBy": "system",
+            "DisplayEvent": false
+        },
+        {
+            "Name": "network_device_grpc_heartbeat",
+            "EventRuleId": "NETWORK_DEVICE_GRPC_HEARTBEAT",
+            "MetricType": "device.grpc.heartbeat",
+            "AggregationFunction": "sum",
+            "ComparisonFunction": "equal",
+            "Threshold": 0,
+            "IntervalDuration": "1s",
+            "IntervalsWithException": 1,
+            "IntervalCount": 1,
+            "Module": "alarms",
+            "Mode": "alert",
+            "EventRuleScope": "network_device",
+            "EventRuleType": "static",
+            "CreatedBy": "system",
+            "DisplayEvent": false
+        }
+    ],
+    "profile": {
+        "CompositeAlarmScope": "network_device",
+        "CompositeAlarmType": "health",
+        "ObjectId": "all",
+        "Rulesets": [
+            {
+                "RuleList": ["NETWORK_DEVICE_COLLECTOR_HEARTBEAT",
+                             "NETWORK_DEVICE_SNMP_HEARTBEAT",
+                             "NETWORK_DEVICE_JTI_HEARTBEAT",
+                             "NETWORK_DEVICE_GRPC_HEARTBEAT"],
+                "WeightList": [0.25, 0.25, 0.25, 0.25],
+                "Threshold": 0.25,
+                "RulesetObjectId": "all"
+            }
+        ]
+    }
+}

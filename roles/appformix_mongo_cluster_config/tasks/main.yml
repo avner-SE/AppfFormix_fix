@@ -1,0 +1,49 @@
+---
+- name: Ensure AppFormix Mongo Cluster configuration directory exists
+  become: yes
+  file:
+    path: "{{ item }}"
+    state: "{{ (appformix_mongo_cluster_config_state == 'absent') | ternary('absent','directory') }}"
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+  - "{{ appformix_host_mongo_cluster_conf_dir }}"
+  - "{{ appformix_host_mongos_client_conf_dir }}"
+
+- name: Copy AppFormix Mongo Cluster replication set file to the Management host
+  become: yes
+  template:
+    src: "replication_set.js"
+    dest: "{{ appformix_host_mongo_cluster_conf_dir }}"
+    owner: root
+    group: root
+    mode: 0644
+  when: appformix_state != 'absent'
+
+- name: Create conf dir inside AppFormix Mongo Replica Master Container
+  become: yes
+  command: docker exec "{{ appformix_mongo_replica_name }}"
+           mkdir -p "{{ appformix_mongo_cluster_container_conf_dir }}"
+  when: appformix_state != 'absent'
+
+- name: Copy Replication Set files to AppFormix Mongo Replica Master Container
+  become: yes
+  command: docker cp
+           "{{ appformix_host_mongo_cluster_conf_dir }}"/replication_set.js
+           "{{ appformix_mongo_replica_name }}:{{ appformix_mongo_cluster_container_replication_set }}"
+  when: appformix_state != 'absent'
+
+# For this ansible task, we have put in multiple retries with some delay. In
+# some of the environments (especially nested) the mongo servers running within
+# some of the replica containers are not up by the time we want to add them to
+# the replica set.
+- name: Initialize Replication Set on AppFormix Mongo Replica Master Container
+  become: yes
+  command: docker exec "{{ appformix_mongo_replica_name }}"
+           bash -c "mongo admin -u {{ appformix_mongo_username }} -p {{ appformix_mongo_password }} --port {{ appformix_mongo_replica_exposed_port }} {{ appformix_mongo_cluster_container_replication_set }}"
+  register: add_replication_output
+  until: add_replication_output.stdout.count('stateStr') == appformix_scale_nodes | int
+  retries: 30
+  delay: 10
+  when: appformix_state != 'absent'

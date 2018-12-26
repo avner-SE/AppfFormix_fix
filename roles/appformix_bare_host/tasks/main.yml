@@ -1,0 +1,33 @@
+---
+- name: Register host with AppFormix Controller using IPv4 Address
+  script: >
+      configure_host.py {{ auth_token }} {{ auth_type }} {{ inventory_hostname }} {{ ansible_default_ipv4.address }} {{ post_url }} {{ appformix_bare_host_source }} {{ task_url }} {{ appformix_kvm_instance_discovery | default("false")}} {{ appformix_tag }}
+  delegate_to: localhost
+  register: ipv4_result
+  ignore_errors: yes
+  when: ipv6_cidr is undefined and not register_nfx150
+
+- name: Register host with AppFormix Controller using inventory Hostname
+  script: >
+      configure_host.py {{ auth_token }} {{ auth_type }} {{ inventory_hostname }} {{ inventory_hostname }} {{ post_url }} {{ appformix_bare_host_source }} {{ task_url }} {{ appformix_kvm_instance_discovery | default("false")}} {{ appformix_tag }}
+  delegate_to: localhost
+  when: (ipv6_cidr is undefined) and (ipv4_result | failed) and not register_nfx150
+
+- name: Register host with AppFormix Controller
+  script: >
+      configure_host.py {{ auth_token }} {{ auth_type }} {{ inventory_hostname }} {{ inventory_hostname }} {{ post_url }} {{ appformix_bare_host_source }} {{ task_url }} {{ appformix_kvm_instance_discovery | default("false")}} {{ appformix_tag }}
+  delegate_to: localhost
+  register: ipv6_result
+  when: ipv6_cidr is defined and not register_nfx150
+
+- name: Update Server MetaData if needed
+  script: >
+      update_host.py {{ auth_token }} {{ auth_type }} {{ post_url }} {{ inventory_hostname }} {{ task_url }} {{ jti_inband_ip }}
+  when: jti_inband_ip is defined and not register_nfx150
+
+- name: Register NFX150 host with Appformix Controller using Agent Address
+  script: >
+    configure_host.py {{ auth_token }} {{ auth_type }} {{ hostvars[item].inventory_hostname }} {{ hostvars[item].agent_ip }} {{ post_url }} {{ appformix_bare_host_source }} {{ task_url }} {{ appformix_kvm_instance_discovery }} {{ appformix_tag }}
+  delegate_to: localhost
+  with_items: "{{ nfx150 }}"
+  when: register_nfx150

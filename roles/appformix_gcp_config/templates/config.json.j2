@@ -1,0 +1,17 @@
+{
+  "AdminRoles": {{ appformix_infrastructure_view_roles }},
+  "ControllerIp": "{{ appformix_vip }}",
+  "ControllerPort": "{{ appformix_vip_api_port_http }}",
+  "ControllerSSLPort": "{{ appformix_vip_api_port_https }}",
+  "ConfigAdminRoles": {{ appformix_administrator_roles }},
+  "ReadOnlyAdminRoles": {{ appformix_read_only_infrastructure_view_roles }},
+  "DatamanagerIp": "{{ appformix_vip }}",
+  "DatamanagerPort": "{{ appformix_vip_api_port_http }}",
+  "DatamanagerSSLPort": "{{ appformix_vip_api_port_https }}",
+  "GCPAdapterIp": "{{ appformix_vip }}",
+  "GCPAdapterPort": "{{ appformix_vip_api_port_http }}",
+  "GCPAdapterSSLPort": "{{ appformix_vip_api_port_https }}",
+  "InternalAPIPort": "{{ appformix_vip_api_port }}",
+  "SSLEnabled": {{ (appformix_ssl_enabled|bool) }},
+  "VerboseMode": true
+}

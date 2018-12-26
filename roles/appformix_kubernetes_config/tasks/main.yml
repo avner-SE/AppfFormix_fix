@@ -1,0 +1,74 @@
+---
+# Run AppFormix Kubernetes Discovery from ansible
+#
+# To use this ansible script, you need to install python-httplib2
+# in your ansible runner
+# If you have change your kubernetes-adapter configuration and repost
+# you need to restart the kubernetes-adapter and controller containers
+# by running:
+# ansible-playbook appformix_openstack.yml --skip-tags=appformix_config
+# -e appformix_state=restarted -e appformix_version= -e appformix_license
+
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: ( {{ item }} is undefined or {{ item }} == "" )
+  with_items:
+    - kubernetes_cluster_url
+
+- name: Post AppFormix Kubernetes Adapter configuration
+  uri:
+    url: "{{ kubernetes_adapter_url }}/config"
+    method: POST
+    HEADER_Content-Type: "application/json"
+    # NOTE: Leading space in body string is required as a workaround to known
+    #       issue in Ansible 1.9.6.  Refer to:
+    #       https://github.com/ansible/ansible-modules-core/pull/1011#issuecomment-155963713
+    #       https://github.com/ansible/ansible-modules-core/issues/265
+    body: " {{ config_json | to_json}}"
+  delegate_to: localhost
+
+- name: Get host list from Kubernetes Adapter
+  uri:
+    url: "{{ kubernetes_adapter_url }}/nodes"
+    method: GET
+  register: kubernetes_nodes
+  delegate_to: localhost
+
+- set_fact:
+    compute_hosts: { "Nodes": "{{ kubernetes_nodes.json.KubernetesAdapterNodes }}" }
+    kubernetes_adapter_url: "{{ kubernetes_adapter_url }}"
+
+- name: Post host list to Kubernetes Adapter
+  uri:
+    url: "{{ kubernetes_adapter_url }}/nodes"
+    method: POST
+    HEADER_Content-Type: "application/json"
+    body: " {{ compute_hosts | to_json }}"
+  delegate_to: localhost
+
+- name: Check Kubernetes discovery status
+  uri:
+    url: "{{ kubernetes_adapter_url }}/discovery_status"
+    method: GET
+  register: discovery_status
+  delegate_to: localhost
+
+- name: Start Kubernetes discovery
+  uri:
+    url: "{{ kubernetes_adapter_url }}/discovery/start"
+    method: POST
+  when: discovery_status.json.DiscoveryStatus.state == 'Not started'
+  delegate_to: localhost
+
+- name: Check Kubernetes discovery status
+  uri:
+    url: "{{ kubernetes_adapter_url }}/discovery_status"
+    method: GET
+  register: discovery_status
+  delegate_to: localhost
+
+# It will not throw out errors if we skip Start Kubernetes discovery with
+# discovery status equals running or completed
+- name: Error out if discovery does not start
+  fail: msg="Unable to start appformix-kubernetes-adapter discovery. Please check logs in /var/log/appformix/kubernetes_adapter/appformix/."
+  when: discovery_status.json.DiscoveryStatus.state != 'Running' and discovery_status.json.DiscoveryStatus.state != 'Discovery completed'

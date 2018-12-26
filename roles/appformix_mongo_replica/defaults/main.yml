@@ -1,0 +1,6 @@
+---
+appformix_mongo_replica_state: "{{ appformix_state }}"
+
+# This is the internal port inside of the appformix-mongo container
+appformix_mongo_replica_docker_ports: "{{ appformix_mongo_replica_exposed_port }}:{{ appformix_mongo_replica_port }}"
+appformix_mongo_replica_start_timeout: 120

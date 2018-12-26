@@ -1,0 +1,22 @@
+---
+- name: Prerequisites for using plugins for SNMP monitoring
+  become: yes
+  yum:
+    state: present
+    name: '{{ item }}'
+  with_items:
+    - net-snmp
+    - net-snmp-utils
+  when: appformix_remote_host_monitoring_enabled|bool == True or appformix_network_device_monitoring_enabled|bool == True or appformix_install_snmp_dependencies|bool == True
+  ignore_errors: yes
+
+- name: Prerequisites for using plugins for IPMI monitoring
+  become: yes
+  yum:
+    state: present
+    name: '{{ item }}'
+  with_items:
+    - ipmitool
+  when: appformix_remote_host_monitoring_enabled|bool == True or appformix_install_ipmi_dependencies|bool == True
+  ignore_errors: yes
+

@@ -1,0 +1,28 @@
+---
+- include: yum.yml
+  when: ansible_pkg_mgr == 'yum'
+
+- include: apt.yml
+  when: ansible_pkg_mgr == 'apt'
+
+- name: Install docker-py
+  become: yes
+  pip:
+    name: 'docker-py=={{ docker_py_version }}'
+    extra_args: '{{ pip_extra_args | default(omit) }}'
+    state: '{{ docker_state }}'
+
+- name: add user to docker group
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: docker
+    append: yes
+  become: yes
+  when: ansible_user_id != 'root' and docker_state != 'absent'
+
+- name: check docker is accessible to user
+  shell: docker ps
+  when: docker_state != 'absent'
+
+- name: check appformix release versions
+  script: appformix_version.py {{ appformix_version }}

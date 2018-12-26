@@ -1,0 +1,24 @@
+---
+# Install AppFormix for vCenter
+
+- include: prerequisites.yml
+  tags: ['prerequisites']
+  vars:
+    state: present
+
+- include: deploy.yml
+  tags: ['deploy']
+  vars:
+    master_auth_creator_token: "{{default_master_auth_creator_token}}"
+    vcenter_platform_enabled: true
+    appformix_images:
+      - "{{ appformix_controller_image }}"
+      - "{{ appformix_dashboard_image }}"
+      - "{{ appformix_datamanager_image }}"
+      - "{{ appformix_vcenter_adapter_image }}"
+
+- include: configure_vcenter.yml
+  vars:
+    openstack_platform_enabled: false
+    vcenter_platform_enabled: true
+  tags: ['configure']

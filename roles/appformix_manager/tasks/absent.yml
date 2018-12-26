@@ -1,0 +1,12 @@
+---
+- name: Remove AppFormix Agent from host
+  become: yes
+  command: dpkg -P appformix-manager
+  ignore_errors: yes
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Remove AppFormix Agent from host
+  become: yes
+  command: rpm -e appformix-manager
+  ignore_errors: yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux' or ansible_distribution == 'RedHat'

@@ -1,0 +1,20 @@
+{
+    "ServiceGroupName": "AppformixNeutronServiceGroup",
+    "Endpoints": [
+        {
+            "Url": "{{ neutron_url }}",
+            "EndpointName": "neutronEndpoint",
+            "Method": "GET",
+            "Interval": 2
+        }
+    ],
+    "ServiceGroupId": "NeutronServiceGroupId",
+    "RefreshTokenData": {
+        "RefreshToken": "False",
+        "Username": "admin",
+        "AuthType": "openstack",
+        "Password": "{{ }}",
+        "AuthUrl": "{{ }}",
+        "Project": ""
+    }
+}

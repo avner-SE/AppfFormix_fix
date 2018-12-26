@@ -1,0 +1,51 @@
+---
+# Install AppFormix components
+#
+# Arguments:
+#   appformix_ssl_cert : path to SSL certificate file (optional)
+#   appformix_ssl_key  : path to SSL private key file (optional)
+#   appformix_license  : path to AppFormix license file (optional)
+#
+# To enable HTTPS protocol for REST APIs, pass an SSL certificate
+# and private key as arguments when running this playbook (e.g.,
+# "-e 'appformix_ssl_cert=...' -e 'appformix_ssl_key=...'")
+#
+
+- hosts: appformix_controller
+  tags: [ appformix_controller ]
+  roles:
+    - appformix_defaults
+    - appformix_filesystem
+    - { role: appformix_logrotate, when: appformix_state != 'absent' }
+    - { role: appformix_network, when: appformix_state != 'absent' }
+    - { role: appformix_docker_images, when: appformix_state != 'absent' }
+    - appformix_translate
+
+- hosts: appformix_controller
+  tags: appformix_controller
+  roles:
+    - appformix_defaults
+    - { role: appformix_certs, when: appformix_ssl_cert is defined and appformix_ssl_key is defined }
+    - { role: appformix_license, when: appformix_license is defined }
+    - appformix_redis
+    - appformix_mongo
+    - appformix_datamanager
+    - appformix_dashboard
+    - { role: appformix_datamanager, datamanager_action: "configure" }
+
+- hosts: appformix_controller
+  tags: appformix_platform_ipv6_setup
+  roles:
+    - { role: appformix_ipv6_setup, when: ipv6_cidr is defined }
+
+- hosts: appformix_controller:bare_host:ceph_osd:ceph_monitor:compute:openstack_controller:appformix_network_agents
+  tags: appformix_manager
+  roles:
+    - appformix_manager
+
+- hosts: appformix_controller
+  tags: [ appformix_nfx150_setup ]
+  roles:
+    - appformix_defaults
+    - { role: appformix_nfx150_config,
+        when: nfx150 | length > 0 }

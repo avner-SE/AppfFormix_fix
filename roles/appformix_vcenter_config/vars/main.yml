@@ -1,0 +1,53 @@
+---
+vcenter_adapter_url: "{{ appformix_vip_url }}/appformix/v1.0/vcenter_adapter"
+
+# TODO: The repetition below can be avoided by updating the base
+# config with value of SSLEnabled at runtime based on the value of
+# appformix_ssl_enabled. We can use this until we find a way to achieve
+# this with ansible 1.9.4 version.
+
+config_json_ssl_enabled:
+  "AdminRoles": "{{ appformix_infrastructure_view_roles }}"
+  "ConfigAdminRoles": "{{ appformix_administrator_roles }}"
+  "ReadOnlyAdminRoles": "{{ appformix_read_only_infrastructure_view_roles }}"
+  "VCenterName": "{{ appformix_vcenter_adapter_vcenter_name }}"
+  "VCenterIp": "{{ appformix_vcenter_adapter_vcenter_ip }}"
+  "VCenterUser": "{{ appformix_vcenter_adapter_vcenter_user }}"
+  "VCenterPassword": "{{ appformix_vcenter_adapter_vcenter_password }}"
+  "VCenterPort": "{{ appformix_vcenter_adapter_vcenter_port }}"
+  "InternalAPIPort": "{{ appformix_vip_api_port_https }}"
+  "ControllerIp": "{{ appformix_vip }}"
+  "ControllerPort": "{{ appformix_vip_api_port_http }}"
+  "ControllerSSLPort": "{{ appformix_vip_api_port_https }}"
+  "DatamanagerIp": "{{ appformix_vip }}"
+  "DatamanagerPort": "{{ appformix_vip_api_port_http }}"
+  "DatamanagerSSLPort": "{{ appformix_vip_api_port_https }}"
+  "VCenterAdapterIp": "{{ appformix_vip }}"
+  "VCenterAdapterPort": "{{ appformix_vip_api_port_http }}"
+  "VCenterAdapterSSLPort": "{{ appformix_vip_api_port_https }}"
+  "SSLEnabled": true
+  "VerboseMode": true
+
+config_json_ssl_disabled:
+  "AdminRoles": "{{ appformix_infrastructure_view_roles }}"
+  "ConfigAdminRoles": "{{ appformix_administrator_roles }}"
+  "ReadOnlyAdminRoles": "{{ appformix_read_only_infrastructure_view_roles }}"
+  "VCenterName": "{{ appformix_vcenter_adapter_vcenter_name }}"
+  "VCenterIp": "{{ appformix_vcenter_adapter_vcenter_ip }}"
+  "VCenterUser": "{{ appformix_vcenter_adapter_vcenter_user }}"
+  "VCenterPassword": "{{ appformix_vcenter_adapter_vcenter_password }}"
+  "VCenterPort": "{{ appformix_vcenter_adapter_vcenter_port }}"
+  "InternalAPIPort": "{{ appformix_vip_api_port_http }}"
+  "ControllerIp": "{{ appformix_vip }}"
+  "ControllerPort": "{{ appformix_vip_api_port_http }}"
+  "ControllerSSLPort": "{{ appformix_vip_api_port_https }}"
+  "DatamanagerIp": "{{ appformix_vip }}"
+  "DatamanagerPort": "{{ appformix_vip_api_port_http }}"
+  "DatamanagerSSLPort": "{{ appformix_vip_api_port_https }}"
+  "VCenterAdapterIp": "{{ appformix_vip }}"
+  "VCenterAdapterPort": "{{ appformix_vip_api_port_http }}"
+  "VCenterAdapterSSLPort": "{{ appformix_vip_api_port_https }}"
+  "SSLEnabled": false
+  "VerboseMode": true
+
+config_json: "{{ (appformix_ssl_enabled|bool) | ternary(config_json_ssl_enabled, config_json_ssl_disabled)}}"

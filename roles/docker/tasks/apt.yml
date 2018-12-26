@@ -1,0 +1,55 @@
+- name: Prerequisites for using HTTPS apt repository
+  become: yes
+  apt: state=present name={{ item }}
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common
+
+- name: Add Docker apt repository GPG key
+  become: yes
+  apt_key:
+    data: "{{ lookup('file', 'ubuntu.asc') }}"
+    state: '{{ docker_state }}'
+  when: docker_state != 'absent'
+
+- name: Configure Docker apt repository
+  become: yes
+  apt_repository:
+    update_cache: yes
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    state: '{{ docker_state }}'
+
+- name: Purge obsolete docker, docker-engine, lxc-docker packages
+  become: yes
+  apt: state=absent purge=yes name={{ item }}
+  with_items:
+    - docker
+    - docker-engine
+    - lxc-docker
+
+# The linux-image-extra is a recommended package that enables 'aufs' storage
+# driver.  It is not required.
+- name: Prerequisites for Docker
+  become: yes
+  ignore_errors: yes
+  apt: state=present name={{ item }}
+  with_items:
+      - linux-image-extra-{{ ansible_kernel }}
+      - linux-image-extra-virtual
+
+- name: Install docker-ce
+  become: yes
+  apt:
+    name: docker-ce={{ docker_ce_version_ubuntu }}
+    force: yes
+    purge: yes
+    state: '{{ docker_state }}'
+
+- name: Start docker-engine
+  become: yes
+  service:
+    name: docker
+    state: started
+    enabled: true
+  when: docker_state != 'absent'

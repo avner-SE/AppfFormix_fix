@@ -1,0 +1,86 @@
+# Example naming schemes are as below:
+#   hostname ansible_ssh_user='username' ansible_sudo_pass='password'
+
+# List all Compute Nodes
+[compute]
+
+
+# AppFormix controller host
+#
+# Host variables can be defined to control AppFormix configuration parameters
+# for particular host.  For example, to specify the directory in which MongoDB
+# data is stored on hostname1 (the default is /opt/appformix/mongo/data):
+#
+#   hostname1 appformix_mongo_data_dir=/var/lib/appformix/mongo
+#
+# For variables with same value for all AppFormix controller hosts, set group
+# variables below.
+#
+[appformix_controller]
+
+# Configuration variables for all hosts in the appformix_controller group.
+# Enter one variable per line.  Examples:
+#
+#   appformix_docker_user=username
+#   appformix_docker_email=youremail@yourcompany.com
+#   appformix_docker_password=password
+#   appformix_license=license_file.sig
+[appformix_controller:vars]
+
+
+# List of Openstack controller nodes
+#
+# Openstack controller nodes on which AppFormix Agent is to be installed.
+# AppFormix Controller will monitor these nodes as bare-metal hosts.
+[openstack_controller]
+
+
+# List of AppFormix controller worker nodes
+#
+# Worker nodes are passive nodes fronted by appformix_load_balancer or
+# appformix_load_balancer. Some features are disabled on passive nodes.
+# The intent is to keep appformix_mongo and appformix_redis as a separate
+# layer in this active - passive configuration
+[appformix_controller_worker]
+
+# AppFormix Load Balancer
+[appformix_load_balancer]
+
+# List of bare_host
+# It can be any bare_host we want to monitor, including cloud vms from Azure etc.
+# We will install agent on it and post it to AppFormix-Controller
+# as source=bare-metal. Agent would then discover all the instances running on
+# that bare host.
+#
+# Add "appformix_kvm_instance_discovery='true'" if you want automatic
+# instance discovery.
+#
+[bare_host]
+
+# List of ceph osd nodes(or ceph storage nodes)
+# These nodes are where ceph osds running on.
+# We will install appformix agent on it and post it to AppFormix-Controller
+# as source=bare-metal and aggregate as ceph-osd
+[ceph_osd]
+
+# List of ceph monitor nodes
+# We will install appformix agent on it and post it to AppFormix-Controller
+# as source=bare-metal and aggregate as ceph-monitor
+[ceph_monitor]
+
+# List of remote host you want to use snmp to monitor
+# we will post these servers to appformix_controller but not install our agent
+# use snmp to get these servers' metrics
+[remote_host]
+
+# List of appformix_network_device_collector nodes
+# We will install appformix agent on it and post it to AppFormix-Controller
+# as source=bare-metal and aggregate as appformix_network_agents
+# can specify jti_inband_ip='ip_address' for each entry to specify the which
+# ip address of this network agents you want to use to configure JTI device.
+[appformix_network_agents]
+
+# List of nfx150 host you want to monitor
+# we will post these servers to appformix_controller and install our agent
+# on the lxc container.
+[nfx150]

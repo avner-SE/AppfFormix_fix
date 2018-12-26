@@ -1,0 +1,4 @@
+---
+# This can be any name, since image is a required field in ansible
+# docker module but it didnt use this name when state = absent
+appformix_dns_image: "appformix-dns"

@@ -1,0 +1,12 @@
+---
+# Set this to override the OpenStack Identity endpoint instead of using
+# the value advertised by Keystone.
+
+appformix_infrastructure_view_roles:
+    - 'admin'
+    - 'Owner'
+appformix_administrator_roles:
+    - 'admin'
+    - 'Owner'
+
+appformix_read_only_infrastructure_view_roles: []

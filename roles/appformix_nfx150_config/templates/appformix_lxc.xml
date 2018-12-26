@@ -1,0 +1,76 @@
+<domain type='lxc'>
+  <name>appformix</name>
+  <memory unit='KiB'>{{ appformix_lxc_memory_size }}</memory>
+  <currentMemory unit='KiB'>{{ appformix_lxc_memory_size }}</currentMemory>
+  <vcpu>{{ appformix_lxc_vcpu_count }}</vcpu>
+  <os>
+    <type arch='x86_64'>exe</type>
+    <init>/sbin/init</init>
+  </os>
+  <features>
+    <capabilities policy='allow'>
+      <audit_control state='on'/>
+      <audit_write state='on'/>
+      <block_suspend state='on'/>
+      <chown state='on'/>
+      <ipc_lock state='on'/>
+      <ipc_owner state='on'/>
+      <kill state='on'/>
+      <mac_admin state='on'/>
+      <mac_override state='on'/>
+      <mknod state='on'/>
+      <net_admin state='on'/>
+      <net_bind_service state='on'/>
+      <net_broadcast state='on'/>
+      <net_raw state='on'/>
+      <sys_admin state='on'/>
+      <sys_boot state='on'/>
+      <sys_ptrace state='on'/>
+      <sys_rawio state='on'/>
+      <sys_resource state='on'/>
+      <sys_time state='on'/>
+      <syslog state='on'/>
+    </capabilities>
+  </features>
+  <clock offset='utc'/>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <devices>
+    <emulator>/usr/lib64/libvirt/libvirt_lxc</emulator>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/var/public/appformix'/>
+      <target dir='/'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/proc'/>
+      <target dir='/host/proc'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/sys'/>
+      <target dir='/host/sys'/>
+    </filesystem>
+    <filesystem type='mount' accessmode='passthrough'>
+      <source dir='/var/run'/>
+      <target dir='/host/run'/>
+    </filesystem>
+    <interface type='bridge'>
+      <source bridge='eth0br'/>
+      <guest dev='eth0'/>
+      <link state='up'/>
+    </interface>
+    <interface type='bridge'>
+      <source bridge='virbr0'/>
+      <guest dev='bme1'/>
+      <link state='up'/>
+    </interface>
+    <interface type='bridge'>
+      <source bridge='ctrlbr0'/>
+      <guest dev='bme2'/>
+      <link state='up'/>
+    </interface>
+    <console type='pty'>
+      <target type='lxc' port='0'/>
+    </console>
+  </devices>
+</domain>

@@ -1,0 +1,7 @@
+---
+# Default directory into which 'appformix_docker_images' files are copied
+# to an appformix_controller host.  This is a temporary location to place
+# the files, so that they may be loaded into Docker.  User can override the
+# destination if not enough space in /tmp/.
+appformix_docker_images_remote_dir: "/tmp/"
+appformix_mongo_redis_image_list: "{{ appformix_images }} + ['{{ appformix_mongo_image }}'] + ['{{appformix_redis_image}}']"

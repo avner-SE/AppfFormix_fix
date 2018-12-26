@@ -1,0 +1,38 @@
+{
+    "rules": [
+              {
+                "Name": "aws_host_health_transition",
+                "EventRuleId": "Aws_Host_Health_Transition",
+                "EventRuleScope": "aws_host",
+                "MetricType": "health.transition",
+                "AggregationFunction": "sum",
+                "ComparisonFunction": "above",
+                "Threshold": 0,
+                "IntervalCount": 1,
+                "IntervalsWithException": 1,
+                "IntervalDuration": "1s",
+                "Mode": "event",
+                "CreatedBy": "user",
+                "Severity": "critical",
+                "DisplayEvent": true,
+                "Module": "health/risk"
+            },
+            {
+                "Name": "aws_host_risk_transition",
+                "EventRuleId": "Aws_Host_Risk_Transition",
+                "EventRuleScope": "aws_host",
+                "MetricType": "risk.transition",
+                "AggregationFunction": "sum",
+                "ComparisonFunction": "above",
+                "Threshold": 0,
+                "IntervalCount": 1,
+                "IntervalsWithException": 1,
+                "IntervalDuration": "1s",
+                "Mode": "event",
+                "CreatedBy": "user",
+                "Severity": "critical",
+                "DisplayEvent": true,
+                "Module": "health/risk"
+            }
+          ]
+}

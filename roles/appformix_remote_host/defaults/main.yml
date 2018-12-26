@@ -1,0 +1,4 @@
+---
+post_url: "{{ appformix_vip_url }}/appformix/v1.0/server_definition"
+task_url: "{{ appformix_vip_url }}/appformix/v1.0/task/"
+appformix_bare_host_source: "bare-metal"

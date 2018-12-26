@@ -1,0 +1,15 @@
+---
+# Create IPv6 Docker network
+- name: Create AppFormix Network
+  shell: docker network inspect {{ appformix_network }} || docker network create -d bridge --ipv6 --subnet {{ ipv6_cidr }} {{ appformix_network }}
+  when: ipv6_cidr is defined and appformix_state != 'absent'
+
+# Create IPv4 Docker network
+- name: Create AppFormix Network
+  shell: docker network inspect {{ appformix_network }} || docker network create -d bridge {{ appformix_network_ipv4_subnet_arg }} {{ appformix_network }}
+  when: ipv6_cidr is undefined and appformix_state != 'absent'
+
+# Remove Docker network
+- name: Remove AppFormix Network
+  shell: if docker network inspect {{ appformix_network }}; then docker network rm {{ appformix_network }}; fi
+  when: appformix_state == 'absent'

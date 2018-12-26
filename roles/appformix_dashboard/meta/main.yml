@@ -1,0 +1,12 @@
+---
+dependencies:
+  - { role: appformix_defaults }
+  - { role: appformix_controller }
+  - { role: appformix_stream, when: appformix_stream_enabled|bool == true }
+  - { role: appformix_openstack_adapter, when: openstack_platform_enabled|bool == true}
+  - { role: appformix_network_device_adapter, when: network_device_discovery_enabled|bool == true}
+  - { role: appformix_vcenter_adapter, when: vcenter_platform_enabled|bool == true}
+  - { role: appformix_aws_adapter, when: aws_platform_enabled|bool == true}
+  - { role: appformix_azure_adapter, when: azure_platform_enabled|bool == true}
+  - { role: appformix_gcp_adapter, when: gcp_platform_enabled|bool == true}
+  - { role: appformix_kubernetes_adapter, when: kubernetes_platform_enabled|bool == true}

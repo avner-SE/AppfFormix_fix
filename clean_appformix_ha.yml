@@ -1,0 +1,56 @@
+---
+#
+# Uninstall AppFormix and remove all data, configuration, and log files.
+#
+# As a safeguard to protect user data, the appformix_openstack.yml playbook
+# only uninstalls all services, but does not delete any historical data or
+# configuration.  This clean_appformix_openstack.yml playbook will remove
+# all associated data used by AppFormix.
+#
+
+- include: deploy_ha.yml
+  vars:
+    appformix_state: absent
+
+- hosts: appformix_controller
+  tags: appformix_controller
+  become: yes
+  roles:
+      - { role: appformix_network, appformix_state: absent }
+
+- hosts: appformix_controller
+  tags: appformix_controller
+  become: yes
+  vars:
+    appformix_install_dir: "/opt/appformix"
+    appformix_log_dir: "/var/log/appformix"
+  tasks:
+    - name: Remove AppFormix files and installation directory
+      file:
+        state: absent
+        name: "{{ appformix_install_dir }}"
+
+    - name: Remove AppFormix log files and log directory
+      file:
+        state: absent
+        name: "{{ appformix_log_dir }}"
+
+- hosts: compute:bare_host:appformix_controller
+  tags: appformix_manager
+  become: yes
+  vars:
+    appformix_install_dir: "/opt/appformix"
+    appformix_log_dir: "/var/log/appformix"
+  roles:
+      - { role: appformix_defaults, appformix_state: absent }
+  tasks:
+    - name: Remove Agent configuration files
+      file:
+        state: absent
+        name: "{{ appformix_install_dir }}"
+
+    - name: Remove Agent log files and log directory
+      file:
+        state: absent
+        name: "{{ appformix_log_dir }}"
+

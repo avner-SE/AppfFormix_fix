@@ -1,0 +1,1 @@
+HYPERVISOR_IP={{ appformix_lxc_container_hypervisor_ip }}

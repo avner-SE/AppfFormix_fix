@@ -1,0 +1,33 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "network_device_pythonchecksnmpnetworkdeviceusagepy_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_usage.py",
+        "Type": "snmp_network_device",
+        "PluginPrefix": "routing_engine",
+        "EntityType": ["routing_engine"]
+    },
+    "MetricMap": [
+        {
+            "Name": "temperature",
+            "Units": "C"
+        },
+        {
+            "Name": "cpu_percentage",
+            "Units": "%"
+        },
+        {
+            "Name": "memory_percentage",
+            "Units": "%"
+        }
+    ],
+    "PluginId": "pythonchecksnmpnetworkdeviceusagepy",
+    "PluginName": "snmp_network_device.device",
+    "PluginType": "snmp_network_device",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "APPFORMIX_ROUTING_ENGINE_MIB"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

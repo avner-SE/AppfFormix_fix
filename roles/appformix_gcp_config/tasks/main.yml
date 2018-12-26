@@ -1,0 +1,54 @@
+---
+# Run AppFormix Discovery from ansible
+#
+# To use this ansible script, you need to install python-httplib2
+# in your ansible runner
+# If you have changed your gcp-adapter configuration and repost
+# you need to restart the gcp-adapter and controller containers
+# by running:
+# ansible-playbook appformix_gcp.yml --skip-tags=appformix_config
+# -e appformix_state=restarted -e appformix_version= -e appformix_license
+
+- name: Post AppFormix GCP Adapter configuration
+  uri:
+    url: "{{ gcp_adapter_url }}/config"
+    method: POST
+    HEADER_Content-Type: "application/json"
+    # NOTE: Leading space in body string is required as a workaround to known
+    #       issue in Ansible 1.9.6.  Refer to:
+    #       https://github.com/ansible/ansible-modules-core/pull/1011#issuecomment-155963713
+    #       https://github.com/ansible/ansible-modules-core/issues/265
+    body: " {{ config_json | to_json}}"
+    validate_certs: no
+  delegate_to: localhost
+
+- name: Check GCP discovery status
+  uri:
+    url: "{{ gcp_adapter_url }}/discovery_status"
+    method: GET
+    validate_certs: no
+  register: discovery_status
+  delegate_to: localhost
+
+- name: Start GCP discovery
+  uri:
+    url: "{{ gcp_adapter_url }}/discovery/start"
+    method: POST
+    validate_certs: no
+  when: discovery_status.json.DiscoveryStatus.state == 'Not started'
+  delegate_to: localhost
+
+- name: Check GCP discovery status
+  uri:
+    url: "{{ gcp_adapter_url }}/discovery_status"
+    method: GET
+    validate_certs: no
+  register: discovery_status
+  delegate_to: localhost
+
+# It will not throw out errors if we skip Start OpenStack discovery with
+# discovery status equals running or completed
+- name: Error out if discovery does not start
+  fail: msg="Unable to start appformix-gcp-adapter discovery. Please check logs in /var/log/appformix/gcp_adapter/appformix/."
+  when: discovery_status.json.DiscoveryStatus.state != 'Running' and discovery_status.json.DiscoveryStatus.state != 'Discovery completed'
+

@@ -1,0 +1,10 @@
+---
+# Constants defined for the appformix_mongo role.
+# These should not be overridden.
+appformix_mongo_replica_data_dir_container: "/data/db"
+appformix_mongo_replica_data_volume:
+    - "{{ appformix_mongo_replica_data_dir }}:{{ appformix_mongo_replica_data_dir_container }}"
+appformix_mongo_replica_volumes: "{{ appformix_mongo_replica_data_volume }}"
+
+appformix_mongo_add_users_script: "add_mongodb_users.js"
+appformix_mongo_replica_data_dir_state: "{{ (appformix_mongo_replica_state == 'absent') | ternary('absent','directory') }}"

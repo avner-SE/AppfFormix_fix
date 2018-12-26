@@ -1,0 +1,31 @@
+# Add AppFormix License
+#
+# Arguments:
+#   appformix_license : path to AppFormix license file
+#
+# To enable features, pass a License file as an argument
+# when running this playbook (e.g., -e 'appformix_license=...')
+---
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: '{{ item }} is undefined or {{ item }} == ""'
+  with_items:
+    - network_device_csv_file
+
+- name: Ensure "{{ appformix_network_device_dir }}" directory exists
+  become: yes
+  file:
+    path: "{{ appformix_network_device_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy Network Device CSV file to the Management host
+  become: yes
+  copy:
+    src: "{{ network_device_csv_file }}"
+    dest: "{{ appformix_network_device_csv_file }}"
+    owner: root
+    group: root
+    mode: 0600

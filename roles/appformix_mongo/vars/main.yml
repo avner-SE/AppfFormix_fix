@@ -1,0 +1,20 @@
+---
+# Constants defined for the appformix_mongo role.
+# These should not be overridden.
+appformix_mongo_docker_backup_dir: /backup
+appformix_mongo_scripts_state: "{{ (appformix_mongo_state == 'absent') | ternary('absent','directory') }}"
+appformix_mongo_backup_state: "{{ ((appformix_mongo_state == 'absent') or (appformix_mongo_backup_dir == '')) | ternary('absent','present') }}"
+appformix_mongo_data_volume: "{{ appformix_mongo_data_dir }}:/data/db"
+appformix_mongo_backup_volume: "{{ appformix_mongo_backup_dir }}:{{ appformix_mongo_docker_backup_dir }}"
+# Constants defining config file location
+appformix_host_mongo_conf_dir: "{{ appformix_install_dir }}/mongo/config"
+appformix_host_mongo_conf_file: "{{ appformix_host_mongo_conf_dir }}/mongo.conf"
+appformix_container_mongo_conf_dir: "/usr/local/etc/mongo"
+appformix_container_mongo_conf_file: "{{ appformix_container_mongo_conf_dir }}/mongo.conf"
+appformix_mongo_config_volume: "{{ appformix_host_mongo_conf_dir }}:{{ appformix_container_mongo_conf_dir }}"
+
+appformix_mongo_volumes: "{{ (appformix_mongo_backup_dir == '') | ternary([appformix_mongo_config_volume,appformix_mongo_data_volume], [appformix_mongo_config_volume,appformix_mongo_data_volume,appformix_mongo_backup_volume]) }}"
+
+appformix_mongo_add_users_script: "add_mongodb_users.js"
+appformix_mongo_auth_script: "mongo_auth.js"
+appformix_mongo_credentials_script: "credentials.js"

@@ -1,0 +1,62 @@
+{
+    "Collection": "server_contrail_vrouter_metrics_collection",
+    "Config": {
+        "CommandLine": "python check_contrail_vrouter.py"
+    },
+    "MetricMap": [
+        {
+            "Name": "aged_flows",
+            "Units": "count"
+        },
+        {
+            "Name": "total_flows",
+            "Units": "count"
+        },
+        {
+            "Name": "exception_packets",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_flow_queue_limit_exceeded",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_flow_table_full",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vlan_fwd_enq",
+            "Units": "count"
+        },
+        {
+            "Name": "drop_stats_vlan_fwd_tx",
+            "Units": "count"
+        },
+        {
+            "Name": "flow_export_drops",
+            "Units": "count"
+        },
+        {
+            "Name": "flow_export_sampling_drops",
+            "Units": "count"
+        },
+        {
+            "Name": "flow_rate_active_flows",
+            "Units": "count"
+        },
+        {
+            "Name": "flow_rate_deleted_flows",
+            "Units": "count"
+        },
+        {
+            "Name": "flow_rate_added_flows",
+            "Units": "count"
+        }
+    ],
+    "PluginId": "pythoncheckcontrailvrouterpy",
+    "PluginName": "contrail.vrouter",
+    "PluginType": "command",
+    "Scope": "host",
+    "State": "enabled",
+    "status": "success"
+}

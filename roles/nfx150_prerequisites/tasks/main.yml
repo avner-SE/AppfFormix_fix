@@ -1,0 +1,8 @@
+---
+# Install sshpass package in appformix controller
+# to copy files to NFX150 for installation
+- include: yum.yml
+  when: ansible_pkg_mgr == 'yum'
+
+- include: apt.yml
+  when: ansible_pkg_mgr == 'apt'

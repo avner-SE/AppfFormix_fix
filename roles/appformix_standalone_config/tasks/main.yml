@@ -1,0 +1,13 @@
+---
+- name: Post AppFormix Platform standalone configuration
+  uri:
+    url: "{{ platform_setup_url }}"
+    method: POST
+    HEADER_Content-Type: "application/json"
+    # NOTE: Leading space in body string is required as a workaround to known
+    #       issue in Ansible 1.9.6.  Refer to:
+    #       https://github.com/ansible/ansible-modules-core/pull/1011#issuecomment-155963713
+    #       https://github.com/ansible/ansible-modules-core/issues/265
+    body: " {{ config_json | to_json }}"
+    validate_certs: no
+  delegate_to: localhost

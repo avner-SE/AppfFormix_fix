@@ -1,0 +1,6 @@
+---
+- name: Post Contrail Config to AppFormix OpenStack Adapter
+  script: >
+      appformix_contrail_configure.py {{ openstack_adapter_url }} {{ contrail_cluster_name }} {{ contrail_analytics_url }} {{ contrail_config_url }} {{ auth_token }}
+  delegate_to: localhost
+  when: contrail_cluster_name is defined and contrail_analytics_url is defined and auth_token is defined and contrail_config_url is defined

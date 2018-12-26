@@ -1,0 +1,25 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# Setup IP in Subnet of fxp0 of Jdm
+
+auto eth0
+iface eth0 inet static
+    address {{ hostvars[item].agent_ip }}
+    netmask {{ hostvars[item].agent_subnet }}
+    gateway {{ hostvars[item].agent_gateway }}
+
+
+# Setup IP in Subnet of virbr0 of Hypervisor
+
+auto bme1
+iface bme1 inet static
+    address {{ appformix_lxc_container_default_ip}}
+    netmask {{ appformix_lxc_container_default_subnet }}
+    gateway {{ appformix_lxc_container_default_gateway }}
+
+# Source interfaces
+# Please check /etc/network/interfaces.d before changing this file
+# as interfaces may have been defined in /etc/network/interfaces.d
+# See LP: #1262951
+source /etc/network/interfaces.d/*.cfg

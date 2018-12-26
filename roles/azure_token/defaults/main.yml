@@ -1,0 +1,5 @@
+auth_post_url: "http://{{ appformix_vip }}:{{ appformix_vip_controller_port_http }}/appformix/v1.0/auth_credentials"
+appformix_azure_adapter_username: "{{ appformix_azure_adapter_client_id }}"
+appformix_azure_adapter_password: "{{ appformix_azure_adapter_secret_key }}"
+appformix_azure_adapter_tenantId: "{{ appformix_azure_adapter_tenant_id }}"
+azure_auth_type: "azure"

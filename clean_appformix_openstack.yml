@@ -1,0 +1,13 @@
+---
+#
+# Uninstall AppFormix and remove all data, configuration, and log files.
+#
+# As a safeguard to protect user data, the appformix_openstack.yml playbook
+# only uninstalls all services, but does not delete any historical data or
+# configuration.  This clean_appformix_openstack.yml playbook will remove
+# all associated data used by AppFormix.
+#
+
+- include: clean_appformix.yml
+  vars:
+    openstack_platform_enabled: true

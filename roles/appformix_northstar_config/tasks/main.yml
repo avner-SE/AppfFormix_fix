@@ -1,0 +1,33 @@
+---
+# Run AppFormix Discovery from ansible
+#
+# To use this ansible script, you need to install python-httplib2
+# in your ansible runner
+# If you have change your aws-adapter configuration and repost
+# you need to restart the aws-adapter and controller containers
+# by running:
+# ansible-playbook aws.yml --skip-tags=config
+# -e state=restarted -e version= -e license
+
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: '{{ item }} is undefined or {{ item }} == ""'
+  with_items:
+    - northstar_user_name
+    - northstar_password
+    - northstar_controller_url
+    - northstar_tenant_id
+    - northstar_topology_id
+
+- name: Post NorthStar configuration
+  uri:
+    url: "{{ network_device_adapter_url }}/northstar_config"
+    method: POST
+    HEADER_Content-Type: "application/json"
+    # NOTE: Leading space in body string is required as a workaround to known
+    #       issue in Ansible 1.9.6.  Refer to:
+    #       https://github.com/ansible/ansible-modules-core/pull/1011#issuecomment-155963713
+    #       https://github.com/ansible/ansible-modules-core/issues/265
+    body: " {{ config_json | to_json}}"
+    validate_certs: no
+  delegate_to: localhost

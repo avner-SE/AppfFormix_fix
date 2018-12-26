@@ -1,0 +1,3 @@
+---
+appformix_slack_notifier_ports:
+    - "{{ appformix_slack_notifier_port }}:80"

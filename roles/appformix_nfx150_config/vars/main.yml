@@ -1,0 +1,2 @@
+appformix_lxc_vcpu_count: 2
+appformix_lxc_memory_size: 1048576

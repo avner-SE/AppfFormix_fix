@@ -1,0 +1,3 @@
+auth_post_url: "{{ appformix_vip_url }}/appformix/v1.0/auth_credentials"
+
+openstack_auth_type: "openstack"

@@ -1,0 +1,45 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_network_device_system_usage_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_device_resources_mib",
+        "PluginPrefix": "network_device",
+        "EntityType": ["network_device"]
+    },
+    "MetricMap": [
+        {
+            "Name": "hrSystemUptime",
+            "Units": "Seconds"
+        },
+        {
+            "Name": "hrSystemInitialLoadDevice",
+            "Units": "Count"
+        },
+        {
+            "Name": "hrSystemNumUsers",
+            "Units": "Count"
+        },
+        {
+            "Name": "hrSystemProcesses",
+            "Units": "Count"
+        },
+        {
+            "Name": "hrSystemMaxProcesses",
+            "Units": "Count"
+        },
+        {
+            "Name": "hrMemorySize",
+            "Units": "KBytes"
+        }
+    ],
+    "PluginId": "snmp_network_device_system_usage",
+    "PluginName": "snmp_network_device_system_usage",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "NETWORK_DEVICE_SYSTEM_METRICS_MIB"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

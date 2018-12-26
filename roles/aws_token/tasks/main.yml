@@ -1,0 +1,17 @@
+---
+
+- name: Get Aws Admin Token
+  uri:
+    url: "{{ auth_post_url }}"
+    method: POST
+    body: ' {"UserName": "{{ appformix_aws_adapter_access_key }}",
+             "Password": "{{ appformix_aws_adapter_secret_key }}",
+             "AuthType": "{{ aws_auth_type }}"}'
+    HEADER_Content-Type: "application/json"
+    validate_certs: no
+  register: auth_info
+  delegate_to: localhost
+
+- name: Set fact for Aws token
+  set_fact:
+    auth_info: "{{ auth_info }}"

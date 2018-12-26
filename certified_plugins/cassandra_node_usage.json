@@ -1,0 +1,42 @@
+{
+    "Collection": "host_pythoncheckcassandrapy_collection",
+    "Config": {
+        "CommandLine": "python check_cassandra.py"
+    },
+    "MetricMap": [
+        {
+            "Name": "interdc_stream_output",
+            "Units": "Mb/s"
+        },
+        {
+            "Name": "stream_output",
+            "Units": "Mb/s"
+        },
+        {
+            "Name": "load",
+            "Units": "Kb"
+        },
+        {
+            "Name": "heap_memory",
+            "Units": "MB"
+        },
+        {
+            "Name": "heap_memory_percentage",
+            "Units": "%"
+        },
+        {
+            "Name": "off_heap_memory",
+            "Units": "MB"
+        },
+        {
+            "Name": "exception",
+            "Units": "count"
+        }
+    ],
+    "PluginId": "pythoncheckcassandrapy",
+    "PluginName": "cassandra.node",
+    "PluginType": "command",
+    "Scope": "host",
+    "State": "enabled",
+    "status": "success"
+}

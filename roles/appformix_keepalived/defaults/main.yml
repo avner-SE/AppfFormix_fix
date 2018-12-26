@@ -1,0 +1,35 @@
+---
+appformix_keepalived_state: "{{ appformix_state }}"
+appformix_keepalived_dir_state: "{{ (appformix_keepalived_state == 'absent') | ternary('absent','directory') }}"
+appformix_keepalived_conf_dir: "{{ appformix_install_dir }}/etc/keepalived"
+appformix_keepalived_conf_file: "{{ appformix_keepalived_conf_dir }}/keepalived.conf"
+appformix_keepalived_volumes: "{{ appformix_keepalived_conf_dir }}:/etc/keepalived:ro"
+
+# Values used in template file.  These defaults are appropriate for hosts in
+# appformix_controller group.  Otherwise, these varaibles can be overridden on
+# a per host basis.
+#
+# The following values must be unique for each host:
+#   keepalived_vrrp_priority
+#
+# The following values must be equal for all hosts:
+#   keepalived_vrrp_peers
+#   keepalived_vrrp_router_id
+#   keepalived_vrrp_virtual_ip
+#
+# keepalived_vrrp_peers should include all hosts that participate in the group.
+# The set will be filtered to create appropriate unicast peers for each host's
+# conifguration.
+keepalived_vrrp_interface: "eth1"
+keepalived_vrrp_interface_ansible: "ansible_{{ keepalived_vrrp_interface }}"
+keepalived_vrrp_peers: "{{ groups.appformix_controller }}"
+# we are keeping the priority same in all the keepalived instances so that they
+# don't VIP does not switch back to one particular master node.
+keepalived_vrrp_priority: "200"
+keepalived_vrrp_router_id: 159
+keepalived_vrrp_src_ip: "{{ hostvars[inventory_hostname][keepalived_vrrp_interface_ansible]['ipv4']['address'] }}"
+keepalived_vrrp_virtual_ip: "{{ appformix_vip }}"
+keepalived_haproxy_check_script_weight: "{{ groups['appformix_controller'] | length }}"
+
+keepalived_vrrp_secondary_virtual_ip: "{{ appformix_secondary_vip }}"
+keepalived_vrrp_secondary_interface: ""

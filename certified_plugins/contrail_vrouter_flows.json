@@ -1,0 +1,87 @@
+{
+    "AggregateId": "contrail_vrouter_flows_aggr",
+    "Collection": "contrail_vrouter_flows_metrics_collection",
+    "Config": {
+        "CommandLine": "python check_contrail_vrouter_flows.py"
+    },
+    "MetricMap": [
+        {
+            "Name": "action",
+            "Units": ""
+        },
+        {
+            "Name": "bytes",
+            "Units": "count"
+        },
+        {
+            "Name": "dest_ip",
+            "Units": ""
+        },
+        {
+            "Name": "dest_virtual_network",
+            "Units": ""
+        },
+        {
+            "Name": "fip_vmi",
+            "Units": ""
+        },
+        {
+            "Name": "floating_ip",
+            "Units": ""
+        },
+        {
+            "Name": "last_modified_time",
+            "Units": "timestamp"
+        },
+        {
+            "Name": "next_hop",
+            "Units": ""
+        },
+        {
+            "Name": "packets",
+            "Units": "count"
+        },
+        {
+            "Name": "peer_vrouter",
+            "Units": ""
+        },
+        {
+            "Name": "protocol",
+            "Units": ""
+        },
+        {
+            "Name": "setup_time",
+            "Units": "timestamp"
+        },
+        {
+            "Name": "source_ip",
+            "Units": ""
+        },
+        {
+            "Name": "source_port",
+            "Units": ""
+        },
+        {
+            "Name": "source_virtual_network",
+            "Units": ""
+        },
+        {
+            "Name": "teardown_time",
+            "Units": "timestamp"
+        },
+        {
+            "Name": "tunnel_type",
+            "Units": ""
+        },
+        {
+            "Name": "underlay_source_port",
+            "Units": ""
+        }
+    ],
+    "PluginId": "pythoncheckcontrailvrouterflowspy",
+    "PluginName": "contrail.vrouter.flows",
+    "PluginType": "contrail_vrouter_flows",
+    "Scope": "host",
+    "State": "enabled",
+    "status": "success"
+}

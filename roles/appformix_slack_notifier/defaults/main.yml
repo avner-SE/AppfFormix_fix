@@ -1,0 +1,7 @@
+---
+appformix_slack_notifier_image: "appformix/slack-app:1"
+appformix_slack_notifier_state: "started"
+appformix_slack_notifier_port: 10000
+appformix_slack_notifier_channel: 'general'
+# A valid token is a required parameter
+appformix_slack_notifier_token: ''

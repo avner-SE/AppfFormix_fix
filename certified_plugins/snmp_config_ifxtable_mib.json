@@ -1,0 +1,89 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_network_device_ifxtable_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_ifxtable_mib",
+        "PluginPrefix": "interface",
+        "EntityType": ["interface"]
+    },
+    "MetricMap": [
+        {
+            "Name": "ifHCInBroadcastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifHCOutOctets",
+            "Units": "Octets/s"
+        },
+        {
+            "Name": "ifHCOutUcastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifHCInMulticastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifHCInUcastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifHCInOctets",
+            "Units": "Octets/s"
+        },
+        {
+            "Name": "ifOutBroadcastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifOutMulticastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifInBroadcastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifInMulticastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifHighSpeed",
+            "Units": "Mbps"
+        },
+        {
+            "Name": "ifHCOutMulticastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifHCOutBroadcastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifHCOutBandwidth",
+            "Units": "Mbps"
+        },
+        {
+            "Name": "ifHCInBandwidth",
+            "Units": "Mbps"
+        },
+        {
+            "Name": "ifHCInLinkUtilization",
+            "Units": "%"
+        },
+        {
+            "Name": "ifHCOutLinkUtilization",
+            "Units": "%"
+        }
+    ],
+    "PluginId": "snmp_network_device_ifxtable",
+    "PluginName": "snmp_network_device_ifxtable",
+    "PluginType": "snmp_network_device",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "IF-MIB::ifXTable"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

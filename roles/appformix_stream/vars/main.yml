@@ -1,0 +1,33 @@
+---
+# Constants defined for the appformix_stream role.
+# These should not be overridden.
+
+# First port in the pair is the external port on which the service listens.
+# It is a variable with a default value defined in defaults/main.yml.  This
+# variable can be overridden by the user.
+#
+# Second port in the pair is the port on which the service inside of the
+# container is listening.  This is considered a constant defined by the
+# container and service that runs inside.
+appformix_stream_docker_ports_http:
+    - "{{ appformix_stream_port_http }}:80"
+appformix_stream_docker_ports_https:
+    - "{{ appformix_stream_port_http }}:80"
+    - "{{ appformix_stream_port_https }}:443"
+appformix_stream_ports: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_stream_docker_ports_https, appformix_stream_docker_ports_http) }}"
+
+appformix_stream_volumes_http:
+    - "{{ appformix_log_dir }}/stream/appformix/:/var/log/appformix"
+    - "{{ appformix_log_dir }}/stream/nginx/:/var/log/nginx"
+    - "{{ appformix_install_dir }}/etc:/etc/appformix"
+    - "/etc/hosts:/etc/dnsmasq/hosts"
+    - "/etc/resolv.conf:/etc/dnsmasq/resolv.conf"
+appformix_stream_volumes_https:
+    - "{{ appformix_log_dir }}/stream/appformix/:/var/log/appformix"
+    - "{{ appformix_log_dir }}/stream/nginx/:/var/log/nginx"
+    - "{{ appformix_install_dir }}/etc:/etc/appformix"
+    - "{{ appformix_install_dir }}/etc/cert/appformix.crt:/etc/nginx/ssl/nginx.crt:ro"
+    - "{{ appformix_install_dir }}/etc/cert/appformix.key:/etc/nginx/ssl/nginx.key:ro"
+    - "/etc/hosts:/etc/dnsmasq/hosts"
+    - "/etc/resolv.conf:/etc/dnsmasq/resolv.conf"
+appformix_stream_volumes: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_stream_volumes_https, appformix_stream_volumes_http) }}"

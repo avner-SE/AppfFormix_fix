@@ -1,0 +1,29 @@
+---
+# Add cluster to multicluster dashboard with HAproxy
+
+- include: host_translation.yml
+
+- hosts: appformix_controller
+  roles:
+    - appformix_defaults
+    - { role: appformix_master_auth, when: appformix_state != 'absent' }
+
+- hosts: appformix_controller_master
+  vars:
+    auth_token: "{{ master_auth_token }}"
+    auth_type: "appformix"
+  roles:
+    - appformix_defaults
+    - { role: appformix_multicluster_config, cluster_config_action: 'add',
+        when: appformix_state != 'absent' }
+
+- hosts: appformix_controller
+  vars:
+    cluster_id: "{{ hostvars[groups['appformix_controller_master'][0]]['added_cluster_id'] }}"
+    add_cluster_in_haproxy_config: "{{ hostvars[groups['appformix_controller_master'][0]]['add_cluster_in_haproxy_config'] }}"
+  roles:
+    - appformix_defaults
+    - { role: appformix_docker_images, when: appformix_state != 'absent' and
+        is_master_cluster and (add_cluster_in_haproxy_config|bool) }
+    - { role: appformix_multicluster_haproxy, haproxy_action: 'add',
+        when: appformix_state != 'absent' and (add_cluster_in_haproxy_config|bool) }

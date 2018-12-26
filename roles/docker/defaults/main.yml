@@ -1,0 +1,8 @@
+# Default variables for 'docker' role
+---
+docker_ce_version: 17.03.1
+docker_ce_version_ubuntu: '{{ docker_ce_version }}~ce-0~ubuntu-{{ ansible_distribution_release }}'
+docker_ce_version_centos: '{{ docker_ce_version }}.ce-1.el7.centos'
+docker_ce_selinux_rpm_url: https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-selinux-{{ docker_ce_version }}.ce-1.el7.centos.noarch.rpm
+docker_py_version: 1.10.6
+docker_state: present

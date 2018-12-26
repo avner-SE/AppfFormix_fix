@@ -1,0 +1,56 @@
+---
+- name: Create AppFormix HAProxy pem file
+  become: yes
+  shell: cat {{ appformix_install_dir }}/etc/cert/appformix.crt {{ appformix_install_dir }}/etc/cert/appformix.key > {{ appformix_haproxy_ssl_pem_file_host }}
+  when: appformix_haproxy_state != 'absent' and (appformix_ssl_enabled|bool)
+
+- name: Ensure haproxy script and config directory correct state
+  become: yes
+  file:
+      path: "{{ item }}"
+      state: "{{ appformix_haproxy_dir_state }}"
+      owner: root
+      group: root
+      mode: 0755
+  with_items:
+      - "{{ appformix_haproxy_host_config_dir }}"
+      - "{{ appformix_haproxy_host_scripts_dir }}"
+
+- name: Copy HAProxy configuration file to the management host
+  become: yes
+  template:
+      src: "{{ appformix_haproxy_cfg_file }}"
+      dest: "{{ appformix_haproxy_host_config_dir }}"
+      force: yes
+      owner: root
+      group: root
+      mode: 0755
+  when: appformix_haproxy_state != 'absent'
+
+- name: Copy server health script to the management host
+  become: yes
+  template:
+      src: server_check_script.sh
+      dest: "{{ appformix_haproxy_host_scripts_dir }}"
+      force: yes
+      owner: root
+      group: root
+      mode: 0755
+  when: appformix_haproxy_state != 'absent'
+
+- name: Start AppFormix HaProxy container
+  docker:
+      name: appformix-haproxy
+      image: "{{ appformix_haproxy_image }}"
+      state: "{{ appformix_haproxy_state }}"
+      restart_policy: always
+      net: "{{ appformix_network }}"
+      ports: "{{ appformix_haproxy_exposed_docker_ports_mapping }}"
+      expose: "{{ appformix_haproxy_internal_docker_ports_list }}"
+      volumes: "{{ appformix_haproxy_volumes }}"
+      hostname: "haproxy_{{ ansible_hostname }}"
+
+- name: Wait for some time for AWS ELB to establish state
+  when: appformix_haproxy_state != 'absent' and (aws_platform_enabled|bool) == True
+  pause:
+    seconds: 20

@@ -1,0 +1,3 @@
+---
+appformix_stream_state: "{{ appformix_state }}"
+appformix_stream_pull: 'missing'

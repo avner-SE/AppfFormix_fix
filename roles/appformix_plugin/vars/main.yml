@@ -1,0 +1,3 @@
+---
+plugin_file: "check_real_contrail.py"
+plugin_command: "python check_real_contrail.py"

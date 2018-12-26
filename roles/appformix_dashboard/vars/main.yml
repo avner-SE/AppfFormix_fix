@@ -1,0 +1,39 @@
+---
+# Constants defined for the appformix_dashboard role.
+# These should not be overridden.
+
+# First port in the pair is the external port on which the service listens.
+# It is a variable with a default value defined in defaults/main.yml.  This
+# variable can be overridden by the user.
+#
+# Second port in the pair is the port on which the service inside of the
+# container is listening.  This is considered a constant defined by the
+# container and service that runs inside.
+appformix_dashboard_docker_ports_http:
+    - "{{ appformix_dashboard_port_http }}:80"
+appformix_dashboard_docker_ports_https:
+    - "{{ appformix_dashboard_port_http }}:80"
+    - "{{ appformix_dashboard_port_https }}:443"
+appformix_dashboard_ports: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_dashboard_docker_ports_https, appformix_dashboard_docker_ports_http) }}"
+
+appformix_dashboard_volumes_http:
+    - "{{ appformix_install_dir }}/etc/dashboard/:/dashboard/conf"
+    - "{{ appformix_install_dir }}/etc/license/:/dashboard/license"
+    - "{{ appformix_install_dir }}/etc/logos/:/dashboard/logos"
+    - "{{ appformix_install_dir }}/etc/network_device/:/dashboard/csv"
+    - "{{ appformix_install_dir }}/etc/logrotate/dashboard:/etc/logrotate.d/appformix"
+    - "{{ appformix_install_dir }}/etc/logrotate/nginx:/etc/logrotate.d/nginx"
+    - "{{ appformix_log_dir }}/dashboard/appformix/:/dashboard/logs"
+    - "{{ appformix_log_dir }}/dashboard/nginx/:/var/log/nginx"
+appformix_dashboard_volumes_https:
+    - "{{ appformix_install_dir }}/etc/dashboard/:/dashboard/conf"
+    - "{{ appformix_install_dir }}/etc/cert/appformix.crt:/etc/nginx/ssl/nginx.crt:ro"
+    - "{{ appformix_install_dir }}/etc/cert/appformix.key:/etc/nginx/ssl/nginx.key:ro"
+    - "{{ appformix_install_dir }}/etc/license/:/dashboard/license"
+    - "{{ appformix_install_dir }}/etc/logos/:/dashboard/logos"
+    - "{{ appformix_install_dir }}/etc/network_device/:/dashboard/csv"
+    - "{{ appformix_install_dir }}/etc/logrotate/dashboard:/etc/logrotate.d/appformix"
+    - "{{ appformix_install_dir }}/etc/logrotate/nginx:/etc/logrotate.d/nginx"
+    - "{{ appformix_log_dir }}/dashboard/appformix/:/dashboard/logs"
+    - "{{ appformix_log_dir }}/dashboard/nginx/:/var/log/nginx"
+appformix_dashboard_volumes: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_dashboard_volumes_https, appformix_dashboard_volumes_http) }}"

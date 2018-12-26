@@ -1,0 +1,6 @@
+---
+# Default values for the appformix_kubernetes_adapter role.  These can be
+# overridden when including the role.
+appformix_kubernetes_adapter_version: "{{ appformix_version }}"
+appformix_kubernetes_adapter_state: "{{ appformix_state }}"
+appformix_kubernetes_adapter_pull: 'missing'

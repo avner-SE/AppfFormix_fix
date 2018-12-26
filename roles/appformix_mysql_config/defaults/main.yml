@@ -1,0 +1,3 @@
+---
+appformix_mysql_cluster_name: 'default_mysql_cluster'
+appformix_mysql_port: 3306

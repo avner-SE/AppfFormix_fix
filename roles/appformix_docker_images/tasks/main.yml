@@ -1,0 +1,32 @@
+---
+- fail:
+    msg: "The variable appformix_docker_images_file is deprecated. Define appformix_docker_images to specify a list of images to be loaded."
+  when: appformix_docker_images_file is defined
+
+- name: Login to AppFormix Docker Registry
+  command: docker login -u {{ appformix_docker_user }} -e {{ appformix_docker_email }} -p {{ appformix_docker_password }} {{ appformix_docker_registry }}
+  when: appformix_docker_user is defined and appformix_docker_email is defined and appformix_docker_password is defined and appformix_docker_images is not defined
+
+- name: Pull AppFormix Docker images
+  command: docker pull {{ item }}
+  with_items:
+    - "{{ appformix_images }}"
+  when: appformix_docker_images is not defined and appformix_images is defined
+
+- name: Check if Docker images already exist
+  check_docker_images:
+    all_docker_images: "{{ appformix_mongo_redis_image_list }}"
+  register: result
+
+- name: Copy AppFormix Docker images file to host
+  copy:
+    src: "{{ item }}"
+    dest: "{{ appformix_docker_images_remote_dir }}"
+  register: image_copy
+  when: appformix_docker_images is defined and result.load == True
+  with_items: "{{ appformix_docker_images | default([]) }}"
+
+- name: Load AppFormix Docker images from file
+  command: docker load -i {{ item.dest }}
+  when: appformix_docker_images is defined and item is defined and item.dest is defined and result.load == True
+  with_items: "{{ image_copy.results | default([]) }}"

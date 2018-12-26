@@ -1,0 +1,36 @@
+AppFormix ContainerFlow
+=======================
+
+AppFormix ContainerFlow provides resource control and visibility for hosts,
+containers, and virtual machines in your cloud infrastructure.
+
+The software consists of multiple components:
+
+* Agent monitors resource usage on compute nodes.
+* Controller offers REST APIs to configure the system.
+* DataManager stores data from multiple Agents.
+* Dashboard provides a Web-based user interface.
+* An Adapter discovers platform-specific resources and configures Controller.
+  Adapters exist for OpenStack, Kubernetes, Amazon EC2.
+
+The Agent component runs on the lowest level "compute nodes" of the
+infrastructure that provide computational resources to execute application
+workload. A compute node may be a bare-metal host or a virtual machine.
+
+The remaining components run on a class of "infrastructure node(s)" that
+execute the services that power software-defined infrastructure, such as the
+OpenStack infrastructure service nodes or Kubernetes master nodes. A host on
+which ContainerFlow control plane components is a Controller host (likely a
+virtual machine). A Controller host requires network connectivity to all of the
+compute nodes and to infrastructure services that manage the infrastructure.
+
+Ansible playbooks are provided to install and uninstall the software on compute
+nodes and the Controller host.
+
+
+Please refer to the Getting Started guide for installation:
+
+  http://docs.appformix.com/getting_started/index.html
+
+Refer to NOTICES for copyright and licenses of third-party software included
+in this distribution.

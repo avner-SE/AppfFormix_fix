@@ -1,0 +1,141 @@
+---
+- name: Ensure "{{ appformix_plugin_backup_remote_dir }}" directory exists
+  become: yes
+  file:
+    path: "{{ appformix_plugin_backup_remote_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: restore_backup_files or copy_user_defined_plugin_files
+
+- name: Ensure "{{ appformix_plugin_dir }}" directory exists
+  become: yes
+  file:
+    path: "{{ appformix_plugin_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: restore_backup_files or copy_user_defined_plugin_files
+
+- name: Ensure "{{ appformix_plugin_backup_remote_dir }}" directory is restored.
+  become: yes
+  ignore_errors: yes
+  command: cp {{ appformix_plugin_backup_remote_dir }}/* {{ appformix_plugin_dir }}
+  when: restore_backup_files
+
+- name: Ensure user defined plugin files exist in "{{ appformix_plugin_backup_remote_dir }}"
+  become: yes
+  copy:
+    src: '{{ item.plugin_file }}'
+    dest: '{{ appformix_plugin_backup_remote_dir }}'
+    owner: root
+    group: root
+    mode: 0755
+  when: copy_user_defined_plugin_files
+  with_items: '{{ appformix_user_defined_plugins }}'
+
+- name: Ensure user defined plugin files exist in "{{ appformix_plugin_dir }}"
+  become: yes
+  copy:
+    src: '{{ item.plugin_file }}'
+    dest: '{{ appformix_plugin_dir }}'
+    owner: root
+    group: root
+    mode: 0755
+  when: copy_user_defined_plugin_files
+  with_items: '{{ appformix_user_defined_plugins }}'
+
+- name: Create custom SNMP plugins JSON file
+  parse_plugin_config:
+    config_file_name:  '{{ item.config_file_name }}'
+    json_file_name:  '{{ item.config_file_name | replace(".py", ".json") }}'
+    current_path: '{{ playbook_dir }}'
+  delegate_to: localhost
+  when: certified_plugin
+  with_items: '{{ appformix_custom_snmp_plugins }}'
+
+- name: Copy plugin config files to all agents
+  become: yes
+  copy:
+    src: "{{ item.config_file_name }}"
+    dest: "{{ appformix_plugin_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+  when: copy_plugin_config
+  with_items: '{{ appformix_custom_snmp_plugins }}'
+
+- name: Configure custom SNMP plugins
+  appformix_plugin:
+    json_file: '{{ item.config_file_name | replace(".py", ".json") }}'
+    plugin_url: '{{ plugin_post_url }}'
+    aggr_url: '{{ aggr_post_url }}'
+    token: "{{ auth_token }}"
+    auth_type: "{{ auth_type }}"
+    task_url: "{{ task_url }}"
+  delegate_to: localhost
+  when: certified_plugin
+  with_items: '{{ appformix_custom_snmp_plugins }}'
+
+- name: Configure OpenStack logparser plugins in Controller
+  appformix_plugin:
+    json_file: '{{ item.plugin_info }}'
+    plugin_url: '{{ plugin_post_url }}'
+    aggr_url: '{{ aggr_post_url }}'
+    token: "{{ auth_token }}"
+    log_file_path: "{{ item.log_file_path }}"
+    auth_type: "{{ auth_type }}"
+    task_url: "{{ task_url }}"
+  delegate_to: localhost
+  when: certified_plugin and item.log_file_path is defined
+  with_items: '{{ appformix_plugins }}'
+
+- name: Configure other pre-certified plugins in Controller
+  appformix_plugin:
+    json_file: '{{ item.plugin_info }}'
+    plugin_url: '{{ plugin_post_url }}'
+    aggr_url: '{{ aggr_post_url }}'
+    token: "{{ auth_token }}"
+    auth_type: "{{ auth_type }}"
+    task_url: "{{ task_url }}"
+  delegate_to: localhost
+  when: certified_plugin and item.log_file_path is not defined
+  with_items: '{{ appformix_plugins }}'
+
+- name: Configure user defined plugins in Controller
+  appformix_plugin:
+    json_file: '{{ item.plugin_info }}'
+    plugin_url: '{{ plugin_post_url }}'
+    aggr_url: '{{ aggr_post_url }}'
+    token: "{{ auth_token }}"
+    auth_type: "{{ auth_type }}"
+    task_url: "{{ task_url }}"
+  delegate_to: localhost
+  when: user_defined_plugins
+  with_items: '{{ appformix_user_defined_plugins }}'
+
+- name: Copy control plane plugin config files to all agents
+  become: yes
+  copy:
+    src: "{{ item.config_file_name }}"
+    dest: "{{ appformix_plugin_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+  when: copy_control_plane_plugin_config_files
+  with_items: '{{ appformix_control_plane_plugin_config_files }}'
+
+- name: Update Control Plane plugin in Controller
+  parse_and_update_control_plane_plugin_config:
+    config_file_name: '{{ item.config_file_name }}'
+    plugin_type: '{{ item.type }}'
+    plugin_url: '{{ plugin_post_url }}'
+    token: "{{ auth_token }}"
+    auth_type: "{{ auth_type }}"
+    task_url: "{{ task_url }}"
+    current_path: '{{ ansible_env.PWD }}'
+  delegate_to: localhost
+  when: update_control_plane_plugin
+  with_items: '{{ appformix_control_plane_plugin_config_files }}'

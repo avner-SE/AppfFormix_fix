@@ -1,0 +1,20 @@
+{
+  "AdminRoles": {{ appformix_infrastructure_view_roles }},
+  "AwsAccessKeyId": "{{ appformix_aws_adapter_access_key }}",
+  "AwsAdapterIp": "{{ appformix_vip }}",
+  "AwsAdapterPort": "{{ appformix_vip_api_port_http }}",
+  "AwsAdapterSSLPort": "{{ appformix_vip_api_port_https }}",
+  "AwsSecretAccessKey": "{{ appformix_aws_adapter_secret_key }}",
+  "AwsRegion": "{{ appformix_aws_adapter_default_region }}",
+  "ControllerIp": "{{ appformix_vip }}",
+  "ControllerPort": "{{ appformix_vip_api_port_http }}",
+  "ControllerSSLPort": "{{ appformix_vip_api_port_https }}",
+  "ConfigAdminRoles": {{ appformix_administrator_roles }},
+  "ReadOnlyAdminRoles": {{ appformix_read_only_infrastructure_view_roles }},
+  "DatamanagerIp": "{{ appformix_vip }}",
+  "DatamanagerPort": "{{ appformix_vip_api_port_http }}",
+  "DatamanagerSSLPort": "{{ appformix_vip_api_port_https }}",
+  "InternalAPIPort": "{{ appformix_vip_api_port }}",
+  "SSLEnabled": {{ (appformix_ssl_enabled|bool) }},
+  "VerboseMode": true
+}

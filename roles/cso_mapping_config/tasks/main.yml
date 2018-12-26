@@ -1,0 +1,21 @@
+---
+# Post CSO Data View Central URL and
+# all the regional clusters information
+# to central cluster. The central controller
+# will query CSO Data View Central to find
+# tenant-CPE mappings and relay on to regional clusters.
+
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: '{{ item }} is undefined or {{ item }} == ""'
+  with_items:
+    - data_view_central_url
+    - regional_controller_urls
+    - cso_config_post_url
+
+- name: Post CSO Data View Config to OpenStack Adapter
+  cso_config:
+      data_view_central_url: '{{ data_view_central_url}}'
+      regional_controller_urls: '{{ regional_controller_urls }}'
+      cso_config_post_url: '{{ cso_config_post_url }}'
+

@@ -1,0 +1,37 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_udp_mib_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_udp_mib",
+        "PluginPrefix": "udp_mib",
+        "EntityType": ["network_device"]
+    },
+    "MetricMap": [
+        {
+            "Name": "udpInDatagrams",
+            "Units": "Count"
+        },
+        {
+            "Name": "udpNoPorts",
+            "Units": "Count"
+        },
+        {
+            "Name": "udpInErrors",
+            "Units": "Count"
+        },
+        {
+            "Name": "udpOutDatagrams",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "snmp_udp_mib",
+    "PluginName": "snmp_udp_mib",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "UDP-MIB::udp"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

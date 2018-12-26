@@ -1,0 +1,660 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "jti_usage_collection",
+    "Config": {
+        "SensorMap": {
+            "/junos/system/linecard/fabric/": {
+                "Collection": "jti_config_fabric_sensor_collection",
+                "ConfigFile": "jti_config_fabric_sensor",
+                "SensorType": "normal",
+                "EntityType": ["fabric"],
+                "MetricMap": [
+                    {
+                        "Name": "packets",
+                        "Units": "Packets"
+                    },
+                    {
+                        "Name": "bytes",
+                        "Units": "Bytes"
+                    },
+                    {
+                        "Name": "packets_per_second",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "bytes_per_second",
+                        "Units": "Bytes/s"
+                    },
+                    {
+                        "Name": "drop_packets",
+                        "Units": "Packets"
+                    },
+                    {
+                        "Name": "drop_bytes",
+                        "Units": "Bytes"
+                    },
+                    {
+                        "Name": "drop_packets_per_second",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "drop_bytes_per_second",
+                        "Units": "Bytes/s"
+                    },
+                    {
+                        "Name": "queue_depth_average",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "queue_depth_peak",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "error_packets",
+                        "Units": "Packets"
+                    },
+                    {
+                        "Name": "error_packets_per_second",
+                        "Units": "Packets/s"
+                    }
+                ]
+            },
+            "/junos/system/linecard/cpu/memory/": {
+                "Collection": "jti_config_cpu_memory_sensor_collection",
+                "ConfigFile": "jti_config_cpu_memory_sensor",
+                "SensorType": "normal",
+                "EntityType": ["kernel"],
+                "MetricMap": [
+                    {
+                        "Name": "bytes_allocated",
+                        "Units": "Byte"
+                    },
+                    {
+                        "Name": "allocations",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "frees",
+                        "Units": "Byte"
+                    },
+                    {
+                        "Name": "allocations_failed",
+                        "Units": "Count"
+                    }
+                ]
+            },
+            "/junos/system/linecard/firewall/": {
+                "Collection": "jti_config_firewall_sensor_collection",
+                "ConfigFile": "jti_config_firewall_sensor",
+                "SensorType": "normal",
+                "EntityType": ["firewall"],
+                "MetricMap": [
+                    {
+                        "Name": "memory_allocated",
+                        "Units": "Byte"
+                    }
+                ]
+            },
+            "/junos/system/linecard/interface/": {
+                "Collection": {"interface": "jti_config_interface_sensor_interface_collection",
+                               "queue": "jti_config_interface_sensor_queue_collection"},
+                "ConfigFile": "jti_config_interface_sensor",
+                "SensorType": "nested",
+                "EntityType": ["interface", "queue"],
+                "MetricMap": {
+                    "interface": [
+                        {
+                            "Name": "egress_errors.if_errors",
+                            "Units": "Errors/s"
+                        },
+                        {
+                            "Name": "egress_errors.if_discards",
+                            "Units": "Discards/s"
+                        },
+                        {
+                            "Name": "egress_stats.if_1sec_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "egress_stats.if_octets",
+                            "Units": "Octets/s"
+                        },
+                        {
+                            "Name": "egress_stats.if_mc_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "egress_stats.if_bc_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "egress_stats.if_1sec_octets",
+                            "Units": "Octets/s"
+                        },
+                        {
+                            "Name": "egress_stats.if_error",
+                            "Units": "Errors/s"
+                        },
+                        {
+                            "Name": "egress_stats.if_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "egress_stats.if_uc_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "egress_stats.if_pause_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "ingress_errors.if_in_fifo_errors",
+                            "Units": "Errors/s"
+                        },
+                        {
+                            "Name": "ingress_errors.if_in_frame_errors",
+                            "Units": "Errors/s"
+                        },
+                        {
+                            "Name": "ingress_errors.if_discards",
+                            "Units": "Discards/s"
+                        },
+                        {
+                            "Name": "ingress_errors.if_in_l3_incompletes",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "ingress_errors.if_in_runts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "ingress_errors.if_errors",
+                            "Units": "Errors/s"
+                        },
+                        {
+                            "Name": "ingress_errors.if_in_l2chan_errors",
+                            "Units": "Errors/s"
+                        },
+                        {
+                            "Name": "ingress_errors.if_in_resource_errors",
+                            "Units": "Errors/s"
+                        },
+                        {
+                            "Name": "ingress_errors.if_in_qdrops",
+                            "Units": "Drops/s"
+                        },
+                        {
+                            "Name": "ingress_errors.if_in_l2_mismatch_timeouts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "ingress_stats.if_1sec_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "ingress_stats.if_octets",
+                            "Units": "Octets/s"
+                        },
+                        {
+                            "Name": "ingress_stats.if_mc_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "ingress_stats.if_bc_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "ingress_stats.if_1sec_octets",
+                            "Units": "Octets/s"
+                        },
+                        {
+                            "Name": "ingress_stats.if_error",
+                            "Units": "Errors/s"
+                        },
+                        {
+                            "Name": "ingress_stats.if_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "ingress_stats.if_uc_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "ingress_stats.if_pause_pkts",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "ifHighSpeed",
+                            "Units": "Mbps"
+                        },
+                        {
+                            "Name": "if_operational_status",
+                            "Units": "Value"
+                        },
+                        {
+                            "Name": "ingress_stats.if_bandwidth",
+                            "Units": "Mbps"
+                        },
+                        {
+                            "Name": "ingress_stats.if_link_utilization",
+                            "Units": "%"
+                        },
+                        {
+                            "Name": "egress_stats.if_bandwidth",
+                            "Units": "Mbps"
+                        },
+                        {
+                            "Name": "egress_stats.if_link_utilization",
+                            "Units": "%"
+                        }
+                    ],
+                    "queue": [
+                        {
+                            "Name": "egress_queue_info.peak_buffer_occupancy",
+                            "Units": "Bytes"
+                        },
+                        {
+                            "Name": "egress_queue_info.rl_drop_bytes",
+                            "Units": "Bytes/s"
+                        },
+                        {
+                            "Name": "egress_queue_info.packets",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "egress_queue_info.rl_drop_packets",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "egress_queue_info.bytes",
+                            "Units": "Bytes/s"
+                        },
+                        {
+                            "Name": "egress_queue_info.allocated_buffer_size",
+                            "Units": "Bytes"
+                        },
+                        {
+                            "Name": "egress_queue_info.tail_drop_packets",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "egress_queue_info.red_drop_packets",
+                            "Units": "Packets/s"
+                        },
+                        {
+                            "Name": "egress_queue_info.red_drop_bytes",
+                            "Units": "Bytes/s"
+                        },
+                        {
+                            "Name": "egress_queue_info.cur_buffer_occupancy",
+                            "Units": "Bytes"
+                        },
+                        {
+                            "Name": "egress_queue_info.avg_buffer_occupancy",
+                            "Units": "Bytes"
+                        }
+                    ]
+                }
+            },
+            "/junos/system/linecard/interface/logical/usage/": {
+                "Collection": "jti_config_logical_interface_usage_sensor_collection",
+                "ConfigFile": "jti_config_logical_interface_usage_sensor",
+                "SensorType": "normal",
+                "EntityType": ["interface"],
+                "MetricMap": [
+                    {
+                        "Name": "egress_stats.if_packets",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "egress_stats.if_mcast_packets",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "egress_stats.if_octets",
+                        "Units": "Octets/s"
+                    },
+                    {
+                        "Name": "ingress_stats.if_ucast_packets",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "ingress_stats.if_packets",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "ingress_stats.if_mcast_packets",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "ingress_stats.if_octets",
+                        "Units": "Octets/s"
+                    },
+                    {
+                        "Name": "op_state.operational_status",
+                        "Units": "Value"
+                    }
+                ]
+            },
+            "/junos/system/linecard/npu/memory/": {
+                "Collection": "jti_config_npu_memory_sensor_collection",
+                "ConfigFile": "jti_config_npu_memory_sensor",
+                "SensorType": "normal",
+                "EntityType": ["fpc"],
+                "MetricMap": [
+                    {
+                        "Name": "size",
+                        "Units": "Byte"
+                    },
+                    {
+                        "Name": "allocated",
+                        "Units": "Byte"
+                    },
+                    {
+                        "Name": "utilization",
+                        "Units": "%"
+                    }
+                ]
+            },
+            "/junos/system/linecard/npu/utilization/": {
+                "Collection": "jti_config_npu_utilization_sensor_collection",
+                "ConfigFile": "jti_config_npu_utilization_sensor",
+                "SensorType": "normal",
+                "EntityType": ["fpc"],
+                "MetricMap": [
+                    {
+                        "Name": "packets_average_instructions_per_packet",
+                        "Units": "Byte"
+                    },
+                    {
+                        "Name": "packets_rate",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "packets_average_wait_cycles_per_packet",
+                        "Units": "s"
+                    },
+                    {
+                        "Name": "packets_average_cycles_per_packet",
+                        "Units": "s"
+                    },
+                    {
+                        "Name": "memory_average_util",
+                        "Units": "Byte"
+                    },
+                    {
+                        "Name": "memory_lowest_util",
+                        "Units": "Byte"
+                    },
+                    {
+                        "Name": "memory_highest_cache_hit_rate",
+                        "Units": "%"
+                    },
+                    {
+                        "Name": "memory_highest_util",
+                        "Units": "Byte"
+                    },
+                    {
+                        "Name": "memory_average_cache_hit_rate",
+                        "Units": "%"
+                    },
+                    {
+                        "Name": "memory_lowest_cache_hit_rate",
+                        "Units": "%"
+                    }
+                ]
+            },
+            "/junos/system/linecard/optics/": {
+                "Collection": "jti_config_optics_sensor_collection",
+                "ConfigFile": "jti_config_optics_sensor",
+                "SensorType": "normal",
+                "EntityType": "interface",
+                "MetricMap": [
+                     {
+                         "Units": "Value",
+                         "Name": "module_temp_low_warning"
+                     },
+                     {
+                         "Units": "Value",
+                         "Name": "module_temp_high_alarm"
+                     },
+                     {
+                         "Units": "Value",
+                         "Name": "module_temp_low_alarm"
+                     },
+                     {
+                         "Units": "Value",
+                         "Name": "module_temp_high_warning"
+                     },
+                     {
+                         "Units": "Counter",
+                         "Name": "module_temp_low_warning_threhsold"
+                     },
+                     {
+                         "Units": "Counter",
+                         "Name": "module_temp_high_alarm_threshold"
+                     },
+                     {
+                         "Units": "Counter",
+                         "Name": "module_temp_low_alarm_threshold"
+                     },
+                     {
+                        "Units": "Counter",
+                        "Name": "module_temp_high_warning_threshold"
+                     }
+                ]
+            },
+            "/junos/system/linecard/packet/usage/": {
+                "Collection": "jti_config_packet_usage_sensor_collection",
+                "ConfigFile": "jti_config_packet_usage_sensor",
+                "SensorType": "normal",
+                "EntityType": ["network_device"],
+                "MetricMap": [
+                    {
+                        "Name": "control_high_drops_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "control_high_drops_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "dma_failure_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "dma_failure_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "fabric_drops_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "fabric_drops_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "hardware_input_drops_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "hardware_input_drops_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "input_drops_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "input_high_drops_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "input_high_drops_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "input_low_drops_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "input_low_drops_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "input_medium_drops_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "input_medium_drops_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "input_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "input_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "local_packets_input_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "local_packets_input_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "local_packets_output_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "local_packets_output_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "output_drops_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "output_drops_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "output_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "output_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "packet_get_failure_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "packet_get_failure_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "rate_limited_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "rate_limited_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "regular_discards_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "regular_discards_packet_rate",
+                        "Units": "Count/s"
+                    },
+                    {
+                        "Name": "total_dma_packets_packet_count",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "total_dma_packets_packet_rate",
+                        "Units": "Count/s"
+                    }
+                ]
+            },
+            "/junos/system/linecard/qmon/": {
+                "Collection": "jti_config_qmon_sensor_collection",
+                "ConfigFile": "jti_config_qmon_sensor",
+                "SensorType": "normal",
+                "EntityType": ["queue"],
+                "MetricMap": [
+                    {
+                        "Name": "egress_octets",
+                        "Units": "Octets/s"
+                    },
+                    {
+                        "Name": "egress_packets",
+                        "Units": "Packets/s"
+                    },
+                    {
+                        "Name": "egress_peak_buffer_occupancy_bytes",
+                        "Units": "Bytes"
+                    },
+                    {
+                        "Name": "egress_peak_buffer_occupancy_percent",
+                        "Units": "%"
+                    },
+                    {
+                        "Name": "egress_red_drop_octets_color_0",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "egress_red_drop_octets_color_1",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "egress_red_drop_octets_color_2",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "egress_red_drop_octets_color_3",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "egress_red_drop_packets_color_0",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "egress_red_drop_packets_color_1",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "egress_red_drop_packets_color_2",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "egress_red_drop_packets_color_3",
+                        "Units": "Count"
+                    },
+                    {
+                        "Name": "egress_tail_drop_octets",
+                        "Units": "Octets"
+                    },
+                    {
+                        "Name": "egress_tail_drop_packets",
+                        "Units": "Packets"
+                    }
+                ]
+            }
+        }
+    },
+    "MetricMap": [],
+    "PluginId": "jti_network_device",
+    "PluginName": "jti_network_device",
+    "PluginType": "control_plane",
+    "Scope": "jti_network_device",
+    "State": "enabled",
+    "status": "success"
+}

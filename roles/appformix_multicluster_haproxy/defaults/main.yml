@@ -1,0 +1,5 @@
+---
+appformix_haproxy_state: "{{ appformix_state }}"
+
+appformix_haproxy_host_config_dir: "{{ appformix_install_dir }}/etc/multicluster_haproxy"
+appformix_haproxy_host_scripts_dir: "{{ appformix_install_dir }}/multicluster_haproxy"

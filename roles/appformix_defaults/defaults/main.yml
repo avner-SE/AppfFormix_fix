@@ -1,0 +1,387 @@
+# TODO: Need to figure out mongo cluster with mongo auth
+---
+# Use a trailing slash.  This variable is used without a separator
+# character so that the variable may be defined as empty (e.g., to
+# use local Docker images or Docker Hub as a registry).
+
+appformix_images: []
+# Mongo version
+appformix_mongo_image: "mongo:3.2.17"
+# Redis Version
+appformix_redis_image: "redis:3.0.4"
+
+
+# The host address by which AppFormix control plane services will be
+# contacted, e.g., Agent -> DataManager, Adapter -> Controller, etc.
+appformix_controllers: "{{ groups['appformix_controller'] | difference(groups['compute'] | default([])) }}"
+appformix_controller_host: "{{ groups['appformix_controller'][0] }}"
+
+# AppFormix HaProxy configuration parameters
+appformix_scale_nodes: "{{ groups['appformix_controller'] | length }}"
+appformix_scale_setup_flag: "{{ (appformix_scale_nodes|int) > 1 | bool }}"
+appformix_vip: "{{ appformix_controller_host }}"
+# appformix_secondary_vip (optional):
+# Used in HA mode if the user wishes to expose APIs and Dashboard to a
+# different network than the network used for agent-platform communication.
+appformix_secondary_vip: ""
+appformix_multi_node_setup: "{{ (appformix_scale_setup_flag|bool) | ternary('1', '0') }}"
+
+appformix_docker_registry: registry.appformix.com/
+appformix_version: 2.18.8
+appformix_manager_version: "{{ appformix_version }}"
+appformix_state: reloaded
+
+appformix_ssl_enabled: "{{ appformix_ssl_cert is defined and appformix_ssl_key is defined }}"
+
+install_redis: "{{ (appformix_scale_setup_flag|bool) | ternary('no', 'yes') }}"
+appformix_redis_password: 2e980334eecf03c64b852910b0f7cab18a781605f201496833ad9f6d172cfdef
+appformix_network: AppFormixNetwork
+openstack_username: "{{ lookup('env', 'OS_USERNAME') }}"
+openstack_password: "{{ lookup('env', 'OS_PASSWORD') }}"
+openstack_user_domain_name: "{{ lookup('env', 'OS_USER_DOMAIN_NAME') | default('Default', true) }}"
+#appformix_internal_api_port: 9000
+
+# File paths
+appformix_install_dir: /opt/appformix
+appformix_bin_dir: "{{ appformix_install_dir }}/bin"
+appformix_log_dir: /var/log/appformix
+
+# Ports
+appformix_controller_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(27000, 7000) }}"
+appformix_controller_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(27001, 7001) }}"
+appformix_haproxy_controller_port_http: 7000
+appformix_haproxy_controller_port_https: 7001
+
+appformix_stream_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(28000, 8000) }}"
+appformix_stream_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(28001, 8001) }}"
+appformix_haproxy_stream_port_http: 8000
+appformix_haproxy_stream_port_https: 8001
+
+appformix_datamanager_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(28090, 8090) }}"
+appformix_datamanager_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(28091, 8091) }}"
+appformix_haproxy_datamanager_port_http: 8090
+appformix_haproxy_datamanager_port_https: 8091
+
+appformix_dashboard_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(29000, 9000) }}"
+appformix_dashboard_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(29001, 9001) }}"
+appformix_haproxy_dashboard_port_http: 9000
+appformix_haproxy_dashboard_port_https: 9001
+
+appformix_openstack_adapter_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(27500, 7500) }}"
+appformix_openstack_adapter_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(27501, 7501) }}"
+appformix_haproxy_openstack_adapter_port_http: 7500
+appformix_haproxy_openstack_adapter_port_https: 7501
+
+appformix_kubernetes_adapter_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(27700, 7700) }}"
+appformix_kubernetes_adapter_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(27701, 7701) }}"
+appformix_haproxy_kubernetes_adapter_port_http: 7700
+appformix_haproxy_kubernetes_adapter_port_https: 7701
+
+appformix_network_device_adapter_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(27650, 7650) }}"
+appformix_network_device_adapter_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(27651, 7651) }}"
+appformix_haproxy_network_device_adapter_port_http: 7650
+appformix_haproxy_network_device_adapter_port_https: 7651
+
+appformix_aws_adapter_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(27600, 7600) }}"
+appformix_aws_adapter_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(27601, 7601) }}"
+appformix_haproxy_aws_adapter_port_http: 7600
+appformix_haproxy_aws_adapter_port_https: 7601
+
+appformix_vcenter_adapter_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(27800, 7800) }}"
+appformix_vcenter_adapter_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(27801, 7801) }}"
+appformix_haproxy_vcenter_adapter_port_http: 7800
+appformix_haproxy_vcenter_adapter_port_https: 7801
+
+appformix_redis_host: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_vip, 'appformix-redis') }}"
+appformix_haproxy_redis_port: "{{ (appformix_scale_setup_flag|bool) | ternary(26379, 6379) }}"
+appformix_redis_port: 6379
+
+appformix_redis_local_host: "appformix-redis"
+appformix_redis_local_port: 6379
+
+appformix_haproxy_datamanager_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_haproxy_datamanager_port_https, appformix_haproxy_datamanager_port_http) }}"
+appformix_haproxy_controller_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_haproxy_controller_port_https, appformix_haproxy_controller_port_http) }}"
+appformix_haproxy_stream_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_haproxy_stream_port_https, appformix_haproxy_stream_port_http) }}"
+appformix_haproxy_dashboard_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_haproxy_dashboard_port_https, appformix_haproxy_dashboard_port_http) }}"
+appformix_haproxy_openstack_adapter_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_haproxy_openstack_adapter_port_https, appformix_haproxy_openstack_adapter_port_http) }}"
+appformix_haproxy_aws_adapter_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_haproxy_aws_adapter_port_https, appformix_haproxy_aws_adapter_port_http) }}"
+appformix_haproxy_network_device_adapter_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_haproxy_network_device_adapter_port_https, appformix_haproxy_network_device_adapter_port_http) }}"
+appformix_haproxy_vcenter_adapter_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_haproxy_vcenter_adapter_port_https, appformix_haproxy_vcenter_adapter_port_http) }}"
+
+appformix_datamanager_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_datamanager_port_https, appformix_datamanager_port_http) }}"
+appformix_controller_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_controller_port_https, appformix_controller_port_http) }}"
+appformix_stream_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_stream_port_https, appformix_stream_port_http) }}"
+appformix_dashboard_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_dashboard_port_https, appformix_dashboard_port_http) }}"
+appformix_openstack_adapter_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_openstack_adapter_port_https, appformix_openstack_adapter_port_http) }}"
+appformix_aws_adapter_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_aws_adapter_port_https, appformix_aws_adapter_port_http) }}"
+appformix_network_device_adapter_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_network_device_adapter_port_https, appformix_network_device_adapter_port_http) }}"
+appformix_vcenter_adapter_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_vcenter_adapter_port_https, appformix_vcenter_adapter_port_http) }}"
+
+appformix_azure_adapter_port_http: 7900
+appformix_azure_adapter_port_https: 7901
+
+appformix_gcp_adapter_port_http: 7550
+appformix_gcp_adapter_port_https: 7551
+
+appformix_haproxy_stats_port: 1936
+appformix_multicluster_haproxy_stats_port: 1937
+
+# These set of variables would replace the use of controller_host and
+# controller_port throughout the playbook.
+appformix_vip_controller_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_controller_port_http, appformix_controller_port_http) }}"
+appformix_vip_datamanager_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_datamanager_port_http, appformix_datamanager_port_http) }}"
+appformix_vip_openstack_adapter_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_openstack_adapter_port_http, appformix_openstack_adapter_port_http) }}"
+appformix_vip_aws_adapter_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_aws_adapter_port_http, appformix_aws_adapter_port_http) }}"
+appformix_vip_network_device_adapter_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_network_device_adapter_port_http, appformix_network_device_adapter_port_http) }}"
+appformix_vip_vcenter_adapter_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_vcenter_adapter_port_http, appformix_vcenter_adapter_port_http) }}"
+appformix_vip_kubernetes_adapter_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_kubernetes_adapter_port_http, appformix_kubernetes_adapter_port_http) }}"
+appformix_vip_dashboard_port_http: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_dashboard_port_http, appformix_dashboard_port_http) }}"
+appformix_vip_api_port_http: "{{ appformix_vip_dashboard_port_http }}"
+appformix_vip_controller_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_controller_port_https, appformix_controller_port_https) }}"
+appformix_vip_datamanager_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_datamanager_port_https, appformix_datamanager_port_https) }}"
+appformix_vip_openstack_adapter_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_openstack_adapter_port_https, appformix_openstack_adapter_port_https) }}"
+appformix_vip_aws_adapter_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_aws_adapter_port_https, appformix_aws_adapter_port_https) }}"
+appformix_vip_network_device_adapter_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_network_device_adapter_port_https, appformix_network_device_adapter_port_https) }}"
+appformix_vip_vcenter_adapter_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_vcenter_adapter_port_https, appformix_vcenter_adapter_port_https) }}"
+appformix_vip_dashboard_port_https: "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_haproxy_dashboard_port_https, appformix_dashboard_port_https) }}"
+appformix_vip_api_port_https: "{{ appformix_vip_dashboard_port_https }}"
+
+appformix_vip_api_port: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_vip_api_port_https, appformix_vip_api_port_http) }}"
+
+appformix_vip_url_http: "http://{{appformix_vip}}:{{appformix_vip_api_port_http}}"
+appformix_vip_url_https: "https://{{appformix_vip}}:{{appformix_vip_api_port_https}}"
+
+appformix_vip_url: "{{ (appformix_ssl_enabled|bool) | ternary(appformix_vip_url_https, appformix_vip_url_http) }}"
+
+appformix_plugin_verification_host: "{{ groups['compute'][0] }}"
+appformix_mongo_replica_set_name: "rs0"
+appformix_mongo_replica_port: 27017
+install_mongo: "{{ (appformix_scale_setup_flag|bool) | ternary('no', 'yes') }}"
+appformix_mongo_host: "appformix-mongo"
+appformix_mongo_port:  "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_mongo_replica_port, 27017) }}"
+appformix_mongo_replica_set:  "{{ (appformix_scale_setup_flag|bool) | ternary(appformix_mongo_replica_set_name, '') }}"
+appformix_mongo_username: 'admin'
+appformix_mongo_password: '44e5caa4e76d4becabfb902eef57b26c53787733bff9a4fd07aa66f9c674b39f'
+appformix_controller_tag: "appformix_platform"
+appformix_network_agents_tag: "appformix_network_agents"
+
+aws_platform_enabled: false
+azure_platform_enabled: false
+gcp_platform_enabled: false
+network_device_discovery_enabled: false
+openstack_platform_enabled: false
+vcenter_platform_enabled: false
+kubernetes_platform_enabled: false
+
+# Auth constants
+master_auth_creator_token: null
+default_master_auth_creator_token: 27aa6968-98b7-11e7-bc71-c4b301d14949
+
+# Log Rotation Parameters
+# Set it to 1 to enable daily rotation
+appformix_log_rotate_daily: 0
+# Rotate log after maxsize exceeded in mega bytes
+appformix_log_rotate_max_size_in_mb: 10
+# Number of rotated log files to maintain
+appformix_log_rotate_max_count: 5
+
+# Logrotate interval in hours calculated for python logger in agent, controller and adapter
+appformix_log_rotate_max_hours: "{{ appformix_log_rotate_daily * 24 }}"
+# Logrotate max bytes is calculated from max_mb for all appformix logs
+appformix_log_rotate_max_bytes: "{{ appformix_log_rotate_max_size_in_mb * 1024 * 1024 }}"
+
+# Docker images
+appformix_controller_version: "{{ appformix_version }}"
+appformix_controller_image: "{{ appformix_docker_registry }}appformix/controller:{{ appformix_controller_version }}"
+appformix_stream_image: "{{ appformix_controller_image }}"
+appformix_dashboard_version: "{{ appformix_version }}"
+appformix_dashboard_image: "{{ appformix_docker_registry }}appformix/dashboard:{{ appformix_dashboard_version }}"
+appformix_datamanager_version: "{{ appformix_version }}"
+appformix_datamanager_image: "{{ appformix_docker_registry }}appformix/datamanager:{{ appformix_datamanager_version }}"
+appformix_openstack_adapter_version: "{{ appformix_version }}"
+appformix_openstack_adapter_image: "{{ appformix_docker_registry }}appformix/openstack_adapter:{{ appformix_openstack_adapter_version }}"
+appformix_vcenter_adapter_version: "{{ appformix_version }}"
+appformix_vcenter_adapter_image: "{{ appformix_docker_registry }}appformix/vcenter_adapter:{{ appformix_vcenter_adapter_version }}"
+
+appformix_aws_adapter_version: "{{ appformix_version }}"
+appformix_aws_adapter_image: "{{ appformix_docker_registry }}appformix/aws_adapter:{{ appformix_aws_adapter_version }}"
+
+appformix_azure_adapter_version: "{{ appformix_version }}"
+appformix_azure_adapter_image: "{{ appformix_docker_registry }}appformix/azure_adapter:{{ appformix_azure_adapter_version }}"
+
+appformix_gcp_adapter_version: "{{ appformix_version }}"
+appformix_gcp_adapter_image: "{{ appformix_docker_registry }}appformix/gcp_adapter:{{ appformix_gcp_adapter_version }}"
+
+appformix_network_device_adapter_version: "{{ appformix_version }}"
+appformix_network_device_adapter_image: "{{ appformix_docker_registry }}appformix/network_device_adapter:{{ appformix_network_device_adapter_version }}"
+
+appformix_kubernetes_adapter_version: "{{ appformix_version }}"
+appformix_kubernetes_adapter_image: "{{ appformix_docker_registry }}appformix/kubernetes_adapter:{{ appformix_kubernetes_adapter_version }}"
+
+install_keepalived_flag: true
+appformix_keepalived_version: "1"
+appformix_keepalived_image: "{{ appformix_docker_registry }}appformix/keepalived:{{ appformix_keepalived_version }}"
+appformix_haproxy_version: "1"
+appformix_haproxy_image: "{{ appformix_docker_registry }}appformix/haproxy:{{ appformix_haproxy_version }}"
+
+# Openstack controller
+openstack_controllers: "{{ (groups['openstack_controller'] | default([])) | difference(groups['compute'] | default([])) }}"
+appformix_openstack_controller_tag: "openstack_controller"
+
+# Ceph
+appformix_ceph_monitor_tag: "ceph-monitor"
+appformix_ceph_osd_tag: "ceph-osd"
+ceph_monitor: "{{ groups['ceph_monitor'] | default([]) }}"
+ceph_osd: "{{ groups['ceph_osd'] | default([]) }}"
+
+# Compute
+computes: "{{ groups['compute'] | default([]) }}"
+
+# NFX150
+appformix_nfx150_tag: "nfx150"
+nfx150: "{{ groups['nfx150'] | default([]) }}"
+register_nfx150: false
+
+# User may configure certified plugins to be used by the Agent for
+# collecting metrics.  Define the 'appformix_plugins' variable to be a list
+# of dictionaries, one per plugin.  The dictionary should have the
+# following keys:
+#   plugin_info: (required) path to JSON plugin definition
+#
+# Certified plugins have all required executable dependencies already
+# installed on the Agent host.  No additional deployment step is necessary.
+#
+# The 'appformix_plugins' variable should be defined in the user's
+# inventory.  Example:
+#   appformix_plugins: '{{ appformix_contrail_factory_plugins }} + {{ appformix_network_device_factory_plugins }}'
+#
+appformix_plugins: []
+
+# User may configure user defined plugins to be used by the Agent for
+# collecting metrics.  Define the 'appformix_user_defined_plugins' variable to be a list
+# of dictionaries, one per plugin.  The dictionary should have the
+# following keys:
+#   plugin_info: (required) path to JSON plugin definition
+#   plugin_file: (required) path to plugin file (.py)
+#
+appformix_user_defined_plugins: []
+
+appformix_application_factory_plugins:
+  - { plugin_info: 'certified_plugins/cassandra_node_usage.json' }
+  - { plugin_info: 'certified_plugins/zookeeper_usage.json' }
+
+appformix_contrail_factory_plugins:
+  - { plugin_info: 'certified_plugins/contrail_vrouter.json' }
+  - { plugin_info: 'certified_plugins/contrail_vrouter_flows.json' }
+  - { plugin_info: 'certified_plugins/contrail_vrouter_5x.json' }
+
+# For appformix_openstack_factory_plugins, you can specify an additional
+# variable "log_file_path". This variable indicates the log file paths you
+# wanted monitored by each plugin. The log_file_path should be a string
+# separated by ',' which contains a list of log_file_path you want to monitor
+appformix_openstack_factory_plugins:
+  - { plugin_info: 'certified_plugins/cinder_api_logparser.json',
+      log_file_path: '/var/log/cinder/cinder-api.log'}
+  - { plugin_info: 'certified_plugins/glance_logparser.json' }
+  - { plugin_info: 'certified_plugins/heavy_hitters.json' }
+  - { plugin_info: 'certified_plugins/keystone_logparser.json' }
+  - { plugin_info: 'certified_plugins/neutron_logparser.json',
+      log_file_path: '/var/log/neutron/neutron-server.log,/var/log/neutron/server.log'}
+  - { plugin_info: 'certified_plugins/nova_logparser.json' }
+
+# Allow user to decide if additional dependencies required by certified
+# plugins should be installed by the AppFormix Ansible playbooks.
+appformix_install_ipmi_dependencies: false
+appformix_install_jti_dependencies: false
+appformix_install_snmp_dependencies: false
+
+# DEPRECATED: appformix_remote_host_monitoring_enabled
+# REPLACED BY: appformix_install_ipmi_dependencies
+appformix_remote_host_monitoring_enabled: false
+appformix_remote_host_factory_plugins:
+  - { plugin_info: 'certified_plugins/ipmi_host_usage.json' }
+  - { plugin_info: 'certified_plugins/snmp_host_usage.json' }
+
+# DEPRECATED: appformix_network_device_monitoring_enabled
+# REPLACED BY: appformix_install_snmp_dependencies
+# DEPRECATED: appformix_jti_network_device_monitoring_enabled
+# REPLACED BY: appformix_install_jti_dependencies
+appformix_network_device_monitoring_enabled: false
+appformix_jti_network_device_monitoring_enabled: false
+
+# All out of box factory plugins for snmp device collections should be listed
+# here for users to configure
+appformix_network_device_factory_plugins:
+  - { plugin_info: 'certified_plugins/snmp_config_device_resources_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_device_system_storage_resources_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_ifxtable_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_ip_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_ipv6_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_jnx_js_spu_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_juniper_alarm_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_juniper_device_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_juniper_firewall_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_juniper_ipv6_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_juniper_pfe_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_juniper_subscriber_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_tcp_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_ucd_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_config_udp_mib.json' }
+  - { plugin_info: 'certified_plugins/snmp_network_device_routing_engine.json' }
+  - { plugin_info: 'certified_plugins/snmp_network_device_usage.json' }
+  - { plugin_info: 'certified_plugins/jti_config_all_sensors.json' }
+  - { plugin_info: 'certified_plugins/grpc_config_all_sensors.json' }
+
+# User may want to supply their own custom SNMP plugins which indicates which
+# mibs they want to monitor
+# The 'appformix_custom_snmp_plugins' variable should be defined in the user's
+# inventory.  Example:
+# { 'config_file_name': '', 'json_file_name': '' }
+# where config_file_name is the name of config file user input their plugin
+# details, json_file_name is just a name which user want to save their plugin
+# json(we will create this plugin json through ansible based on the config file
+# user supply)
+appformix_custom_snmp_plugins: []
+
+# User may want to supply their new JTI/GRPC sensor into appformix
+# The 'appformix_control_plane_plugin_config_files' variable should be defined
+# in the user's inventory.  Example:
+# { 'config_file_name': '', 'type': '' }
+# where config_file_name is the name of config file user input their sensor
+# information(we will update the control_plane plugin based on this config file)
+# and type will be either JTI or GRPC
+appformix_control_plane_plugin_config_files: []
+
+# Default port for multicluster Haproxy deployment
+multicluster_haproxy_port: 18081
+
+# Deploy Appformix Stream Container
+appformix_stream_enabled: false
+
+# User may configure certified service connectivity profiles to be used
+# by the Agent for collecting metrics.  Define the
+# 'appformix_service_connectivity_profiles' variable to be a list of dictionaries,
+# one per plugin.  The dictionary should have the following keys:
+# connectivity_profiles: (required) path to JSON service connectivity profiles definition
+#
+# Certified plugins have all required executable dependencies already
+# installed on the Agent host.  No additional deployment step is necessary.
+#
+# The 'appformix_service_connectivity_profiles' variable should be defined in
+# the user's inventory.  Example:
+#   appformix_service_connectivity_profiles: []
+#
+appformix_openstack_service_connectivity_profiles:
+  - { connectivity_profiles: 'profiles/cinder_default_service_profile.json.j2' }
+  - { connectivity_profiles: 'profiles/glance_default_service_profile.json.j2' }
+  - { connectivity_profiles: 'profiles/keystone_default_service_profile.json.j2' }
+  - { connectivity_profiles: 'profiles/neutron_default_service_profile.json.j2' }
+  - { connectivity_profiles: 'profiles/nova_default_service_profile.json.j2' }
+
+appformix_service_connectivity_profiles: []
+appformix_service_connectivity_certs: []
+
+appformix_northstar_monitoring_enabled: false
+
+# User may want to set timeout for calls made to openstack adapter
+appformix_openstack_adapter_timeout: 20

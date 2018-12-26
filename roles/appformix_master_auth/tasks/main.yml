@@ -1,0 +1,47 @@
+---
+- name: Attempt to read the token file
+  become: yes
+  slurp:
+    src: "{{ master_auth_token_file }}"
+  register: slurp_file
+  ignore_errors: yes
+
+# Use token from file
+- name: Initialize file read
+  set_fact:
+    contents: "{{ slurp_file['content'] | b64decode | from_json }}"
+  when: slurp_file.content is defined
+
+- name: Set fact for Master Auth Token using file
+  set_fact:
+    master_auth_token: "{{ contents['Token']['TokenId'] }}"
+  when: slurp_file.content is defined
+
+# Generate token using seed and save to file
+- name: Get AppFormix Master Auth Token
+  uri:
+    url: "{{ master_auth_post_url }}"
+    method: POST
+    body: ' {"Description": "Generated during Ansible installation {{ ansible_date_time.iso8601_micro }}",
+             "Expiry": "{{ ansible_date_time.epoch|int * 1000 + 31449600000 }}",
+             "UserName": "{{ appformix_username }}",
+             "Password": "{{ appformix_password }}" } '
+    HEADER_Content-Type: "application/json"
+    HEADER_X-Auth-Token: "{{ auth_token }}"
+    HEADER_X-Auth-Type: "{{ auth_type }}"
+    validate_certs: no
+  register: auth_info
+  delegate_to: localhost
+  when: (slurp_file.failed is defined and slurp_file.failed) or (contents.Token.UserName is undefined) or (contents.Token.UserName == "")
+
+- name: Set fact for Master Auth Token
+  set_fact:
+    master_auth_token: "{{ auth_info.json.Token.TokenId }}"
+  when: (slurp_file.failed is defined and slurp_file.failed) or (contents.Token.UserName is undefined) or (contents.Token.UserName == "")
+
+- name: Save Master Auth Token
+  become: yes
+  copy:
+    content: "{{ auth_info.json }}"
+    dest: "{{ master_auth_token_file }}"
+  when: (slurp_file.failed is defined and slurp_file.failed) or (contents.Token.UserName is undefined) or (contents.Token.UserName == "")

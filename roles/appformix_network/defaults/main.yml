@@ -1,0 +1,3 @@
+---
+appformix_network_ipv4_subnet: ""
+appformix_network_ipv4_subnet_arg: "{{ (appformix_network_ipv4_subnet != '') | ternary('--subnet ' + appformix_network_ipv4_subnet, '') }}"

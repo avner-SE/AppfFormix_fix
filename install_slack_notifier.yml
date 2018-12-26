@@ -1,0 +1,16 @@
+---
+# Install AppFormix slack notifier
+#
+# Arguments:
+#   appformix_slack_notifier_token  : api key created on a slack channel
+#   appformix_slack_notifier_port   : port the custom notifier listens on the host
+#   appformix_slack_notifier_channel: channel the slack bot messages on
+
+# Inventory:
+#   appformix_slack_notifier_host   : Group with single host where slack
+#                                     notifier should run
+
+- hosts: appformix_slack_notifier_host
+  roles:
+    - appformix_slack_notifier
+

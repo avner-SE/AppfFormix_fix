@@ -1,0 +1,13 @@
+{
+    "AuthType": "appformix",
+    "AdminRoles": {{ appformix_infrastructure_view_roles | to_json }},
+    "ConfigAdminRoles": {{ appformix_administrator_roles | to_json }},
+    "ReadOnlyAdminRoles": {{ appformix_read_only_infrastructure_view_roles | to_json }},
+    "ControllerUrl": "{{ appformix_vip_url }}",
+    "DataManagerUrl": "{{ appformix_vip_url }}",
+    "InternalApiUrl": "{{ appformix_vip_url }}",
+    "AdapterUrl": "",
+    "UserName": "",
+    "Password": "",
+    "SSLEnabled": {{ (appformix_ssl_enabled|bool) }},
+}

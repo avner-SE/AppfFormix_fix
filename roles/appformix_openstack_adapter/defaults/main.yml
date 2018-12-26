@@ -1,0 +1,5 @@
+---
+# Default values for the appformix_openstack_adapter role.  These can be
+# overridden when including the role.
+appformix_openstack_adapter_state: "{{ appformix_state }}"
+appformix_openstack_adapter_pull: 'missing'

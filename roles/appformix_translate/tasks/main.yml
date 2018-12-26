@@ -1,0 +1,62 @@
+---
+#
+# Translates existing mongo data for the AppFormix version being installed
+#
+# Parameters:
+#   appformix_docker_registry: specifies the host and port of a Docker Registry.
+#       If not defined or set to empty string, then images on the target Docker
+#       Engine will be used.  The latter is useful for development hosts where
+#       the image was built.
+#
+#   appformix_controller_version: version of the Controller image
+#
+
+- name: Create AppFormix Translate log directories
+  file: path="{{item}}" state=directory mode=755
+  become: true
+  when: appformix_state != 'absent'
+  with_items:
+    - /var/log/appformix/translate/appformix
+
+- name: Start appformix translate with a dns server
+  when: appformix_state != 'absent'
+  docker:
+      name: appformix-translate
+      image: "{{ appformix_controller_image }}"
+      state: "{{ appformix_translate_state }}"
+      dns: ["127.0.0.1"]
+      net: "{{ appformix_network }}"
+      volumes: "{{ appformix_translate_volumes }}"
+      command: dnsmasq -k
+      env:
+        MONGO_HOST: "{{ appformix_mongo_host | default('appformix-mongo') }}"
+        MONGO_PORT: "{{ appformix_mongo_port }}"
+        MONGO_USERNAME: "{{ appformix_mongo_username }}"
+        MONGO_PASSWORD: "{{ appformix_mongo_password }}"
+        MONGO_REPLICA_SET_NAME: "{{ appformix_mongo_replica_set }}"
+        REDIS_HOST: "{{ appformix_redis_host | default('appformix-redis') }}"
+        REDIS_PORT: "{{ appformix_redis_port }}"
+        REDIS_PASSWORD: "{{ appformix_redis_password | default('') }}"
+
+- name: Check if DB translation necessary
+  when: appformix_state != 'absent'
+  ignore_errors: yes
+  shell: docker exec appformix-translate bash -c "python -m controller_package.translate_db --check"
+  register: translate_check
+
+# Check exit codes of translate container:
+# - 0 if translation not required, and there are no errors
+# - 3 if translation required
+- name: Fail if translate check failed
+  fail: msg="Translate failed with code {{ translate_check.rc }}"
+  when: appformix_state != 'absent' and translate_check.rc != 0 and translate_check.rc != 3
+
+- include: translate.yml
+  when: appformix_state != 'absent' and translate_check.rc == 3
+
+- name: Remove AppFormix Translate container
+  when: appformix_state != 'absent'
+  docker:
+      name: appformix-translate
+      image: "{{appformix_docker_registry}}appformix/controller:{{appformix_controller_version}}"
+      state: absent

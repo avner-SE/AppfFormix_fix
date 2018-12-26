@@ -1,0 +1,54 @@
+---
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: item is undefined or item == ""
+  with_items:
+    - appformix_datamanager_version
+
+- name: Create AppFormix DataManager log directories
+  file: path="{{item}}" state=directory mode=755
+  become: true
+  with_items:
+    - /var/log/appformix/datamanager/appformix
+    - /var/log/appformix/datamanager/nginx
+  when: datamanager_action == "install"
+
+- name: Start AppFormix DataManager container
+  when: datamanager_action == "install"
+  docker:
+    name: appformix-datamanager
+    image: "{{ appformix_datamanager_image }}"
+    state: "{{ appformix_datamanager_state }}"
+    restart_policy: always
+    env:
+        PURGER_ENABLED: "{{ appformix_datamanager_purger_enable | default(true) }}"
+        CACHER_ENABLED: "{{ appformix_datamanager_cacher_enable | default(true) }}"
+        SOCKET_SERVICE_ENABLED: "{{ appformix_datamanager_socket_service_enable | default(true) }}"
+        DATA_MANAGER_ID: "{{ inventory_hostname }}"
+        REDIS_HOST: "{{ appformix_redis_host | default('appformix-redis') }}"
+        REDIS_PORT: "{{ appformix_redis_port }}"
+        REDIS_PASSWORD: "{{ appformix_redis_password | default('') }}"
+        MONGO_HOST: "{{ appformix_mongo_host | default('appformix-mongo') }}"
+        MONGO_PORT: "{{ appformix_mongo_port }}"
+        MONGO_USERNAME: "{{ appformix_mongo_username }}"
+        MONGO_PASSWORD: "{{ appformix_mongo_password }}"
+        MONGO_REPLICA_SET_NAME: "{{ appformix_mongo_replica_set }}"
+    dns: ["127.0.0.1"]
+    net: "{{ appformix_network }}"
+    ports: "{{ appformix_datamanager_ports }}"
+    pull: "{{ appformix_datamanager_pull }}"
+    volumes: "{{ appformix_datamanager_volumes }}"
+
+- name: Wait for AppFormix DataManager to be ready
+  uri:
+    url: "{{ appformix_datamanager_writer_url }}"
+    method: POST
+    HEADER_Content-Type: "application/json"
+    validate_certs: no
+  register: result
+  until: result.status | default(0) == 200
+  retries: 60
+  delay: 1
+  delegate_to: localhost
+  run_once: true
+  when: appformix_datamanager_state != 'absent' and datamanager_action == 'configure'

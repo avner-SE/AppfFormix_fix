@@ -1,0 +1,41 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_ipv6_mib_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_ipv6_mib",
+        "PluginPrefix": "interface",
+        "EntityType": ["interface"]
+    },
+    "MetricMap": [
+        {
+            "Name": "ipv6IfOperStatus",
+            "Units": "Count"
+        },
+        {
+            "Name": "ipv6IfReasmMaxSize",
+            "Units": "Count"
+        },
+        {
+            "Name": "ipv6IfAdminStatus",
+            "Units": "Count"
+        },
+        {
+            "Name": "ipv6IfIdentifierLength",
+            "Units": "Count"
+        },
+        {
+            "Name": "ipv6IfEffectiveMtu",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "snmp_ipv6_mib",
+    "PluginName": "snmp_ipv6_mib",
+    "PluginType": "snmp_network_device",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "IPV6-MIB::ipv6IfTable"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

@@ -1,0 +1,52 @@
+{
+  "NetworkDeviceList": [
+    {
+      "NetworkDevice": {
+        "ManagementIp": "device_management_ip_address",
+        "Name": "qfx1|mx1|vmx1|vrsx1|ex1|ptx1",
+        "NetworkDeviceId": "device_id",
+        "Source": ["user.snmp", "user.jti"],
+        "ChassisType": "coreswitch|spine|tor|virtual",
+        "ConnectionInfo": [
+          {
+            "remote_interface_name": "et-0/0/1",
+            "local_interface_name": "et-0/1/0",
+            "remote_system_id": "qfx2"
+          }
+        ],
+        "InterfaceList": [
+          {
+            "InterfaceId": "InterfaceList is optional if ConnectionInfo is provided;; interface_id",
+            "InterfaceName": "InterfaceList is optional if ConnectionInfo is provided;; xe-0/0/0"
+          }
+        ],
+        "MetaData": {
+          "InstanceId": "NetworkDevice that references a VNF must provide an InstanceId;;For connectivity collection will be colocated on its server;;ChassisType must be virtual",
+          "ServerId": "NetworkDevice that references a CloudInstance must provide a ServerId;;ChassisType must be virtual",
+          "JtiConfig": {
+            "Version": "15.1F5|15.1F6|15.1F7|17.2R1|17.3R1",
+            "Username": "JTI device username for pyez netconf ssh config",
+            "Password": "JTI device password for pyez netconf ssh config",
+            "SensorList": [
+              {
+                "Name": "sensor_name used for pyez netconf ssh config",
+                "Resource": "sensor_resource_path used for pyez netconf ssh config;;Supported Sensors;;/junos/system/linecard/interface/,/junos/system/linecard/cpu/memory/,/junos/system/linecard/npu/memory/,/junos/system/linecard/npu/utilization/,/junos/system/linecard/packet/usage/,/junos/system/linecard/firewall/"
+              }
+            ]
+          },
+          "SnmpConfig": {
+            "Version": "2c|3",
+            "Community": "check device snmp config;; needed when version=2c",
+            "Username": "check device snmp config;; needed when version=3",
+            "Password": "check device snmp config;; authentication passphrase, needed when version=3",
+            "Level": "check device snmp config;; security level, needed when version=3",
+            "Protocol": "check device snmp config;; MD5|SHA needed when version=3",
+            "PrivProtocol": "check device snmp config;; DES|AES for version=3",
+            "PrivKey": "check device snmp config;; privacy protocol pass phrase, for version=3",
+            "OIDList": ["OIDs and Top-level MIBs for which plugins are specified for collection;;Supported OIDs;;TCP-MIB::tcp,IF-MIB::ifXTable,IF-MIB::ifTable,APPFORMIX_ROUTING_ENGINE_MIB,1.3.6.1.4.1.2636.3.4.2,enterprises.2636.3.1.13.1"]
+          }
+        }
+      }
+    }
+  ]
+}

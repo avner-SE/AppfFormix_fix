@@ -1,0 +1,26 @@
+---
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: '{{ item }} is undefined or {{ item }} == ""'
+  with_items:
+    - appformix_slack_notifier_token
+    - appformix_slack_notifier_channel
+    - appformix_slack_notifier_port
+
+- name: Modify the source file with relevant vars
+  copy: src=Dockerfile dest=/tmp/
+
+- name: Modify the source file with relevant vars
+  template: src=slack_notifier.js dest=/tmp/slack_notifier.js
+
+- name: Build Container image based on Dockerfile
+  become: yes
+  shell: docker build -t {{ appformix_slack_notifier_image }} -f /tmp/Dockerfile /tmp/
+
+- name: Start AppFormix Slack Notifier Container
+  docker:
+      name: appformix-slack-app
+      image: "{{ appformix_slack_notifier_image }}"
+      state: "{{ appformix_slack_notifier_state }}"
+      restart_policy: always
+      ports: "{{ appformix_slack_notifier_ports }}"

@@ -1,0 +1,11 @@
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: ( {{ item }} is undefined or {{ item }} == "" )
+  with_items:
+    - kubernetes_auth_token
+
+- name: Copy kubelet api token to compute nodes
+  become: yes
+  copy:
+    content: "{{ kubernetes_auth_token }}"
+    dest: "{{ appformix_manager_kubernetes_token_file }}"

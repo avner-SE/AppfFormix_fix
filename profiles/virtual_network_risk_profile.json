@@ -1,0 +1,34 @@
+{
+    "rules": [
+        {
+            "Name": "virtual_network_heartbeat",
+            "EventRuleId": "VIRTUAL_NETWORK_HEARTBEAT",
+            "MetricType": "status",
+            "AggregationFunction": "sum",
+            "ComparisonFunction": "equal",
+            "Threshold": 0,
+            "IntervalDuration": "1s",
+            "IntervalsWithException": 1,
+            "IntervalCount": 1,
+            "Module": "alarms",
+            "Mode": "alert",
+            "EventRuleScope": "virtual_network",
+            "EventRuleType": "static",
+            "CreatedBy": "system",
+            "DisplayEvent": false
+        }
+    ],
+    "profile": {
+        "CompositeAlarmScope": "virtual_network",
+        "CompositeAlarmType": "risk",
+        "ObjectId": "all",
+        "Rulesets": [
+            {
+                "RuleList": ["VIRTUAL_NETWORK_HEARTBEAT"],
+                "WeightList": [1],
+                "Threshold": 1,
+                "RulesetObjectId": "all"
+            }
+        ]
+    }
+}

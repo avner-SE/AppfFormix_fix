@@ -1,0 +1,65 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_network_device_tcp_state_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_tcp_mib",
+        "PluginPrefix": "tcp",
+        "EntityType": ["network_device"]
+    },
+    "MetricMap": [
+        {
+            "Name": "tcpMaxConn",
+            "Units": "Count"
+        },
+        {
+            "Name": "tcpActiveOpens",
+            "Units": "Count"
+        },
+        {
+            "Name": "tcpPassiveOpens",
+            "Units": "Count"
+        },
+        {
+            "Name": "tcpAttemptFails",
+            "Units": "Count"
+        },
+        {
+            "Name": "tcpEstabResets",
+            "Units": "Count"
+        },
+        {
+            "Name": "tcpCurrEstab",
+            "Units": "Count"
+        },
+        {
+            "Name": "tcpInSegs",
+            "Units": "Count"
+        },
+        {
+            "Name": "tcpOutSegs",
+            "Units": "Count"
+        },
+        {
+            "Name": "tcpRetransSegs",
+            "Units": "Count"
+        },
+        {
+            "Name": "tcpInErrs",
+            "Units": "Count"
+        },
+        {
+            "Name": "tcpOutRsts",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "snmp_network_device_tcp_state",
+    "PluginName": "snmp_network_device_tcp_state",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "TCP-MIB::tcp"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

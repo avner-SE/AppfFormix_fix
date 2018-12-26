@@ -1,0 +1,7 @@
+# Playbook to cleanup AppFormix on Regional CSO.
+
+- include: clean_appformix_ha.yml
+  vars:
+    openstack_platform_enabled: false
+    aws_platform_enabled: false
+    network_device_discovery_enabled: true

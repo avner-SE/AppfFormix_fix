@@ -1,0 +1,30 @@
+
+- hosts: appformix_controller
+  roles:
+    - appformix_defaults
+  tasks:
+  - name: Run the tac script on appformix-controller nodes
+    command: "{{ appformix_install_dir }}/bin/tac-collect"
+
+  - name: Fetch the tac script from each controller to local
+    become: yes
+    fetch:
+      src: appformix_tac_info.tgz
+      dest: ./tac/appformix_tac_info__{{inventory_hostname}}.tgz
+      mode: 0755
+      flat: yes
+
+  - name: Clean appformix_tac_info.tgz file on appformix-controller nodes
+    file:
+      state: absent
+      path: appformix_tac_info.tgz
+
+- hosts: localhost
+  vars:
+    date: "{{ lookup('pipe', 'date +%Y%m%d-%H%M') }}"
+  tasks:
+  - name: Zip all the tac files
+    command: tar czf ./appformix_tac_info_{{ date }}.tgz ./tac
+
+  - name: Clean all the tac files on localhost
+    command: rm -rf ./tac

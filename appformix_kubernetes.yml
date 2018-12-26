@@ -1,0 +1,22 @@
+---
+# Install AppFormix for Kubernetes
+
+- include: prerequisites.yml
+  tags: ['prerequisites']
+  vars:
+    state: present
+
+- include: deploy.yml
+  vars:
+    kubernetes_platform_enabled: True
+    appformix_images:
+      - "{{ appformix_controller_image }}"
+      - "{{ appformix_dashboard_image }}"
+      - "{{ appformix_datamanager_image }}"
+      - "{{ appformix_kubernetes_adapter_image }}"
+  tags: ['deploy']
+
+- include: configure_kubernetes.yml
+  vars:
+    kubernetes_platform_enabled: True
+  tags: ['configure']

@@ -1,0 +1,127 @@
+# Sample group vars file for appformix on openstack installation.
+
+appformix_version: 2.15.2
+appformix_license: /path/to/license.sig
+
+appformix_docker_images:
+  - /path/to/appformix-platform-images-2.15.2.tar.gz
+  - /path/to/appformix-dependencies-images-2.15.2.tar.gz
+  - /path/to/appformix-openstack-images-2.15.2.tar.gz
+
+appformix_plugins: '{{ appformix_openstack_factory_plugins }}'
+
+# appformix_plugins:
+#  - '{{ appformix_network_device_factory_plugins }}'
+#  - '{{ appformix_openstack_factory_plugins }}'
+#  - '{{ appformix_remote_host_factory_plugins }}'
+#  - '{{ appformix_application_factory_plugins }}'
+#  - '{{ appformix_contrail_factory_plugins }}'
+
+# Required when appformix manager deb version is different from the appformix controller version
+# and that version of the appformix manager should be in the ansible installer path
+# appformix_manager_version: 2.15.1
+
+# Appformix ssl
+# appformix_ssl_cert: /path/to/ssl_certificate.crt
+# appformix_ssl_key: /path/to/ssl_key.key
+
+# IPv6 ip range used for AppFormix Network
+# ipv6_cidr: '2001:db8::/24'
+
+# Enable for remote host monitoring with plugins
+# appformix_remote_host_monitoring_enabled: true
+
+# Enable Network device plugin factory plugin when network device is installed
+# appformix_network_device_monitoring_enabled : true
+# appformix_jti_network_device_monitoring_enabled: true
+# network_device_file_name: /path/to/network_device_config.json
+
+# Auto discovery when network adapter is installed
+# network_device_csv_file: /path/to/file.csv
+
+# For onboarding custom user defined mib directory path
+# user_defined_mib_location: '/path/to/snmp_mibs/*'
+
+# Overriding mongo database directory path
+# appformix_mongo_data_dir: /opt/appformix/mongo/data
+
+# This is the internal port inside of the appformix containers
+# appformix_mongo_exposed_port: 27017
+# appformix_redis_exposed_port: 6379
+
+# Set log rotate daily to 1 to enable it.
+appformix_log_rotate_daily: 0
+appformix_log_rotate_max_size_in_mb: 10
+appformix_log_rotate_max_count: 5
+
+# Haproxy ssl
+# ssl_cert: /path/to/ha_ssl_certificate.crt
+# ssl_key: /path/to/ha_ssl_key.key
+
+# Process monitoring
+# process_set_monitors_file_name: /path/to/sample_process_set_montiors.json
+
+# Services monitoring
+#
+# Contrail Service
+# contrail_cluster_name: 'Contrail_Cluster'
+# contrail_analytics_url: 'http://120.51.53.174:8081'
+# contrail_config_url: 'http://120.51.53.174:8082'
+#
+# Scaleio Service
+# scaleio_cluster:
+#   name: ScaleIO_cluster1
+#   host: 110.23.53.13
+#   port: 80
+#   username: username
+#   password: password
+#
+# Mysql Service
+# appformix_mysql_username: 'username'
+# appformix_mysql_password: 'password'
+# appformix_mysql_port: 3306
+# appformix_mysql_cluster_name: 'mysql1'
+# appformix_mysql_hosts:
+#   - { 'AgentUrl': 'http://101.187.168.27:42595', 'MySQLHost': '10.87.68.94' }
+#
+# RabbitMQ Service
+# appformix_rabbitmq_cluster_name: 'myrabbit1'
+# appformix_rabbitmq_username: 'username'
+# appformix_rabbitmq_password: 'password'
+# appformix_rabbitmq_nodes:
+#   - { RabbitNode: 'rabbit@host', RabbitUrl: 'http://host:15672', AgentUrl: 'http://101.187.168.27:42595' }
+#
+# Cassandra Service
+# cassandra_host: 110.22.32.213
+# cassandra_username: 'username'
+# cassandra_password  'password'
+
+# Openstack endpoint override urls
+#
+# Set this to override the OpenStack Identity endpoint instead of using
+# the value advertised by Keystone.
+# appformix_keystone_endpoint_override_url: ''
+#
+# Set this to override the OpenStack Compute endpoint instead of using
+# the value advertised by Nova.
+# appformix_nova_endpoint_override_url: ''
+#
+# Set this to override the OpenStack Network endpoint instead of using
+# the value advertised by Neutron.
+# appformix_neutron_endpoint_override_url: ''
+#
+# Set this to override the OpenStack Volume endpoint instead of using
+# the value advertised by Cinder.
+# appformix_cinder_endpoint_override_url: ''
+#
+# Set this to override the OpenStack Heat endpoint instead of using
+# the value advertised by Heat.
+# appformix_heat_endpoint_override_url: ''
+#
+# Set this to override the OpenStack Glance endpoint instead of using
+# the value advertised by Glance.
+# appformix_glance_endpoint_override_url: ''
+
+# NFX150 Monitoring
+# Include the lxc container image path
+# appformix_lxc_container_image: /path/to/appformix-lxc-images-2.15.2.tar.gz

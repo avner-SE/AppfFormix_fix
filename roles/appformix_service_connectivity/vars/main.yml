@@ -1,0 +1,2 @@
+appformix_service_connectivity_controller_cert_dir: /opt/appformix/etc/service_connectivity/certs
+appformix_service_connectivity_agent_cert_dir: /opt/appformix/manager/service_connectivity/certs

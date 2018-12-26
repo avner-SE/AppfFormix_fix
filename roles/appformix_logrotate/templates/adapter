@@ -1,0 +1,34 @@
+{% if openstack_platform_enabled %}
+/var/log/appformix/uwsgi.log
+{% endif %}
+
+{% if gcp_platform_enabled %}
+/var/log/appformix/uwsgi_gcp_adapter.log
+{% endif %}
+
+{% if network_device_discovery_enabled %}
+/var/log/appformix/uwsgi_network_device_adapter.log
+{% endif %}
+
+{% if vcenter_platform_enabled %}
+/var/log/appformix/uwsgi_vcenter_adapter.log
+{% endif %}
+
+{% if azure_platform_enabled %}
+/var/log/appformix/uwsgi_azure_adapter.log
+{% endif %}
+
+{% if aws_platform_enabled %}
+/var/log/appformix/uwsgi_aws_adapter.log
+{% endif %}
+
+{
+    {{ appformix_log_rotate_daily | ternary ('daily', '') }}
+    maxsize {{ appformix_log_rotate_max_bytes }}
+    missingok
+    rotate {{ appformix_log_rotate_max_count }}
+    compress
+    delaycompress
+    notifempty
+    copytruncate
+}

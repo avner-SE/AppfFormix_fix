@@ -1,0 +1,13 @@
+---
+appformix_manager_state: "{{ (appformix_state == 'absent') | ternary('absent','present') }}"
+# Use an alternate definition of rpm version if the branch version has a - in
+# it. Fpm treats - different for deb and rpms. For deb it retains the - in the
+# version string. For rpms it modifies it to _.
+# ex - 2.4.2-kubernetes.1 becomes 2.4.2-kubernetes.1 in deb and
+# 2.4.2_kubernetes.1 in the rpm
+appformix_manager_rpm_version: "{{ appformix_version }}"
+package_dir: .
+appformix_agent_port: 42595
+appformix_agent_user: 'root'
+appformix_manager_upstart_conf: /etc/init/appformix-manager.conf
+appformix_manager_systemd_conf: /etc/systemd/system/appformix-manager.service

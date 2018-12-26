@@ -1,0 +1,80 @@
+# Requires: Ansible 1.9.6
+#
+# User must be able to run Docker commands
+#
+# Parameters:
+#   appformix_docker_registry: specifies the host and port of a Docker Registry.
+#       If not defined or set to empty string, then images on the target Docker
+#       Engine will be used.  The latter is useful for development hosts where
+#       the image was built.
+#
+#   appformix_controller_version: version of the Controller image
+#
+---
+
+- name: Create AppFormix Controller log directories
+  file: path="{{item}}" state=directory mode=755
+  become: true
+  with_items:
+    - "{{ appformix_log_dir }}/controller/appformix"
+    - "{{ appformix_log_dir }}/controller/nginx"
+    - "{{ appformix_install_dir }}/etc/custom_notifier"
+    - "{{ appformix_install_dir }}/etc/service_connectivity/certs"
+
+- name: Start AppFormix Controller container
+  docker:
+      name: appformix-controller
+      image: "{{ appformix_controller_image }}"
+      state: "{{ appformix_controller_state }}"
+      restart_policy: always
+      dns: ["127.0.0.1"]
+      net: "{{ appformix_network }}"
+      ports: "{{ appformix_controller_ports }}"
+      pull: "{{ appformix_controller_pull }}"
+      volumes: "{{ appformix_controller_volumes }}"
+      env:
+        http_proxy: "{{ appformix_controller_env_http_proxy }}"
+        https_proxy: "{{ appformix_controller_env_https_proxy }}"
+        no_proxy: "{{ appformix_controller_env_no_proxy }}"
+        MULTI_NODE_SETUP: "{{ appformix_multi_node_setup }}"
+        MONGO_HOST: "{{ appformix_mongo_host }}"
+        MONGO_PORT: "{{ appformix_mongo_port }}"
+        MONGO_USERNAME: "{{ appformix_mongo_username }}"
+        MONGO_PASSWORD: "{{ appformix_mongo_password }}"
+        MONGO_REPLICA_SET_NAME: "{{ appformix_mongo_replica_set }}"
+        REDIS_HOST: "{{ appformix_redis_host }}"
+        REDIS_PORT: "{{ appformix_redis_port }}"
+        REDIS_LOCAL_HOST: "{{ appformix_redis_local_host }}"
+        REDIS_LOCAL_PORT: "{{ appformix_redis_local_port }}"
+        REDIS_PASSWORD: "{{ appformix_redis_password }}"
+        APPFORMIX_AUTH_CREATOR_TOKEN: "{{ master_auth_creator_token }}"
+        LOG_ROTATE_MAX_COUNT: "{{ appformix_log_rotate_max_count }}"
+        LOG_ROTATE_MAX_BYTES: "{{ appformix_log_rotate_max_bytes }}"
+        LOG_ROTATE_MAX_HOURS: "{{ appformix_log_rotate_max_hours }}"
+        OPENSTACK_ADAPTER_HTTP_TIMEOUT: "{{ appformix_openstack_adapter_timeout}}"
+
+#- name: Wait for AppFormix Controller to be ready
+#  wait_for: port={{ appformix_controller_port_http }} timeout=20
+#
+#- name: Wait for AppFormix Controller to be ready (SSL Enabled)
+#  wait_for: port={{ appformix_controller_port_https }} timeout=20
+#  when: appformix_ssl_enabled
+
+- name: Wait for AppFormix controller to be ready
+  uri:
+    url: "{{ appformix_controller_master_url }}"
+    method: POST
+    HEADER_Content-Type: "application/json"
+    # NOTE: Leading space in body string is required as a workaround to known
+    #       issue in Ansible 1.9.6.  Refer to:
+    #       https://github.com/ansible/ansible-modules-core/pull/1011#issuecomment-155963713
+    #       https://github.com/ansible/ansible-modules-core/issues/265
+    body: ' {{ controller_master_config_json | to_json}}'
+    validate_certs: no
+  register: result
+  until: result.status | default(0) == 200
+  retries: 30
+  delay: 1
+  delegate_to: localhost
+  run_once: true
+  when: appformix_controller_state != 'absent' and (appformix_scale_setup_flag|bool)

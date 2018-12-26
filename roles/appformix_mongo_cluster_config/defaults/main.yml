@@ -1,0 +1,5 @@
+---
+appformix_mongo_cluster_config_state: "{{ appformix_state }}"
+appformix_mongo_cluster_container_conf_dir: "{{ appformix_mongos_client_container_conf_dir }}"
+appformix_mongo_cluster_container_replication_set: "{{ appformix_mongo_cluster_container_conf_dir }}/replication_set.js"
+appformix_mongo_cluster_container_init_shard: "{{ appformix_mongo_cluster_container_conf_dir }}/init_shard.js"

@@ -1,0 +1,4 @@
+#! /bin/bash
+docker exec -it appformix-mongo mongo --shell \
+    /usr/local/etc/mongo/credentials.js \
+    /usr/local/etc/mongo/mongo_auth.js

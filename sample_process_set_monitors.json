@@ -1,0 +1,22 @@
+{
+    "ProcessSetMonitors": [
+        {
+        "ProcessSetMonitor":
+            {
+                "ProcessSetMonitorId": "psm1",
+                "ObjectType": "aggregate",
+                "ObjectId": "appformix_platform",
+                "ProcessList": ["nova-api", "java", "neutron-server"]
+            }
+        },
+        {
+        "ProcessSetMonitor":
+            {
+                "ProcessSetMonitorId": "psm2",
+                "ObjectType": "host",
+                "ObjectId": "host_id",
+                "ProcessList": ["python"]
+            }
+        }
+    ]
+}

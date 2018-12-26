@@ -1,0 +1,9 @@
+---
+appformix_mongos_client_image: "mongo:3.0.6"
+appformix_mongos_client_state: "{{ appformix_state }}"
+
+# This is the internal port inside of the appformix-mongo container
+appformix_mongos_client_docker_ports: "{{ appformix_mongos_client_exposed_port }}:{{ appformix_mongos_client_port }}"
+appformix_mongos_client_start_timeout: 120
+
+appformix_host_mongos_client_conf_dir: "{{ appformix_install_dir }}/etc/mongos"

@@ -1,0 +1,195 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_network_device_cisco_system_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_cisco_system_mib",
+        "EntityType": [
+            "network_device"
+        ],
+        "PluginPrefix": "system_state"
+    },
+    "MetricMap": [
+        {
+            "Name": "freeMem",
+            "Units": "Bytes"
+        },
+        {
+            "Name": "bufferElFree",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferElMax",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferElHit",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferElMiss",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferElCreate",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferSmSize",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferSmTotal",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferSmFree",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferSmMax",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferSmHit",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferSmMiss",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferSmTrim",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferSmCreate",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferBgSize",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferBgTotal",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferBgFree",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferBgMax",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferBgHit",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferBgMiss",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferBgTrim",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferBgCreate",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferMdSize",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferMdTotal",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferMdFree",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferMdMax",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferMdHit",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferMdMiss",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferMdTrim",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferMdCreate",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferLgSize",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferLgTotal",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferLgFree",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferLgMax",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferLgHit",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferLgMiss",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferLgTrim",
+            "Units": "Count"
+        },
+        {
+            "Name": "bufferLgCreate",
+            "Units": "Count"
+        },
+        {
+            "Name": "busyPer",
+            "Units": "Count"
+        },
+        {
+            "Name": "avgBusy1.0",
+            "Units": "Count"
+        },
+        {
+            "Name": "avgBusy5.0",
+            "Units": "Count"
+        },
+        {
+            "Name": "idleCount",
+            "Units": "Count"
+        },
+        {
+            "Name": "idleWired",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "snmp_network_device_cisco_system",
+    "PluginName": "snmp_network_device_cisco_system",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "1.3.6.1.4.1.9.2.1"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

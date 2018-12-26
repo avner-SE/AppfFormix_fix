@@ -1,0 +1,18 @@
+---
+
+- name: Get OpenStack Admin Token
+  uri:
+    url: "{{ auth_post_url }}"
+    method: POST
+    body: ' {"UserName": "{{ openstack_username }}",
+             "UserDomainName": "{{ openstack_user_domain_name }}",
+             "Password": "{{ openstack_password }}",
+             "AuthType": "{{ openstack_auth_type }}"} '
+    HEADER_Content-Type: "application/json"
+    validate_certs: no
+  register: auth_info
+  delegate_to: localhost
+
+- name: set fact for openstack token
+  set_fact:
+    auth_info: "{{ auth_info }}"

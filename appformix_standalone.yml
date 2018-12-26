@@ -1,0 +1,23 @@
+---
+# Install AppFormix Platform as standalone installation
+
+- include: prerequisites.yml
+  tags: ['prerequisites']
+  vars:
+    state: present
+
+- include: deploy.yml
+  tags: ['deploy']
+  vars:
+    network_device_discovery_enabled: True
+    master_auth_creator_token: "{{default_master_auth_creator_token}}"
+    appformix_images:
+      - "{{ appformix_controller_image }}"
+      - "{{ appformix_dashboard_image }}"
+      - "{{ appformix_datamanager_image }}"
+      - "{{ appformix_network_device_adapter_image }}"
+
+- include: configure_standalone.yml
+  tags: ['configure']
+  vars:
+    master_auth_creator_token: "{{default_master_auth_creator_token}}"

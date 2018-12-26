@@ -1,0 +1,6 @@
+- name: Install SSH-Pass
+  become: yes
+  apt:
+    name: sshpass
+    force: yes
+    state: present

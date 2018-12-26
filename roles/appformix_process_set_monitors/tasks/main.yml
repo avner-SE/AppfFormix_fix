@@ -1,0 +1,5 @@
+---
+- name: Post Process Set Monitors to controller
+  script: >
+      post_process_set_monitors.py {{ auth_token }} {{ auth_type }} {{ process_set_monitor_post_url }} {{ process_set_monitors_file_name }}
+  delegate_to: localhost

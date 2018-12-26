@@ -1,0 +1,21 @@
+---
+appformix_controller_state: "{{ appformix_state }}"
+appformix_controller_pull: 'missing'
+
+# Configure the HTTP proxy settings inside of appformix-controller container
+#
+# Each variable affects the definition of an environment variable inside of the
+# appformix-controller container.
+#
+# By default, appformix_controller_env_https_proxy has the same value as
+# appformix_controller_env_http_proxy.  This is a convenience for when the
+# values may be the same.  User may configure
+# appformix_controller_env_http_proxy to set both 'http_proxy' and
+# 'https_proxy' environment variables to the same value.  Alternately, user may
+# define each value independently.
+#
+# The default value of empty string for appformix_controller_env_http_proxy has
+# no effect on the environment.
+appformix_controller_env_http_proxy: ""
+appformix_controller_env_https_proxy: "{{ appformix_controller_env_http_proxy }}"
+appformix_controller_env_no_proxy: ""

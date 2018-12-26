@@ -1,0 +1,4 @@
+auth_post_url: "http://{{ appformix_vip }}:{{ appformix_vip_controller_port_http }}/appformix/v1.0/auth_credentials"
+appformix_gcp_adapter_username: "gcp_admin"
+appformix_gcp_adapter_password: "e472d9aa-6e40-11e7-89d6-c4b301d14949"
+gcp_auth_type: "gcp"

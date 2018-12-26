@@ -1,0 +1,19 @@
+/var/log/nginx/*.log {
+    {{ appformix_log_rotate_daily | ternary ('daily', '') }}
+    maxsize {{ appformix_log_rotate_max_bytes }}
+    missingok
+    rotate {{ appformix_log_rotate_max_count }}
+    compress
+    delaycompress
+    notifempty
+    create 0640 www-data adm
+    sharedscripts
+    prerotate
+        if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+                run-parts /etc/logrotate.d/httpd-prerotate; \
+        fi \
+    endscript
+    postrotate
+        [ -s /run/nginx.pid ] && kill -USR1 `cat /run/nginx.pid`
+    endscript
+}

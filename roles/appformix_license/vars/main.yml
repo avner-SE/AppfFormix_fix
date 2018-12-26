@@ -1,0 +1,5 @@
+---
+appformix_license_dir: "{{ appformix_install_dir }}/etc/license"
+appformix_license_file: "{{ appformix_license_dir }}/AppFormixLicense.sig"
+appformix_features_url: "{{ appformix_vip_url }}/appformix/v1.0/features"
+license_action: "create"

@@ -1,0 +1,1 @@
+appformix_mongo_cluster_deployment_flag_file: "{{ appformix_install_dir }}/mongo/cluster_already_deployed"

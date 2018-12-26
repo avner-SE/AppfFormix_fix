@@ -1,0 +1,25 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_juniper_subscriber_mib_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_juniper_subscriber_mib",
+        "PluginPrefix": "juniper_subscriber",
+        "EntityType": ["network_device"]
+    },
+    "MetricMap": [
+        {
+            "Name": "jnxSubscriberTotalCount",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "snmp_juniper_subscriber_mib",
+    "PluginName": "snmp_juniper_subscriber_mib",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "JUNIPER-SUBSCRIBER-MIB::jnxSubscriberTotalCount"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

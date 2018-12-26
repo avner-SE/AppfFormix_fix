@@ -1,0 +1,13 @@
+---
+gcp_adapter_url: "{{ appformix_vip_url }}/appformix/v1.0/gcp_adapter"
+
+# Using a Jinja2 variable in the value of a dictionary always results in a
+# string, as opposed to a boolean or integer.  By using the template to define
+# the dictionary, the types are preserved.
+#
+# https://github.com/ansible/ansible/issues/9362#issuecomment-302432118
+# https://sdwr98.wordpress.com/2015/06/01/using-ansible-for-marathonchronos-deployments/
+#
+# Ansible 1.9.6 looks for templates only in the current directory. Use relative path to
+# specify location of the template file.
+config_json: '{{ lookup("template", "../templates/config.json.j2") }}'

@@ -1,0 +1,55 @@
+---
+openstack_auth_url: "{{ lookup('env', 'OS_AUTH_URL') }}"
+openstack_endpoint_type: "{{ lookup('env', 'OS_ENDPOINT_TYPE') | default('publicURL', true) }}"
+openstack_password: "{{ lookup('env', 'OS_PASSWORD') }}"
+openstack_project_domain_name: "{{ lookup('env', 'OS_PROJECT_DOMAIN_NAME') | default('Default', true)}}"
+openstack_user_domain_name: "{{ lookup('env', 'OS_USER_DOMAIN_NAME') | default('Default', true) }}"
+openstack_username: "{{ lookup('env', 'OS_USERNAME') }}"
+# In Keystone v3, OS_PROJECT_NAME is the preferred variable.  Give this
+# environment variable precedence.  If not defined or an empty string,
+# then use OS_TENANT_NAME.
+openstack_tenant_name: "{{ lookup('env', 'OS_PROJECT_NAME') | default(lookup('env', 'OS_TENANT_NAME'), true) }}"
+# Domain-scoped authentication will be enabled if OS_DOMAIN_NAME
+# is specified.
+openstack_domain_name: "{{ lookup('env', 'OS_DOMAIN_NAME') }}"
+
+# Set this to override the OpenStack Identity endpoint instead of using
+# the value advertised by Keystone.
+appformix_keystone_endpoint_override_url: ""
+
+# Set this to override the OpenStack Compute endpoint instead of using
+# the value advertised by Nova.
+appformix_nova_endpoint_override_url: ""
+
+# Set this to override the OpenStack Network endpoint instead of using
+# the value advertised by Neutron.
+appformix_neutron_endpoint_override_url: ""
+
+# Set this to override the OpenStack Volume endpoint instead of using
+# the value advertised by Cinder.
+appformix_cinder_endpoint_override_url: ""
+
+# Set this to override the OpenStack Heat endpoint instead of using
+# the value advertised by Heat.
+appformix_heat_endpoint_override_url: ""
+
+# Set this to override the OpenStack Glance endpoint instead of using
+# the value advertised by Glance.
+appformix_glance_endpoint_override_url: ""
+
+appformix_infrastructure_view_roles:
+    - 'admin'
+
+appformix_administrator_roles:
+    - 'admin'
+
+appformix_read_only_infrastructure_view_roles: []
+
+# Control whether openstack-adapter will use host_ip (default) or
+# hypervisor_hostname field of a hypervisor as the address at which
+# to connect to Agent.  This maps to the SkipIpLookup configuration
+# parameter of openstack-adapter.
+appformix_use_hypervisor_hostname: false
+
+# Timeout for get host list call
+appformix_get_host_list_timeout: 120

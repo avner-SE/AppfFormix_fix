@@ -1,0 +1,5 @@
+---
+appformix_redis_state: "{{ appformix_state }}"
+
+# This is the internal port inside of the appformix-redis container
+appformix_redis_docker_ports: "{{ appformix_redis_exposed_port is defined | ternary(['%s:%s'|format(appformix_redis_exposed_port | default(''), appformix_redis_local_port)], []) }}"

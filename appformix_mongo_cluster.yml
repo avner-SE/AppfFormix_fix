@@ -1,0 +1,50 @@
+---
+- hosts: appformix_mongo_replica_master:appformix_mongo_replica_slaves
+  tags: appformix_mongo_cluster
+  roles:
+    - { role: appformix_mongo_cluster_check, cluster_deployment_flag: 'check' }
+
+# Initialize the run_mongo_cluster_role to False
+- hosts: localhost
+  tags: appformix_mongo_cluster
+  tasks:
+    - name: Initialize run_mongo_cluster_role state
+      set_fact:
+        run_mongo_cluster_role: False
+
+# Set run_mongo_cluster_role to True if any of the host in the group have cluster_state
+# set to False
+- hosts: localhost
+  tags: appformix_mongo_cluster
+  tasks:
+    - name: Update the run_mongo_cluster_role state depending on state of mongo hosts
+      set_fact:
+        run_mongo_cluster_role: True
+      when: "{{ hostvars[item].cluster_state }} | bool == False"
+      with_items: "{{ groups.appformix_controller }}"
+      ignore_errors: yes
+
+- hosts: appformix_mongo_replica_master:appformix_mongo_replica_slaves
+  tags: appformix_mongo_cluster
+  roles:
+    - { role: appformix_dns, when: "{{ hostvars['localhost']['run_mongo_cluster_role']|bool }}"}
+
+- hosts: appformix_mongo_replica_master
+  tags: appformix_mongo_cluster
+  roles:
+    - { role: appformix_mongo_replica,  deployment: 'master', when: "{{ hostvars['localhost']['run_mongo_cluster_role']|bool }}"}
+
+- hosts: appformix_mongo_replica_slaves
+  tags: appformix_mongo_cluster
+  roles:
+    - { role: appformix_mongo_replica,  deployment: 'slaves', when: "{{ hostvars['localhost']['run_mongo_cluster_role']|bool }}"}
+
+- hosts: appformix_mongo_replica_master
+  tags: appformix_mongo_cluster
+  roles:
+    - { role: appformix_mongo_cluster_config, when: "{{ hostvars['localhost']['run_mongo_cluster_role']|bool }}" }
+
+- hosts: appformix_mongo_replica_master:appformix_mongo_replica_slaves
+  tags: appformix_mongo_cluster
+  roles:
+    - { role: appformix_mongo_cluster_check, cluster_deployment_flag: 'create' }

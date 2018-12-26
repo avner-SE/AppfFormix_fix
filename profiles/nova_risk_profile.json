@@ -1,0 +1,26 @@
+{
+    "rules": [
+        {
+            "Name": "nova_risk_1",
+            "EventRuleId": "NOVA_HEARTBEAT_RISK",
+            "MetricType": "openstack.cluster.heartbeat.Nova",
+            "AggregationFunction": "value",
+            "ComparisonFunction": "equal",
+            "Threshold": 0,
+            "ServiceType": "openstack",
+            "Module": "service_alarms",
+            "ObjectList": ["all"],
+            "Mode": "alert",
+            "MetricScope": "cluster",
+            "CreatedBy": "system",
+            "DisplayEvent": false
+        }
+    ],
+    "profile": {
+        "CompositeAlarmScope": "Nova",
+        "CompositeAlarmType": "risk",
+        "RuleList": ["NOVA_HEARTBEAT_RISK"],
+        "WeightList": [1],
+        "Threshold": 1
+    }
+}

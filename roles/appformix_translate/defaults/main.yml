@@ -1,0 +1,4 @@
+---
+appformix_translate_state: "{{ appformix_state }}"
+appformix_controller_version: "{{ appformix_version }}"
+

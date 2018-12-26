@@ -1,0 +1,10 @@
+---
+# Default values for the appformix_datamanager role.  These can be
+# overridden when including the role.
+appformix_datamanager_state: "{{ appformix_state }}"
+appformix_datamanager_pull: 'missing'
+appformix_datamanager_cacher_enable: true
+appformix_datamanager_purger_enable: true
+appformix_datamanager_socket_service_enable: true
+appformix_datamanager_mongo_link: ["appformix-mongo:mongo"]
+datamanager_action: "install"

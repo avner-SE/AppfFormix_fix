@@ -1,0 +1,3 @@
+---
+appformix_network_device_dir: "{{ appformix_install_dir }}/etc/network_device"
+appformix_network_device_csv_file: "{{ appformix_network_device_dir }}/network_device.csv"

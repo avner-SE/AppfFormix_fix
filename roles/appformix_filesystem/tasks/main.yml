@@ -1,0 +1,19 @@
+---
+- name: Create filesystem directories
+  become: yes
+  file:
+    path: "{{appformix_bin_dir}}"
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+    recurse: yes
+
+- name: Copy tac-collect script to platform host
+  become: yes
+  copy:
+    src: tac-collect
+    dest: "{{ appformix_bin_dir }}"
+    owner: root
+    group: root
+    mode: 0755

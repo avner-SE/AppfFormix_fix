@@ -1,0 +1,6 @@
+---
+- name: Post Cassandra Config to AppFormix OpenStack Adapter
+  script: >
+      appformix_cassandra_configure.py {{ openstack_adapter_url }} {{ cassandra_host }} {{ cassandra_cluster_name }} {{ cassandra_username }} {{ cassandra_password }}
+  delegate_to: localhost
+  when: cassandra_username is defined and cassandra_password is defined and cassandra_host is defined

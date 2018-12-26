@@ -1,0 +1,25 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_juniper_pfe_mib_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_juniper_pfe_mib",
+        "PluginPrefix": "juniper_pfe",
+        "EntityType": ["network_device"]
+    },
+    "MetricMap": [
+        {
+            "Name": "jnxPfeMemoryUkernFreePercent",
+            "Units": "Count"
+        }
+    ],
+    "PluginId": "snmp_juniper_pfe_mib",
+    "PluginName": "snmp_juniper_pfe_mib",
+    "PluginType": "snmp_device_info",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "JUNIPER-PFE-MIB::jnxPfeMemoryUkernFreePercent"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

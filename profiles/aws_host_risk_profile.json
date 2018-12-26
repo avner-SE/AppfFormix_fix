@@ -1,0 +1,70 @@
+{
+    "rules": [
+        {
+            "Name": "aws_host_risk_1",
+            "EventRuleId": "Aws_Host_Risk1",
+            "EventRuleScope": "aws_host",
+            "MetricType": "cpu.loadavg_15m",
+            "AggregationFunction": "average",
+            "ComparisonFunction": "above",
+            "Threshold": 0.7,
+            "IntervalCount": 60,
+            "IntervalsWithException": 50,
+            "IntervalDuration": "1s",
+            "Mode": "alert",
+            "CreatedBy": "system",
+            "Severity": "critical",
+            "DisplayEvent": false,
+            "Module": "health/risk"
+        },
+        {
+            "Name": "aws_host_risk_2",
+            "EventRuleId": "Aws_Host_Risk2",
+            "EventRuleScope": "aws_host",
+            "MetricType": "memory.usage",
+            "AggregationFunction": "average",
+            "ComparisonFunction": "above",
+            "Threshold": 90,
+            "IntervalCount": 60,
+            "IntervalsWithException": 50,
+            "IntervalDuration": "1s",
+            "Mode": "alert",
+            "CreatedBy": "system",
+            "Severity": "critical",
+            "DisplayEvent": false,
+            "Module": "health/risk"
+        },
+        {
+            "Name": "aws_host_heartbeat_risk",
+            "EventRuleId": "Aws_Host_Heartbeat_Risk",
+            "EventRuleScope": "aws_host",
+            "MetricType": "heartbeat",
+            "AggregationFunction": "sum",
+            "ComparisonFunction": "equal",
+            "Threshold": 0,
+            "IntervalCount": 1,
+            "IntervalsWithException": 1,
+            "IntervalDuration": "1s",
+            "Mode": "alert",
+            "CreatedBy": "system",
+            "Severity": "critical",
+            "DisplayEvent": false,
+            "Module": "health/risk"
+        }
+    ],
+    "profile": {
+        "CompositeAlarmScope": "aws_host",
+        "CompositeAlarmType": "risk",
+        "ObjectId": "all",
+        "Rulesets": [
+            {
+                "RuleList": ["Aws_Host_Risk1",
+                             "Aws_Host_Risk2",
+                             "Aws_Host_Heartbeat_Risk"],
+                "WeightList": [0.25, 0.25, 0.5],
+                "Threshold": 0.5,
+                "RulesetObjectId": "all"
+            }
+        ]
+    }
+}

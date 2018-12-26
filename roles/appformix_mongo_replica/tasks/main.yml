@@ -1,0 +1,95 @@
+---
+- name: Ensure AppFormix Mongo Replica data directory correct state
+  become: yes
+  file:
+      path: "{{ appformix_mongo_replica_data_dir }}"
+      state: "{{ appformix_mongo_replica_data_dir_state }}"
+      owner: root
+      group: root
+      mode: 0755
+
+- name: Start AppFormix Mongo Replica Container without authentication
+  when: deployment == 'master'
+  docker:
+      name: "{{ appformix_mongo_replica_name }}"
+      image: "{{ appformix_mongo_image }}"
+      state: "{{ appformix_mongo_replica_state }}"
+      restart_policy: always
+      net: "{{ appformix_network }}"
+      hostname: "{{ inventory_hostname }}"
+      expose:
+      - "{{ appformix_mongo_replica_port }}"
+      ports:
+      - "{{ appformix_mongo_replica_docker_ports }}"
+      volumes: "{{ appformix_mongo_replica_volumes }}"
+      command: mongod
+               --smallfiles
+               --replSet "{{ appformix_mongo_replica_set_name }}"
+               --port "{{ appformix_mongo_replica_port }}"
+               --shardsvr
+
+- name: Check AppFormix Mongo Replica Container is started
+  wait_for: host={{ inventory_hostname }} port={{ appformix_mongo_replica_exposed_port }} state=started timeout={{ appformix_mongo_replica_start_timeout }}
+  delegate_to: localhost
+  when: appformix_mongo_replica_state != 'absent' and deployment == 'master'
+
+- name: Copy "{{ appformix_mongo_add_users_script }}" script to the Management host
+  when: appformix_mongo_replica_state != 'absent' and deployment == 'master'
+  become: yes
+  copy:
+    src: "{{ appformix_mongo_add_users_script }}"
+    dest: "{{ appformix_mongo_replica_data_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Run replica set initiate inside appformix-mongo-replica container
+  when: appformix_mongo_replica_state != 'absent' and deployment == 'master'
+  ignore_errors: yes
+  command: docker exec {{ appformix_mongo_replica_name }} mongo admin --port {{ appformix_mongo_replica_port }} --eval "rs.initiate()"
+
+- name: Wait for some time for replica set initiation
+  when: appformix_mongo_replica_state != 'absent' and deployment == 'master'
+  pause:
+    seconds: 10
+
+- name: Run "{{ appformix_mongo_add_users_script }}" script inside appformix-mongo-replica container
+  when: appformix_mongo_replica_state != 'absent' and deployment == 'master'
+  ignore_errors: yes
+  command: docker exec {{ appformix_mongo_replica_name }} \
+          mongo admin --port {{ appformix_mongo_replica_port }} "{{ appformix_mongo_replica_data_dir_container }}/{{ appformix_mongo_add_users_script }}" \
+           --eval "PORT={{ appformix_mongo_replica_port }}; USERNAME=\"{{ appformix_mongo_username }}\"; PASSWORD=\"{{ appformix_mongo_password }}\""
+
+- name: Remove appformix-mongo-replica master container
+  when: appformix_mongo_replica_state != 'absent' and deployment == 'master'
+  docker:
+    name: "{{ appformix_mongo_replica_name }}"
+    image: "{{ appformix_mongo_image }}"
+    state: absent
+
+# Executed for replica master and slaves
+- name: Copy the mongo keyfile for authentication
+  become: true
+  copy: src=secret dest={{ appformix_mongo_replica_data_dir }}/secret owner=root group=root mode=0400
+  when: appformix_mongo_replica_state != 'absent'
+
+# Executed for replica master and slaves
+- name: Start AppFormix Mongo Replica Container with authentication
+  docker:
+      name: "{{ appformix_mongo_replica_name }}"
+      image: "{{ appformix_mongo_image }}"
+      state: "{{ appformix_mongo_replica_state }}"
+      restart_policy: always
+      net: "{{ appformix_network }}"
+      hostname: "{{ inventory_hostname }}"
+      expose:
+      - "{{ appformix_mongo_replica_port }}"
+      ports:
+      - "{{ appformix_mongo_replica_docker_ports }}"
+      volumes: "{{ appformix_mongo_replica_volumes }}"
+      command: mongod
+               --smallfiles
+               --replSet "{{ appformix_mongo_replica_set_name }}"
+               --port "{{ appformix_mongo_replica_port }}"
+               --keyFile "{{ appformix_mongo_replica_data_dir_container }}/secret"
+               --shardsvr

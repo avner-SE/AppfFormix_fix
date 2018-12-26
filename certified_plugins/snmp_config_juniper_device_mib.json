@@ -1,0 +1,57 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "snmp_network_device_usage_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "snmp_config_juniper_device_mib",
+        "PluginPrefix": "device",
+        "EntityType": ["fpc", "routing_engine", "pic", "fan", "power"]
+    },
+    "MetricMap": [
+        {
+            "Name": "jnxOperating1MinLoadAvg",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxOperating15MinLoadAvg",
+            "Units": "Count"
+        },
+        {
+            "Name": "jnxOperatingMemory",
+            "Units": "MB"
+        },
+        {
+            "Name": "jnxOperatingHeap",
+            "Units": "MB"
+        },
+        {
+            "Name": "jnxOperatingBuffer",
+            "Units": "MB"
+        },
+        {
+            "Name": "jnxOperatingDRAMSize",
+            "Units": "MB"
+        },
+        {
+            "Name": "jnxOperatingTemp",
+            "Units": "C"
+        },
+        {
+            "Name": "jnxOperatingState",
+            "Units": "Number"
+        },
+        {
+            "Name": "jnxOperatingCPU",
+            "Units": "%"
+        }
+    ],
+    "PluginId": "snmp_network_device_usage",
+    "PluginName": "snmp_network_device_usage",
+    "PluginType": "snmp_network_device",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "enterprises.2636.3.1.13.1"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

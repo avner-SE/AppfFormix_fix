@@ -1,0 +1,34 @@
+---
+# Install AppFormix components for a HA setup on VCenter
+#
+# For the HA setup we need to declare following variables in the group_vars/all file:
+# 1) appformix_vip: "{{ appformix_vip }}"
+#
+# We also list all the nodes in the HA setup under appformix_controller group
+# in the inventory.
+#
+
+- include: prerequisites.yml
+  tags: ['prerequisites']
+  vars:
+    state: present
+
+- include: deploy_ha.yml
+  vars:
+    openstack_platform_enabled: false
+    vcenter_platform_enabled: true
+    appformix_images:
+      - "{{ appformix_controller_image }}"
+      - "{{ appformix_dashboard_image }}"
+      - "{{ appformix_datamanager_image }}"
+      - "{{ appformix_keepalived_image }}"
+      - "{{ appformix_haproxy_image }}"
+      - "{{ appformix_vcenter_adapter_image }}"
+  tags: ['deploy']
+
+- include: configure_vcenter_ha.yml
+  vars:
+    openstack_platform_enabled: false
+    vcenter_platform_enabled: true
+  tags: ['configure']
+

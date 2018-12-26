@@ -1,0 +1,46 @@
+# Install user-supplied certificate
+#
+# AppFormix services use this certificate to verify their server
+# identity to clients accessing the HTTPS endpoints.
+#
+# Arguments:
+#   appformix_ssl_cert : path to SSL certificate file
+#   appformix_ssl_key  : path to SSL private key file
+#
+# To enable HTTPS protocol for REST APIs, pass an SSL certificate
+# and private key as arguments when running this playbook (e.g.,
+# "-e 'appformix_ssl_cert=...' -e 'appformix_ssl_key=...'")
+---
+- name: Check required variables
+  fail: msg="Variable {{ item }} is required."
+  when: '{{ item }} is undefined or {{ item }} == ""'
+  with_items:
+    - appformix_ssl_cert
+    - appformix_ssl_key
+
+- name: Ensure "{{ appformix_certs_dir }}" directory exists
+  become: yes
+  file:
+    path: "{{ appformix_certs_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Copy SSL certificate to the Management host
+  become: yes
+  copy:
+    src: "{{ appformix_ssl_cert }}"
+    dest: "{{ appformix_certs_cert }}"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy SSL key to the Management host
+  become: yes
+  copy:
+    src: "{{ appformix_ssl_key }}"
+    dest: "{{ appformix_certs_key }}"
+    owner: root
+    group: root
+    mode: 0600

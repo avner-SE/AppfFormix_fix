@@ -1,0 +1,8 @@
+---
+#
+# Uninstall AppFormix and remove all data, configuration, and log files.
+#
+
+- include: clean_appformix_ha.yml
+  vars:
+    aws_platform_enabled: true

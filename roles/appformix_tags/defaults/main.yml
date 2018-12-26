@@ -1,0 +1,7 @@
+aggregate_post_url: "{{ appformix_vip_url }}/appformix/v1.0/aggregate_definition"
+task_url: "{{ appformix_vip_url }}/appformix/v1.0/task/"
+
+create_appformix_controller_tag: False
+create_openstack_controller_tag: False
+create_ceph_monitor_tag: False
+create_ceph_osd_tag: False

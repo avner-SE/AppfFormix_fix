@@ -1,0 +1,6 @@
+---
+appformix_host_redis_conf_dir: "{{ appformix_install_dir }}/etc/redis"
+appformix_host_redis_conf_file: "{{ appformix_host_redis_conf_dir }}/redis.conf"
+appformix_container_redis_conf_dir: /usr/local/etc/redis
+appformix_container_redis_conf_file: "{{ appformix_container_redis_conf_dir }}/redis.conf"
+appformix_redis_volumes: "{{ appformix_host_redis_conf_dir }}:{{ appformix_container_redis_conf_dir }}"

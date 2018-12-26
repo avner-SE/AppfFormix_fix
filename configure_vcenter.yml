@@ -1,0 +1,47 @@
+---
+# Install AppFormix for vCenter
+
+- hosts: appformix_controller
+  tags: [ appformix_controller ]
+  roles:
+    - appformix_defaults
+    - { role: appformix_vcenter_config, when: appformix_state != 'absent' }
+
+- hosts: localhost
+  tags: [token]
+  roles:
+    - appformix_defaults
+    - { role: vcenter_token, when: appformix_state != 'absent' }
+
+- hosts: appformix_controller
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: 'vcenter'
+  roles:
+    - appformix_defaults
+    - { role: appformix_license, license_action: 'update',
+        when: appformix_license is defined and appformix_state != 'absent' }
+
+- hosts: appformix_controller
+  tags: [ appformix_controller ]
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: 'vcenter'
+  roles:
+    - appformix_defaults
+    - { role: appformix_master_auth, when: appformix_state != 'absent' }
+
+- include: configure_common.yml
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: "vcenter"
+  when: appformix_state != 'absent'
+
+# Do the below services setup require openstack-adapter?
+# Is there a use case for mysql and rabbit monitoring with vcenter?
+- hosts: appformix_controller
+  tags: [ appformix_controller ]
+  roles:
+    - appformix_defaults
+    - { role: appformix_mysql_config, when: appformix_state != 'absent' }
+    - { role: appformix_rabbit_config, when: appformix_state != 'absent' }

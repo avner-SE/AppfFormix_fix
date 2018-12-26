@@ -1,0 +1,716 @@
+gRPC/Openconfig Sensors
+=======================
+
+1. Sensor :: "/junos/system/linecard/npu/memory/"
+
+Name                                                                                Units
+====                                                                                =====
+mem-util-size                                                                       bytes
+mem-util-allocated                                                                  bytes
+mem-util-utilization                                                                %
+mem-util-bytes-allocated                                                            bytes
+mem-util-allocation-count                                                           Count
+mem-util-free-count                                                                 Count
+
+2. Sensor :: "/junos/rsvp-interface-information/"
+
+Name                                                                                Units
+====                                                                                =====
+authentication-flag                                                                 boolean
+aggregate-flag                                                                      boolean
+protect-flag                                                                        boolean
+message-statistics-messages-sent                                                    Count/s
+message-statistics-messages-received                                                Count/s
+message-statistics-messages-sent-5seconds                                           Count
+message-statistics-messages-received-5seconds                                       Count
+bandwidth-priority-0-total-reserved-bandwidth                                       bps
+bandwidth-priority-1-total-reserved-bandwidth                                       bps
+bandwidth-priority-2-total-reserved-bandwidth                                       bps
+bandwidth-priority-3-total-reserved-bandwidth                                       bps
+bandwidth-priority-4-total-reserved-bandwidth                                       bps
+bandwidth-priority-5-total-reserved-bandwidth                                       bps
+bandwidth-priority-6-total-reserved-bandwidth                                       bps
+bandwidth-priority-7-total-reserved-bandwidth                                       bps
+
+3. Sensor :: "/junos/system/linecard/interface/"
+
+Name                                                                                Units
+====                                                                                =====
+oper-status                                                                         Count
+admin-status                                                                        Count
+in-octets                                                                           Octets/s
+in-pkts                                                                             Packets/s
+out-octets                                                                          Octets/s
+out-pkts                                                                            Packets/s
+out-multicast-pkts                                                                  Packets/s
+out-broadcast-pkts                                                                  Packets/s
+out-unicast-pkts                                                                    Packets/s
+carrier-transitions                                                                 Count
+out-errors                                                                          Error/s
+queue.pkts                                                                          Packets/s
+queue.bytes                                                                         Bytes/s
+queue.allocated-buffer-size                                                         Bytes
+
+4. Sensor :: "/junos/system/linecard/intf-exp/"
+
+Name                                                                                Units
+====                                                                                =====
+oper-status                                                                         Count
+
+5. Sensor :: "/junos/system/linecard/qmon-sw/"
+
+Name                                                                                Units
+====                                                                                =====
+egress.packets                                                                      Count/s
+egress.bytes                                                                        Bytes/s
+
+6. Sensor :: "/junos/services/label-switched-path/usage/"
+
+Name                                                                                Units
+====                                                                                =====
+mpls_lsps_constrained-path_tunnels_tunnel_packets                                   packets/s
+mpls_lsps_constrained-path_tunnels_tunnel_bytes                                     bytes/s
+
+7. Sensor :: "/components/"
+
+Name                                                                                Units
+====                                                                                =====
+temperature                                                                         Celsius
+temperature-cpu                                                                     Celsius
+temperature-intake                                                                  Celsius
+cpu-utilization-user                                                                %
+cpu-utilization-background                                                          %
+cpu-utilization-interrupt                                                           %
+cpu-utilization-kernel                                                              %
+cpu-utilization-idle                                                                %
+cpu-utilization-total                                                               %
+memory-utilization-buffer                                                           MB
+memory-utilization-heap                                                             MB
+memory-dram-installed                                                               MB
+memory-dram-used                                                                    MB
+
+8. Sensor :: "/junos/system/subscriber-management/infra/sdb/statistics/"
+
+Name                                                                                Units
+====                                                                                =====
+active-state-count                                                                  Count
+configured-state-count                                                              Count
+dhcp-client-count                                                                   Count
+dhcp-client-count                                                                   Count
+essm-client-count                                                                   Count
+init-state-count                                                                    Count
+l2tp-client-count                                                                   Count
+mlppp-client-count                                                                  Count
+ppp-client-count                                                                    Count
+pppoe-client-count                                                                  Count
+static-client-count                                                                 Count
+terminated-state-count                                                              Count
+terminating-state-count                                                             Count
+total-client-count                                                                  Count
+total-state-count                                                                   Count
+vlan-client-count                                                                   Count
+vpls-pw-client-count                                                                Count
+
+9. Sensor :: "/junos/system/linecard/packet/usage/"
+
+Name                                                                                Units
+====                                                                                =====
+ts-input-packets                                                                    Count
+ts-output-packets                                                                   Count
+ts-fabric-input-packets                                                             Count
+ts-fabric-input-packets-pps                                                         pps
+ts-fabric-output-packets                                                            Count
+ts-fabric-output-packets-pps                                                        pps
+lpbk-packets                                                                        Count
+lpbk-packets-bytes                                                                  bytes
+lpbk-packets-pps                                                                    pps
+lpbk-packets-bps                                                                    bps
+hwds-normal                                                                         Count
+hwds-fabric                                                                         Count
+ts-input-packets                                                                    Count
+ts-input-packets-pps                                                                pps
+ts-output-packets                                                                   Count
+ts-fabric-input-packets                                                             Count
+ts-fabric-input-packets-pps                                                         pps
+ts-fabric-output-packets                                                            Count
+ts-fabric-output-packets-pps                                                        pps
+lpbk-packets                                                                        Count
+lpbk-packets-bytes                                                                  bytes
+lpbk-packets-pps                                                                    pps
+lpbk-packets-bps                                                                    bps
+hwds-normal                                                                         Count
+hwds-fabric                                                                         Count
+
+10. Sensor :: "/junos/npu-memory/"
+
+Name                                                                                Units
+====                                                                                =====
+mem-util-size                                                                       Count
+mem-util-allocated                                                                  Count
+mem-util-utilization                                                                Count
+mem-util-bytes-allocated                                                            Count
+mem-util-allocation-count                                                           Count
+mem-util-free-count                                                                 Count
+
+11. Sensor :: "/junos/system/linecard/cpu/memory/"
+
+Name                                                                                Units
+====                                                                                =====
+mem-util-size                                                                       bytes
+mem-util-allocated                                                                  bytes
+mem-util-utilization                                                                %
+mem-util-allocations                                                                Count
+mem-util-frees                                                                      Count
+mem-util-failed                                                                     Count
+
+12. Sensor :: "/interfaces/"
+
+Name                                                                                Units
+====                                                                                =====
+oper-status                                                                         Count
+admin-status                                                                        Count
+in-octets                                                                           Octets/s
+in-pkts                                                                             Packets/s
+out-octets                                                                          Octets/s
+out-pkts                                                                            Packets/s
+out-multicast-pkts                                                                  Packets/s
+out-broadcast-pkts                                                                  Packets/s
+out-unicast-pkts                                                                    Packets/s
+carrier-transitions                                                                 Count
+out-errors                                                                          Error/s
+queue.pkts                                                                          Packets/s
+queue.bytes                                                                         Bytes/s
+queue.allocated-buffer-size                                                         Bytes
+
+13. Sensor :: "/junos/services/segment-routing/sid/usage/"
+
+Name                                                                                Units
+====                                                                                =====
+mpls_signalling-protocols_segment-routing_aggregate-sid-counters_aggregate-sid-counter_in-pktspackets/s
+
+14. Sensor :: "/bgp-rib/afi-safis/afi-safi/ipv6-unicast/neighbors/"
+
+Name                                                                                Units
+====                                                                                =====
+adj-rib-in-pre.num-routes                                                           Count
+adj-rib-out-pre.num-routes                                                          Count
+adj-rib-in-post.num-routes                                                          Count
+adj-rib-out-post.num-routes                                                         Count
+
+15. Sensor :: "/junos/task-memory-information/task-memory-overall-report/task-size-block-list/task-size-block/"
+
+Name                                                                                Units
+====                                                                                =====
+tsb-size                                                                            Count
+tsb-alloc-bytes                                                                     bytes
+tsb-allocs                                                                          Count
+tsb-max-allocs                                                                      Count
+tsb-max-bytes                                                                       bytes
+tsb-free-bytes                                                                      bytes
+tlv-discard                                                                         Count
+tlv-unknown                                                                         Count
+
+16. Sensor :: "/bgp-rib/afi-safis/afi-safi/ipv4-unicast/neighbors/"
+
+Name                                                                                Units
+====                                                                                =====
+adj-rib-in-pre.num-routes                                                           Count
+adj-rib-out-pre.num-routes                                                          Count
+adj-rib-in-post.num-routes                                                          Count
+adj-rib-out-post.num-routes                                                         Count
+
+17. Sensor :: "/lldp/interfaces/interface/neighbors/"
+
+Name                                                                                Units
+====                                                                                =====
+age                                                                                 seconds
+
+18. Sensor :: "/junos/system/linecard/firewall/"
+
+Name                                                                                Units
+====                                                                                =====
+memory-usage.heap.allocated                                                         bytes
+
+19. Sensor :: "/junos/system/linecard/npu/utilization/"
+
+Name                                                                                Units
+====                                                                                =====
+util-metric                                                                         Count
+util-average-util                                                                   Byte
+util-highest-util                                                                   Byte
+util-lowest-util                                                                    Byte
+util-average-cache-hit-rate                                                         %'
+util-highest-cache-hit-rate                                                         %'
+util-lowest-cache-hit-rate                                                          %'
+util-disp-0-pkts-rate                                                               Packets/s
+util-disp-1-pkts-rate                                                               Packets/s
+util-disp-2-pkts-rate                                                               Packets/s
+util-disp-3-pkts-rate                                                               Packets/s
+
+20. Sensor :: "/nd6-information/"
+
+Name                                                                                Units
+====                                                                                =====
+expiry                                                                              seconds
+
+21. Sensor :: "/junos/system/subscriber-management/client-protocols/dhcp/v4/"
+
+Name                                                                                Units
+====                                                                                =====
+dropped-total                                                                       Count
+dropped-bad-read                                                                    Count
+dropped-short-packet                                                                Count
+dropped-no-interface                                                                Count
+dropped-no-routing-instance                                                         Count
+dropped-no-memory                                                                   Count
+dropped-recovery-in-progress                                                        Count
+dropped-v4server-total                                                              Count
+dropped-v4server-bad-hware                                                          Count
+dropped-v4server-bootp-pkt                                                          Count
+dropped-v4server-bad-bootp-opcode                                                   Count
+dropped-v4server-bad-options                                                        Count
+dropped-v4server-bad-address                                                        Count
+dropped-v4server-no-address                                                         Count
+dropped-v4server-no-interface-cfg                                                   Count
+dropped-v4server-no-local-address                                                   Count
+dropped-v4server-short-pkt                                                          Count
+dropped-v4server-no-bad-send                                                        Count
+dropped-v4server-no-option60                                                        Count
+dropped-v4server-no-option82                                                        Count
+dropped-v4server-authentication                                                     Count
+dropped-v4server-dynamic-profile                                                    Count
+dropped-v4server-no-license                                                         Count
+dropped-v4server-no-bad-dhcp-opcode                                                 Count
+dropped-v4server-no-options                                                         Count
+dropped-v4server-hop-limit                                                          Count
+dropped-v4server-ttl-expired                                                        Count
+dropped-v4server-bad_udp-checksum                                                   Count
+dropped-v4server-inactive-vlan                                                      Count
+dropped-v4server-era-start-failed                                                   Count
+dropped-v4server-client-lookup                                                      Count
+dropped-v4server-lease-time-violation                                               Count
+offer-delayed                                                                       Count
+offer-delay-in-progress                                                             Count
+offer-delay-total                                                                   Count
+msg-recv-v4server-boot-request                                                      Count
+msg-recv-v4server-decline                                                           Count
+msg-recv-v4server-discover                                                          Count
+msg-recv-v4server-inform                                                            Count
+msg-recv-v4server-release                                                           Count
+msg-recv-v4server-request                                                           Count
+msg-recv-v4server-renew                                                             Count
+msg-recv-v4server-rebind                                                            Count
+msg-recv-v4server-lease-query                                                       Count
+msg-recv-v4server-bulklease-query                                                   Count
+msg-sent-v4server-boot-reply                                                        Count
+msg-sent-v4server-offer                                                             Count
+msg-sent-v4server-boot-ack                                                          Count
+msg-sent-v4server-nak                                                               Count
+msg-sent-v4server-force-renew                                                       Count
+msg-sent-v4server-unassigned                                                        Count
+msg-sent-v4server-unknown                                                           Count
+msg-sent-v4server-active                                                            Count
+msg-sent-v4server-query-done                                                        Count
+binding-state-v4server-binding                                                      Count
+binding-state-v4server-init                                                         Count
+binding-state-v4server-bound                                                        Count
+binding-state-v4server-selecting                                                    Count
+binding-state-v4server-requesting                                                   Count
+binding-state-v4server-renew                                                        Count
+binding-state-v4server-release                                                      Count
+binding-state-server-restoring                                                      Count
+dropped-v4relay-total                                                               Count
+dropped-v4relay-bad-hardware                                                        Count
+dropped-v4relay-bootp-packet                                                        Count
+dropped-v4relay-bootp-packet                                                        Count
+dropped-v4relay-bad-bootp-opcode                                                    Count
+dropped-v4relay-bad-address                                                         Count
+dropped-v4relay-no-address                                                          Count
+dropped-v4relay-no-interface-cfg                                                    Count
+dropped-v4relay-no-local-address                                                    Count
+dropped-v4relay-short-packet                                                        Count
+dropped-v4relay-bad-send                                                            Count
+dropped-v4relay-option-60                                                           Count
+dropped-v4relay-relay-option                                                        Count
+dropped-v4relay-option-82                                                           Count
+dropped-v4relay-authentication                                                      Count
+dropped-v4relay-dynamic-profile                                                     Count
+dropped-v4relay-license                                                             Count
+dropped-v4relay-bad-dhcp-opcode                                                     Count
+dropped-v4relay-no-options                                                          Count
+dropped-v4relay-hop-limit                                                           Count
+dropped-v4relay-ttl-expired                                                         Count
+dropped-v4relay-bad-udp-checksum                                                    Count
+dropped-v4relay-inactive-vlan                                                       Count
+dropped-v4relay-era-start-failed                                                    Count
+dropped-v4relay-client-lookup                                                       Count
+dropped-v4relay-proxy-no-server-addr                                                Count
+dropped-v4relay-lease-time-violation                                                Count
+dropped-v4relay-leasequery-repl-no-circuitid                                        Count
+dropped-v4relay-leasequery-repl-with-error-code                                     Count
+dropped-v4relay-leasequery-repl-with-query-term                                     Count
+dropped-v4relay-older-leasequery-reply                                              Count
+dropped-v4relay-abort-leasequery-reply-proc                                         Count
+dropped-v4relay-during-leasequery-reply                                             Count
+dropped-v4relay-relay-source-no-lpbk-interface                                      Count
+v4relay-bootp-request-rcvd                                                          Count
+msg-recv-v4relay-decline                                                            Count
+msg-recv-v4relay-discover                                                           Count
+msg-recv-v4relay-inform                                                             Count
+msg-recv-v4relay-release                                                            Count
+msg-recv-v4relay-request                                                            Count
+msg-recv-v4relay-leaseactive                                                        Count
+msg-recv-v4relay-leaseunassigned                                                    Count
+msg-recv-v4relay-leaseunknown                                                       Count
+msg-recv-v4relay-leasequerydone                                                     Count
+v4relay-bootp-reply-rcvd                                                            Count
+msg-recv-v4relay-offer                                                              Count
+msg-recv-v4relay-ack                                                                Count
+msg-recv-v4relay-nak                                                                Count
+msg-recv-v4relay-forcerenew                                                         Count
+v4relay-bootp-reply-sent                                                            Count
+msg-sent-v4relay-decline                                                            Count
+msg-sent-v4relay-discover                                                           Count
+msg-sent-v4relay-inform                                                             Count
+msg-sent-v4relay-release                                                            Count
+msg-sent-v4relay-request                                                            Count
+v4relay-bootp-forwarded-total                                                       Count
+v4relay-bootp-request-fwd                                                           Count
+v4relay-bootp-reply-fwd                                                             Count
+binding-state-v4relay-binding                                                       Count
+binding-state-v4relay-init                                                          Count
+binding-state-v4relay-bound                                                         Count
+binding-state-v4relay-selecting                                                     Count
+binding-state-v4relay-requesting                                                    Count
+binding-state-v4relay-renew                                                         Count
+binding-state-v4relay-release                                                       Count
+binding-state-v4relay-restoring                                                     Count
+
+22. Sensor :: "/arp-information/ipv4/neighbors/neighbor/"
+
+Name                                                                                Units
+====                                                                                =====
+expiry                                                                              seconds
+
+23. Sensor :: "/junos/system/subscriber-management/client-protocols/dhcp/v6/"
+
+Name                                                                                Units
+====                                                                                =====
+dropped-total                                                                       Count
+dropped-bad-read                                                                    Count
+dropped-short-packet                                                                Count
+dropped-no-interface                                                                Count
+dropped-no-routing-instance                                                         Count
+dropped-no-safd                                                                     Count
+dropped-no-memory                                                                   Count
+dropped-recovery-in-progress                                                        Count
+
+24. Sensor :: "/junos/task-memory-information/task-memory-overall-report/task-memory-stats-list/task-memory-stats/"
+
+Name                                                                                Units
+====                                                                                =====
+tms-allocs                                                                          Count
+tms-alloc-bytes                                                                     bytes
+tms-max-allocs                                                                      Count
+tms-max-bytes                                                                       bytes
+
+25. Sensor :: "/junos/system/linecard/optics/"
+
+Name                                                                                Units
+====                                                                                =====
+optics_type                                                                         Count
+module_temp                                                                         C
+module_temp_high_alarm_threshold                                                    C
+module_temp_low_alarm_threshold                                                     C
+module_temp_high_warning_threshold                                                  C
+module_temp_low_warning_threshold                                                   C
+laser_output_power_high_alarm_threshold_dbm                                         dbm
+laser_output_power_low_alarm_threshold_dbm                                          dbm
+laser_output_power_high_warning_threshold_dbm                                       dbm
+laser_output_power_low_warning_threshold_dbm                                        dbm
+laser_rx_power_high_alarm_threshold_dbm                                             dbm
+laser_rx_power_low_alarm_threshold_dbm                                              dbm
+laser_rx_power_high_warning_threshold_dbm                                           dbm
+laser_rx_power_low_warning_threshold_dbm                                            dbm
+laser_bias_current_high_alarm_threshold                                             mA
+laser_bias_current_low_alarm_threshold                                              mA
+laser_bias_current_high_warning_threshold                                           mA
+laser_bias_current_low_warning_threshold                                            mA
+module_temp_high_alarm                                                              C
+module_temp_low_alarm                                                               C
+module_temp_high_warning                                                            C
+module_temp_low_warning                                                             C
+lane_number                                                                         Count
+lane_laser_temperature                                                              C
+lane_laser_output_power_dbm                                                         dbm
+lane_laser_receiver_power_dbm                                                       dbm
+lane_laser_bias_current                                                             mA
+lane_laser_output_power_high_alarm                                                  mW
+lane_laser_output_power_low_alarm                                                   mW
+lane_laser_output_power_high_warning                                                mW
+lane_laser_output_power_low_warning                                                 mW
+lane_laser_receiver_power_high_alarm                                                mW
+lane_laser_receiver_power_low_alarm                                                 mW
+lane_laser_receiver_power_high_warning                                              mW
+lane_laser_receiver_power_low_warning                                               mW
+lane_laser_bias_current_high_alarm                                                  mA
+lane_laser_bias_current_low_alarm                                                   mA
+lane_laser_bias_current_high_warning                                                mA
+lane_laser_bias_current_low_warning                                                 mA
+lane_tx_loss_of_signal_alarm                                                        Count
+lane_rx_loss_of_signal_alarm                                                        Count
+lane_tx_laser_disabled_alarm                                                        Count
+
+26. Sensor :: "/lldp/interfaces/interface/state/"
+
+Name                                                                                Units
+====                                                                                =====
+enabled                                                                             Count
+frame-in                                                                            Count
+frame-out                                                                           Count
+frame-error-in                                                                      Count
+frame-error-out                                                                     Count
+frame-discard                                                                       Count
+tlv-discard                                                                         Count
+tlv-unknown                                                                         Count
+
+27. Sensor :: "/junos/services/segment-routing/interface/ingress/usage/"
+
+Name                                                                                Units
+====                                                                                =====
+mpls_signalling-protocols_segment-routing_interfaces_interface_in-pkts              packets/s
+mpls_signalling-protocols_segment-routing_interfaces_interface_in-octets            bytes/s
+
+28. Sensor :: "/lacp/"
+
+Name                                                                                Units
+====                                                                                =====
+lacp-rx-errors                                                                      Count
+lacp-errors                                                                         Count
+lacp-unknown-errors                                                                 Count
+lacp-tx-errors                                                                      Count
+lacp-in-pkts                                                                        Count
+lacp-out-pkts                                                                       Count
+distributing                                                                        boolean
+aggregatable                                                                        boolean
+collecting                                                                          boolean
+
+29. Sensor :: "/bgp-rib/afi-safis/afi-safi/ipv4-unicast/loc-rib/"
+
+Name                                                                                Units
+====                                                                                =====
+num-routes                                                                          Count
+
+30. Sensor :: "/bgp-rib/afi-safis/afi-safi/ipv6-unicast/loc-rib/"
+
+Name                                                                                Units
+====                                                                                =====
+num-routes                                                                          Count
+
+31. Sensor :: "/junos/services/segment-routing/interface/egress/usage/"
+
+Name                                                                                Units
+====                                                                                =====
+mpls_signalling-protocols_segment-routing_interfaces_interface_out-pkts             packets/s
+mpls_signalling-protocols_segment-routing_interfaces_interface_out-octets           bytes/s
+ 
+JTI/Native Sensors
+==================
+
+1. Sensor :: "/junos/system/linecard/npu/utilization/"
+
+Name                                                                                Units
+====                                                                                =====
+packets_average_instructions_per_packet                                             Byte
+packets_rate                                                                        Packets/s
+packets_average_wait_cycles_per_packet                                              s
+packets_average_cycles_per_packet                                                   s
+memory_average_util                                                                 Byte
+memory_lowest_util                                                                  Byte
+memory_highest_cache_hit_rate                                                       %
+memory_highest_util                                                                 Byte
+memory_average_cache_hit_rate                                                       %
+memory_lowest_cache_hit_rate                                                        %
+
+2. Sensor :: "/junos/system/linecard/interface/logical/usage/"
+
+Name                                                                                Units
+====                                                                                =====
+egress_stats.if_packets                                                             Packets/s
+egress_stats.if_mcast_packets                                                       Packets/s
+egress_stats.if_octets                                                              Octets/s
+ingress_stats.if_ucast_packets                                                      Packets/s
+ingress_stats.if_packets                                                            Packets/s
+ingress_stats.if_mcast_packets                                                      Packets/s
+ingress_stats.if_octets                                                             Octets/s
+op_state.operational_status                                                         Value
+
+3. Sensor :: "/junos/system/linecard/npu/memory/"
+
+Name                                                                                Units
+====                                                                                =====
+size                                                                                Byte
+allocated                                                                           Byte
+utilization                                                                         %
+
+4. Sensor :: "/junos/system/linecard/packet/usage/"
+
+Name                                                                                Units
+====                                                                                =====
+control_high_drops_packet_count                                                     Count
+control_high_drops_packet_rate                                                      Count/s
+dma_failure_packet_count                                                            Count
+dma_failure_packet_rate                                                             Count/s
+fabric_drops_packet_count                                                           Count
+fabric_drops_packet_rate                                                            Count/s
+hardware_input_drops_packet_count                                                   Count
+hardware_input_drops_packet_rate                                                    Count/s
+input_drops_packet_count                                                            Count
+input_high_drops_packet_count                                                       Count
+input_high_drops_packet_rate                                                        Count/s
+input_low_drops_packet_count                                                        Count
+input_low_drops_packet_rate                                                         Count/s
+input_medium_drops_packet_count                                                     Count
+input_medium_drops_packet_rate                                                      Count/s
+input_packet_count                                                                  Count
+input_packet_rate                                                                   Count/s
+local_packets_input_packet_count                                                    Count
+local_packets_input_packet_rate                                                     Count/s
+local_packets_output_packet_count                                                   Count
+local_packets_output_packet_rate                                                    Count/s
+output_drops_packet_count                                                           Count
+output_drops_packet_rate                                                            Count/s
+output_packet_count                                                                 Count
+output_packet_rate                                                                  Count/s
+packet_get_failure_packet_count                                                     Count
+packet_get_failure_packet_rate                                                      Count/s
+rate_limited_packet_count                                                           Count
+rate_limited_packet_rate                                                            Count/s
+regular_discards_packet_count                                                       Count
+regular_discards_packet_rate                                                        Count/s
+total_dma_packets_packet_count                                                      Count
+total_dma_packets_packet_rate                                                       Count/s
+
+5. Sensor :: "/junos/system/linecard/interface/"
+
+
+EntityType :: interface
+
+Name                                                                                Units
+====                                                                                =====
+egress_errors.if_errors                                                             Errors/s
+egress_errors.if_discards                                                           Discards/s
+egress_stats.if_1sec_pkts                                                           Packets/s
+egress_stats.if_octets                                                              Octets/s
+egress_stats.if_mc_pkts                                                             Packets/s
+egress_stats.if_bc_pkts                                                             Packets/s
+egress_stats.if_1sec_octets                                                         Octets/s
+egress_stats.if_error                                                               Errors/s
+egress_stats.if_pkts                                                                Packets/s
+egress_stats.if_uc_pkts                                                             Packets/s
+egress_stats.if_pause_pkts                                                          Packets/s
+ingress_errors.if_in_fifo_errors                                                    Errors/s
+ingress_errors.if_in_frame_errors                                                   Errors/s
+ingress_errors.if_discards                                                          Discards/s
+ingress_errors.if_in_l3_incompletes                                                 Packets/s
+ingress_errors.if_in_runts                                                          Packets/s
+ingress_errors.if_errors                                                            Errors/s
+ingress_errors.if_in_l2chan_errors                                                  Errors/s
+ingress_errors.if_in_resource_errors                                                Errors/s
+ingress_errors.if_in_qdrops                                                         Drops/s
+ingress_errors.if_in_l2_mismatch_timeouts                                           Packets/s
+ingress_stats.if_1sec_pkts                                                          Packets/s
+ingress_stats.if_octets                                                             Octets/s
+ingress_stats.if_mc_pkts                                                            Packets/s
+ingress_stats.if_bc_pkts                                                            Packets/s
+ingress_stats.if_1sec_octets                                                        Octets/s
+ingress_stats.if_error                                                              Errors/s
+ingress_stats.if_pkts                                                               Packets/s
+ingress_stats.if_uc_pkts                                                            Packets/s
+ingress_stats.if_pause_pkts                                                         Packets/s
+ifHighSpeed                                                                         Mbps
+if_operational_status                                                               Value
+ingress_stats.if_bandwidth                                                          Mbps
+ingress_stats.if_link_utilization                                                   %
+egress_stats.if_bandwidth                                                           Mbps
+egress_stats.if_link_utilization                                                    %
+
+EntityType :: queue
+
+Name                                                                                Units
+====                                                                                =====
+egress_queue_info.peak_buffer_occupancy                                             Bytes
+egress_queue_info.rl_drop_bytes                                                     Bytes/s
+egress_queue_info.packets                                                           Packets/s
+egress_queue_info.rl_drop_packets                                                   Packets/s
+egress_queue_info.bytes                                                             Bytes/s
+egress_queue_info.allocated_buffer_size                                             Bytes
+egress_queue_info.tail_drop_packets                                                 Packets/s
+egress_queue_info.red_drop_packets                                                  Packets/s
+egress_queue_info.red_drop_bytes                                                    Bytes/s
+egress_queue_info.cur_buffer_occupancy                                              Bytes
+egress_queue_info.avg_buffer_occupancy                                              Bytes
+
+6. Sensor :: "/junos/system/linecard/cpu/memory/"
+
+Name                                                                                Units
+====                                                                                =====
+bytes_allocated                                                                     Byte
+allocations                                                                         Count
+frees                                                                               Byte
+allocations_failed                                                                  Count
+
+7. Sensor :: "/junos/system/linecard/optics/"
+
+Name                                                                                Units
+====                                                                                =====
+module_temp_low_warning                                                             Value
+module_temp_high_alarm                                                              Value
+module_temp_low_alarm                                                               Value
+module_temp_high_warning                                                            Value
+module_temp_low_warning_threhsold                                                   Counter
+module_temp_high_alarm_threshold                                                    Counter
+module_temp_low_alarm_threshold                                                     Counter
+module_temp_high_warning_threshold                                                  Counter
+
+8. Sensor :: "/junos/system/linecard/qmon/"
+
+Name                                                                                Units
+====                                                                                =====
+egress_octets                                                                       Octets/s
+egress_packets                                                                      Packets/s
+egress_peak_buffer_occupancy_bytes                                                  Bytes
+egress_peak_buffer_occupancy_percent                                                %
+egress_red_drop_octets_color_0                                                      Count
+egress_red_drop_octets_color_1                                                      Count
+egress_red_drop_octets_color_2                                                      Count
+egress_red_drop_octets_color_3                                                      Count
+egress_red_drop_packets_color_0                                                     Count
+egress_red_drop_packets_color_1                                                     Count
+egress_red_drop_packets_color_2                                                     Count
+egress_red_drop_packets_color_3                                                     Count
+egress_tail_drop_octets                                                             Octets
+egress_tail_drop_packets                                                            Packets
+
+9. Sensor :: "/junos/system/linecard/firewall/"
+
+Name                                                                                Units
+====                                                                                =====
+memory_allocated                                                                    Byte
+
+10. Sensor :: "/junos/system/linecard/fabric/"
+
+Name                                                                                Units
+====                                                                                =====
+packets                                                                             Packets
+bytes                                                                               Bytes
+packets_per_second                                                                  Packets/s
+bytes_per_second                                                                    Bytes/s
+drop_packets                                                                        Packets
+drop_bytes                                                                          Bytes
+drop_packets_per_second                                                             Packets/s
+drop_bytes_per_second                                                               Bytes/s
+queue_depth_average                                                                 Count
+queue_depth_peak                                                                    Count
+error_packets                                                                       Packets
+error_packets_per_second                                                            Packets/s

@@ -1,0 +1,17 @@
+---
+- name: Update NDP advertisement
+  script: >
+      update_v6_neigh_adv.sh {{ ipv6_bind_interface }}
+  ignore_errors: yes
+
+- name: Enable host router advertisement
+  become: yes
+  sysctl:
+    name: net.ipv6.conf.{{ ipv6_bind_interface }}.accept_ra
+    value: 2
+
+- name: Enable host NDP proxying
+  become: yes
+  sysctl:
+    name: net.ipv6.conf.{{ ipv6_bind_interface }}.proxy_ndp
+    value: 1

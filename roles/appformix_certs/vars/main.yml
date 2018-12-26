@@ -1,0 +1,4 @@
+---
+appformix_certs_dir: "{{ appformix_install_dir }}/etc/cert"
+appformix_certs_cert: "{{ appformix_certs_dir }}/appformix.crt"
+appformix_certs_key: "{{ appformix_certs_dir }}/appformix.key"

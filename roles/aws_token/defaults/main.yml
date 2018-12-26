@@ -1,0 +1,5 @@
+auth_post_url: "{{ appformix_vip_url }}/appformix/v1.0/auth_credentials"
+
+aws_auth_type: "aws"
+appformix_aws_adapter_secret_key: "{{ lookup('env', 'AWS_SECRET_KEY') | default('', true) }}"
+appformix_aws_adapter_access_key: "{{ lookup('env','AWS_ACCESS_KEY') | default('', true) }}"

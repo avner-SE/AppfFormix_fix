@@ -1,0 +1,20 @@
+{
+    "ServiceGroupName": "AppformixKeystoneServiceGroup",
+    "Endpoints": [
+        {
+            "Url": "{{ keystone_url }}",
+            "EndpointName": "keystoneEndpoint",
+            "Method": "GET",
+            "Interval": 2
+        }
+    ],
+    "ServiceGroupId": "KeystoneServiceGroupId",
+    "RefreshTokenData": {
+        "RefreshToken": "False",
+        "Username": "admin",
+        "AuthType": "openstack",
+        "Password": "{{ }}",
+        "AuthUrl": "{{ }}",
+        "Project": ""
+    }
+}

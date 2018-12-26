@@ -1,0 +1,44 @@
+---
+- name: Remove older appformix-mongo-replica containers
+  when: cluster_deployment_flag == 'check'
+  shell: docker stop appformix-mongo-replica; docker rm -vf appformix-mongo-replica
+  ignore_errors: yes
+
+- name: Move older data_replica directory to newer data directory for mongo cluster
+  sudo: yes
+  when: cluster_deployment_flag == 'check'
+  command: mv {{ appformix_install_dir }}/mongo/data_replica "{{ appformix_mongo_replica_data_dir }}"
+  ignore_errors: yes
+
+- name: Check if mongo cluster is already deployed
+  when: cluster_deployment_flag == 'check'
+  stat:
+    path: "{{ appformix_mongo_cluster_deployment_flag_file }}"
+  register: cluster_already_deployed
+
+- set_fact:
+    cluster_state: "{{ cluster_already_deployed.stat.exists }}"
+  when: cluster_deployment_flag == 'check'
+
+# In case we are uninstalling appformix, we need to set the cluster_state to
+# false so that the mongo roles can clean up the containers
+- set_fact:
+    cluster_state: False
+  when: appformix_state == 'absent'
+
+- name: Ensure "{{ appformix_install_dir }}/mongo" directory exists
+  when: appformix_state != 'absent' and cluster_deployment_flag == 'create'
+  become: yes
+  file:
+    path: "{{ appformix_install_dir }}/mongo"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create a file to signal mongo cluster deployment
+  when: appformix_state != 'absent' and cluster_deployment_flag == 'create'
+  sudo: yes
+  file:
+    path: "{{ appformix_mongo_cluster_deployment_flag_file }}"
+    state: touch

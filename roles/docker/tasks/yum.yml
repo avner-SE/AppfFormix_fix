@@ -1,0 +1,59 @@
+---
+# NOTE: The yum module will not force downgrade if a newer version is already
+#       present on the host.  Refer to:
+#           https://github.com/ansible/ansible-modules-core/issues/1419
+- name: Remove older versions of Docker
+  become: yes
+  yum:
+    state: absent
+    name: '{{ item }}'
+  with_items:
+    - docker
+    - docker-engine
+    - docker-common
+    - container-selinux
+    - docker-engine-selinux
+    - docker-selinux
+
+- name: Add Docker yum repository configuration
+  become: yes
+  copy:
+    dest: /etc/yum.repos.d/docker.repo
+    src: docker.yum_repo
+  when: docker_state != 'absent'
+
+- name: Remove Docker yum repository configuration
+  become: yes
+  file:
+    path: /etc/yum.repos.d/docker.repo
+    state: absent
+  when: docker_state == 'absent'
+
+- name: Install required packages
+  become: yes
+  yum:
+    name: '{{ item }}'
+    state: '{{ docker_state }}'
+  with_items:
+    - device-mapper-persistent-data
+    - lvm2
+
+- name: Install docker-ce-selinux
+  become: yes
+  yum:
+    name: "{{ docker_ce_selinux_rpm_url }}"
+    state: '{{ docker_state }}'
+
+- name: Install docker-ce
+  become: yes
+  yum:
+    name: docker-ce-{{ docker_ce_version_centos }}
+    state: '{{ docker_state }}'
+
+- name: Start Docker engine
+  become: yes
+  service:
+    name: docker
+    enabled: yes
+    state: started
+  when: docker_state != 'absent'

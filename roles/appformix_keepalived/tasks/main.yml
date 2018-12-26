@@ -1,0 +1,42 @@
+---
+- name: Enable non-local bind in sysctl
+  become: true
+  sysctl:
+    name: net.ipv4.ip_nonlocal_bind
+    value: 1
+    state: present
+
+- name: Keepalived configuration directory
+  become: true
+  file:
+    path: "{{ appformix_keepalived_conf_dir }}"
+    state: "{{ appformix_keepalived_dir_state }}"
+    mode: 0755
+
+- name: Set the keepalived_vrrp_interface_ansible fact for every host
+  set_fact:
+      keepalived_vrrp_interface_ansible: "ansible_{{ keepalived_vrrp_interface }}"
+
+- name: Keepalived configuration file
+  become: true
+  when: appformix_keepalived_state != 'absent'
+  template:
+    dest: "{{ appformix_keepalived_conf_file }}"
+    src: keepalived.conf.j2
+  notify:
+    - restart keepalived
+
+- name: Keepalived container
+  docker:
+    name: appformix-keepalived
+    image: "{{ appformix_keepalived_image }}"
+    state: "{{ appformix_keepalived_state }}"
+    restart_policy: always
+    net: host
+    ports: []
+    # NOTE: Only CAP_NET_ADMIN is likely required (not tested).  Ansible 1.9.6
+    #       docker module does not support the "cap_add" parameter to be
+    #       granular in the capabilities granted.
+    privileged: true
+    volumes: "{{ appformix_keepalived_volumes }}"
+  register: keepalived_container

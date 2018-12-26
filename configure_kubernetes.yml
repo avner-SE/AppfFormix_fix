@@ -1,0 +1,53 @@
+---
+#
+# Configure AppFormix
+#
+# This playbook should not be called if appformix_state == 'absent'.
+#
+
+- hosts: compute
+  tags: [ appformix_manager ]
+  roles:
+    - appformix_defaults
+    - { role: appformix_kubernetes_node_config, when: appformix_state != 'absent' }
+
+- hosts: appformix_controller
+  tags: [ appformix_controller ]
+  roles:
+    - appformix_defaults
+    - { role: appformix_kubernetes_config, when: appformix_state != 'absent' }
+
+- hosts: localhost
+  tags: [token]
+  roles:
+    - appformix_defaults
+    - { role: kubernetes_token, when: appformix_state != 'absent' }
+
+- hosts: appformix_controller
+  tags: [ appformix_controller, appformix_config ]
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: 'kubernetes'
+  roles:
+    - appformix_defaults
+    - { role: appformix_master_auth, when: appformix_state != 'absent' }
+
+- include: configure_common.yml
+  vars:
+    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+    auth_type: "kubernetes"
+  when: appformix_state != 'absent'
+
+# Configure Contrail/RabbitMQ/MySQL/Cassandra/Scaleio in openstack-adapter
+#- hosts: appformix_controller
+#  tags: [ appformix_controller ]
+#  vars:
+#    auth_token: "{{ hostvars['localhost']['auth_info'].json.Token.tokenId }}"
+#    auth_type: "kubernetes"
+#  roles:
+#    - appformix_defaults
+#    - { role: appformix_contrail_config, when: appformix_state != 'absent' }
+#    - { role: appformix_scaleio, when: appformix_state != 'absent' }
+#    - { role: appformix_mysql_config, when: appformix_state != 'absent' }
+#    - { role: appformix_rabbit_config, when: appformix_state != 'absent' }
+#    - { role: appformix_cassandra_config, when: appformix_state != 'absent' }

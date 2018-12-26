@@ -1,0 +1,113 @@
+{
+    "AggregateId": "appformix_network_agents",
+    "Collection": "host_pythonchecksnmpnetworkdevicepy_collection",
+    "Config": {
+        "CommandLine": "python check_snmp_network_device_template.py",
+        "ConfigFile": "plugin_network_device_metrics",
+        "PluginPrefix": "interface",
+        "EntityType": ["interface"]
+    },
+    "MetricMap": [
+        {
+            "Name": "ifSpeed",
+            "Units": "Bits/s"
+        },
+        {
+            "Name": "ifInErrors",
+            "Units": "Errors/s"
+        },
+        {
+            "Name": "ifInOctets",
+            "Units": "Octets/s"
+        },
+        {
+            "Name": "ifInDiscards",
+            "Units": "Discards/s"
+        },
+        {
+            "Name": "ifInNUcastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifInUcastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifOutNUcastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifOutDiscards",
+            "Units": "Discards/s"
+        },
+        {
+            "Name": "ifOutOctets",
+            "Units": "Octets/s"
+        },
+        {
+            "Name": "ifOutErrors",
+            "Units": "Errors/s"
+        },
+        {
+            "Name": "ifInUnknownProtos",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifOutUcastPkts",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifOperStatus",
+            "Units": "Count"
+        },
+        {
+            "Name": "ifOutQLen",
+            "Units": "count"
+        },
+        {
+            "Name": "ifMtu",
+            "Units": "MTU"
+        },
+        {
+            "Name": "ifInBandwidth",
+            "Units": "Mbps"
+        },
+        {
+            "Name": "ifOutBandwidth",
+            "Units": "Mbps"
+        },
+        {
+            "Name": "ifInLinkUtilization",
+            "Units": "%"
+        },
+        {
+            "Name": "ifOutLinkUtilization",
+            "Units": "%"
+        },
+        {
+            "Name": "ifInPackets",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifInDiscardRate",
+            "Units": "%"
+        },
+        {
+            "Name": "ifOutPackets",
+            "Units": "Packets/s"
+        },
+        {
+            "Name": "ifOutDiscardRate",
+            "Units": "%"
+        }
+    ],
+    "PluginId": "pythonchecksnmpnetworkdevicepy",
+    "PluginName": "snmp_network_device",
+    "PluginType": "snmp_network_device",
+    "Scope": "snmp_network_device",
+    "SnmpOIDList": [
+        "IF-MIB::ifTable"
+    ],
+    "State": "enabled",
+    "status": "success"
+}

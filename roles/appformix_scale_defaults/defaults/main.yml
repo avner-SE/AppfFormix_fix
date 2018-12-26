@@ -1,0 +1,42 @@
+---
+# AppFormix Mongo Replica Container Defaults
+appformix_mongo_replica_name: "appformix-mongo"
+# NOTE: The directory specified in appformix_mongo_replica_data_dir is a
+#       host-volume mounted inside of the Docker container.  Mongo
+#       replica will write config data to this directory.  Changing the value
+#       of this variable after initial installation will cause database
+#       to be reset.
+#
+#       As such, this variable should be defined in a manner such that
+#       it will always have the same value when the role executed.
+#       Best practice recommendation is to define it as a host
+#       variable or group variable in the inventory.
+appformix_mongo_replica_data_dir: "{{ appformix_install_dir }}/mongo/data"
+appformix_mongo_replica_exposed_port: "{{ appformix_mongo_replica_port }}"
+
+# AppFormix Mongo ConfigSrv Container Defaults
+appformix_mongo_configsrv_name: "appformix-mongo-configsrv"
+# NOTE: The directory specified in appformix_mongo_configsrv_data_dir is a
+#       host-volume mounted inside of the Docker container.  Mongo
+#       configsrv will write config data to this directory.  Changing the value
+#       of this variable after initial installation will cause database
+#       to be reset.
+#
+#       As such, this variable should be defined in a manner such that
+#       it will always have the same value when the role executed.
+#       Best practice recommendation is to define it as a host
+#       variable or group variable in the inventory.
+appformix_mongo_configsrv_data_dir: "{{ appformix_install_dir }}/mongo/data_configsrv"
+appformix_mongo_configsrv_script_dir: "{{ appformix_install_dir }}/mongo/script_configsrv"
+appformix_mongo_configsrv_port: 27019
+appformix_mongo_configsrv_exposed_port: "{{ appformix_mongo_configsrv_port }}"
+
+# AppFormix Mongos Client Container Defaults
+appformix_mongos_client_name: "appformix-mongo"
+appformix_mongos_client_port: 27017
+appformix_mongos_client_exposed_port: 37017
+appformix_host_mongos_client_conf_dir: "{{ appformix_install_dir }}/etc/mongos"
+appformix_mongos_client_container_conf_dir: "/etc/appformix"
+
+# Mongo Cluster configuration paramters
+appformix_host_mongo_cluster_conf_dir: "{{ appformix_install_dir }}/etc/mongo_cluster"

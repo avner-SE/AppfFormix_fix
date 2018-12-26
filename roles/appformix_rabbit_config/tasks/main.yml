@@ -1,0 +1,10 @@
+---
+- name: Post RabbitMQ Config to AppFormix OpenStack Adapter
+  appformix_rabbitmq:
+    base_url: '{{ openstack_adapter_url }}'
+    nodes: '{{ appformix_rabbitmq_nodes }}'
+    username: '{{ appformix_rabbitmq_username }}'
+    password: '{{ appformix_rabbitmq_password }}'
+    cluster_name: '{{ appformix_rabbitmq_cluster_name }}'
+  delegate_to: localhost
+  when: appformix_rabbitmq_username is defined and appformix_rabbitmq_password is defined and appformix_rabbitmq_nodes is defined

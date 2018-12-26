@@ -1,0 +1,1 @@
+cso_config_post_url: "{{ appformix_vip_url }}/appformix/v1.0/openstack_adapter/cso_config"

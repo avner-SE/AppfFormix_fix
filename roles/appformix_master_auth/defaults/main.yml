@@ -1,0 +1,4 @@
+master_auth_post_url: "{{ appformix_vip_url }}/appformix/v1.0/master_auth"
+master_auth_token_file: "{{ appformix_install_dir }}/etc/appformix_token.rst"
+appformix_username: "{{ lookup('env','APPFORMIX_USERNAME') }}"
+appformix_password: "{{ lookup('env','APPFORMIX_PASSWORD') }}"

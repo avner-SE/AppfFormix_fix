@@ -1,0 +1,11 @@
+---
+- name: Post MySQL Config to AppFormix OpenStack Adapter
+  appformix_mysql:
+    base_url: '{{ openstack_adapter_url }}'
+    hosts: '{{ appformix_mysql_hosts }}'
+    username: '{{ appformix_mysql_username }}'
+    password: '{{ appformix_mysql_password }}'
+    port: '{{ appformix_mysql_port }}'
+    cluster_name: '{{ appformix_mysql_cluster_name }}'
+  delegate_to: localhost
+  when: appformix_mysql_username is defined and appformix_mysql_password is defined and appformix_mysql_hosts is defined

@@ -1,0 +1,20 @@
+---
+- name: Post Service Alarms and profile to controller
+  script: >
+      add_profile.py {{ service_alarm_post_url }} {{ profile_post_url }} {{ auth_token }} {{ item.filename }} {{ auth_type }}
+  delegate_to: localhost
+  with_items: '{{ openstack_service_profiles }}'
+  when: openstack_platform_enabled|bool == true
+
+- name: Post Alarms and profile to controller
+  script: >
+      add_profile.py {{ alarm_post_url }} {{ profile_post_url }} {{ auth_token }} {{ item.filename }} {{ auth_type }}
+  delegate_to: localhost
+  with_items: '{{ network_device_profiles }} + {{ virtual_network_profiles }}'
+
+- name: Post AWS health and risk profiles to controller
+  script: >
+      add_profile.py {{ alarm_post_url }} {{ profile_post_url }} {{ auth_token }} {{ item.filename }} {{ auth_type }}
+  delegate_to: localhost
+  with_items: '{{ aws_profiles }}'
+  when: aws_platform_enabled|bool == true
